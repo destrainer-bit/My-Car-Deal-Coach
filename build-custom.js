@@ -16,8 +16,16 @@ try {
     mkdirSync('dist', { recursive: true });
   }
 
-  // Copy index.html
-  copyFileSync('index.html', 'dist/index.html');
+  // Read and update index.html
+  let html = readFileSync('index.html', 'utf8');
+  
+  // Replace the script src to point to the built file
+  html = html.replace(
+    '<script type="module" src="/src/main.jsx"></script>',
+    '<script type="module" src="/main.js"></script>'
+  );
+  
+  writeFileSync('dist/index.html', html);
 
   // Build with esbuild
   await build({
