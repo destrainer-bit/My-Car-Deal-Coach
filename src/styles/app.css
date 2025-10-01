@@ -1341,15 +1341,56 @@ body {
   border-color: #3b82f6 !important;
 }
 
+/* Force all checklist text to be visible */
+.checklist * {
+  color: #ffffff !important;
+}
+
+.checklist h1,
+.checklist h2,
+.checklist h3,
+.checklist h4,
+.checklist h5,
+.checklist h6,
+.checklist p,
+.checklist span,
+.checklist div,
+.checklist label {
+  color: #ffffff !important;
+}
+
+.checklist .deal-summary,
+.checklist .section-header,
+.checklist .checklist-section {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
+}
+
+.checklist .checklist-item {
+  background: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  color: #ffffff !important;
+}
+
+.checklist .checklist-item:hover {
+  background: #3a3a3a !important;
+}
+
 /* Fix settings page visibility */
 .settings-content {
+  color: #ffffff !important;
+}
+
+.settings-content * {
   color: #ffffff !important;
 }
 
 .settings-section h2,
 .settings-section h3,
 .settings-section h4,
-.settings-section p {
+.settings-section p,
+.settings-section span,
+.settings-section div {
   color: #ffffff !important;
 }
 
@@ -1360,7 +1401,31 @@ body {
 }
 
 .setting-item h3,
-.setting-item p {
+.setting-item p,
+.setting-item span,
+.setting-item div {
+  color: #ffffff !important;
+}
+
+.setting-item:hover {
+  background: #2a2a2a !important;
+}
+
+/* Force all settings text to be visible */
+.settings * {
+  color: #ffffff !important;
+}
+
+.settings h1,
+.settings h2,
+.settings h3,
+.settings h4,
+.settings h5,
+.settings h6,
+.settings p,
+.settings span,
+.settings div,
+.settings label {
   color: #ffffff !important;
 }
 
@@ -1387,6 +1452,70 @@ body {
   max-height: 90vh !important;
   overflow-y: auto !important;
   color: #ffffff !important;
+}
+
+/* Fix deals section visibility */
+.saved-deals * {
+  color: #ffffff !important;
+}
+
+.saved-deals h1,
+.saved-deals h2,
+.saved-deals h3,
+.saved-deals h4,
+.saved-deals h5,
+.saved-deals h6,
+.saved-deals p,
+.saved-deals span,
+.saved-deals div,
+.saved-deals label {
+  color: #ffffff !important;
+}
+
+.saved-deals .deals-grid,
+.saved-deals .deals-filters,
+.saved-deals .filter-group {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
+  color: #ffffff !important;
+}
+
+.saved-deals .deal-card {
+  background: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  color: #ffffff !important;
+}
+
+.saved-deals .deal-card:hover {
+  background: #3a3a3a !important;
+}
+
+/* Global text visibility override - NUCLEAR OPTION */
+.app * {
+  color: #ffffff !important;
+}
+
+.app h1,
+.app h2,
+.app h3,
+.app h4,
+.app h5,
+.app h6,
+.app p,
+.app span,
+.app div,
+.app label,
+.app button {
+  color: #ffffff !important;
+}
+
+/* Ensure all backgrounds are dark */
+.app .card,
+.app .modal,
+.app .section,
+.app .content {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
 }
 
 .step-1 .animate-float { animation-delay: 0s; }
