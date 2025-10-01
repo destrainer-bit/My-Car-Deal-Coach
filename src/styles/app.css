@@ -1341,10 +1341,14 @@ body {
   border-color: #3b82f6 !important;
 }
 
-/* Force all checklist text to be visible - NUCLEAR OPTION */
+/* Force all checklist text to be visible with DARK backgrounds */
 .checklist * {
   color: #ffffff !important;
   background: #1a1a1a !important;
+}
+
+.checklist {
+  background: #0B0B0B !important;
 }
 
 .checklist h1,
@@ -1560,16 +1564,26 @@ body {
   color: #ffffff !important;
 }
 
-/* ULTRA NUCLEAR OPTION - Force ALL text to be visible */
+/* PROPER FIX - Dark backgrounds with white text */
+body {
+  background: #0B0B0B !important;
+  color: #ffffff !important;
+}
+
+/* Force all backgrounds to be dark */
 * {
+  background: #1a1a1a !important;
   color: #ffffff !important;
 }
 
-body * {
+/* Specific element backgrounds */
+.card, .modal, .section, .content, .deal-card, .checklist-item, .setting-item {
+  background: #1a1a1a !important;
   color: #ffffff !important;
+  border: 1px solid #333 !important;
 }
 
-/* Force all buttons to be visible */
+/* Force all buttons to be visible with proper contrast */
 button {
   background: #3b82f6 !important;
   color: #ffffff !important;
@@ -1580,18 +1594,25 @@ button:hover {
   background: #2563eb !important;
 }
 
-/* Force all text elements */
+/* Force all text elements to be white on dark backgrounds */
 h1, h2, h3, h4, h5, h6, p, span, div, label {
   color: #ffffff !important;
+  background: #1a1a1a !important;
 }
 
 /* Ensure all backgrounds are dark */
+.app {
+  background: #0B0B0B !important;
+  color: #ffffff !important;
+}
+
 .app .card,
 .app .modal,
 .app .section,
 .app .content {
   background: #1a1a1a !important;
   border: 1px solid #333 !important;
+  color: #ffffff !important;
 }
 
 /* Fix DealComparison component visibility */
