@@ -3,6 +3,7 @@ import PriceRange from './PriceRange.jsx'
 import RangeBadge from './RangeBadge.jsx'
 
 function DealComparison({ deals, onClose }) {
+  console.log('DealComparison rendering with deals:', deals)
   const [selectedDeals, setSelectedDeals] = useState([])
 
   const toggleDeal = (deal) => {
@@ -36,6 +37,24 @@ function DealComparison({ deals, onClose }) {
   }
 
   const bestDeal = getBestDeal()
+
+  if (!deals || deals.length === 0) {
+    return (
+      <div className="deal-comparison">
+        <div className="comparison-header">
+          <h3>🔍 Deal Comparison</h3>
+          <button className="close-btn" onClick={onClose}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div className="no-deals">
+          <p>No deals available for comparison. Create some deals first!</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="deal-comparison">
