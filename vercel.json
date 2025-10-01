@@ -1,19 +1,4 @@
 {
-  "functions": {
-    "api/*.js": {
-      "runtime": "@vercel/node@3.0.0"
-    }
-  },
-  "buildCommand": "npm install --legacy-peer-deps && npm run build",
-  "outputDirectory": "dist",
-  "framework": null,
-  "build": {
-    "env": {
-      "NPM_CONFIG_IGNORE_OPTIONAL": "false",
-      "NODE_OPTIONS": "--max-old-space-size=4096"
-    }
-  },
-  "installCommand": "npm install --legacy-peer-deps"
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist"
 }
-
-
