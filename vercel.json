@@ -6,7 +6,7 @@
   },
   "buildCommand": "npm install --legacy-peer-deps && npm run build",
   "outputDirectory": "dist",
-  "framework": "vite",
+  "framework": null,
   "build": {
     "env": {
       "NODE_VERSION": "20",
