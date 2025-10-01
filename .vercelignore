@@ -1,5 +1,9 @@
-# Force Vercel to use Node.js 22.x
+# Force Vercel to use Node.js 18.x
 node_modules
 .git
 .env.local
 .env.*.local
+.vercel
+*.log
+dist
+build
