@@ -7,7 +7,7 @@
     "dev": "npx vite",
     "dev:api": "node server/dev-api.js",
     "dev:all": "npm-run-all --parallel dev dev:api",
-    "build": "node build-custom.js",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "cap:sync": "npx cap sync",
