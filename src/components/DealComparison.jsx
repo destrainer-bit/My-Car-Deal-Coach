@@ -24,16 +24,18 @@ function DealComparison({ deals, onClose }) {
   }
 
   const calculateSavings = (deal) => {
-    const midPrice = deal.price.mid
-    const highPrice = deal.price.high
+    const midPrice = deal.price?.mid || deal.price?.asking || 0
+    const highPrice = deal.price?.high || deal.price?.asking || 0
     return highPrice - midPrice
   }
 
   const getBestDeal = () => {
     if (selectedDeals.length === 0) return null
-    return selectedDeals.reduce((best, current) => 
-      current.price.mid < best.price.mid ? current : best
-    )
+    return selectedDeals.reduce((best, current) => {
+      const currentPrice = current.price?.mid || current.price?.asking || 0
+      const bestPrice = best.price?.mid || best.price?.asking || 0
+      return currentPrice < bestPrice ? current : best
+    })
   }
 
   const bestDeal = getBestDeal()
@@ -57,19 +59,19 @@ function DealComparison({ deals, onClose }) {
   }
 
   return (
-    <div className="deal-comparison">
-      <div className="comparison-header">
-        <h3>🔍 Deal Comparison</h3>
-        <button className="close-btn" onClick={onClose}>
+    <div className="deal-comparison" style={{ background: '#1a1a1a', color: '#ffffff', padding: '20px', minHeight: '400px' }}>
+      <div className="comparison-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h3 style={{ color: '#ffffff', margin: 0 }}>🔍 Deal Comparison</h3>
+        <button className="close-btn" onClick={onClose} style={{ background: '#3b82f6', color: '#ffffff', border: 'none', padding: '8px', borderRadius: '4px', cursor: 'pointer' }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
           </svg>
         </button>
       </div>
 
-      <div className="comparison-instructions">
-        <p>Select up to 3 deals to compare side-by-side</p>
-        <div className="selection-count">
+      <div className="comparison-instructions" style={{ background: '#2a2a2a', padding: '15px', borderRadius: '8px', marginBottom: '20px' }}>
+        <p style={{ color: '#ffffff', margin: '0 0 10px 0' }}>Select up to 3 deals to compare side-by-side</p>
+        <div className="selection-count" style={{ background: '#3b82f6', color: '#ffffff', padding: '5px 10px', borderRadius: '4px', display: 'inline-block' }}>
           {selectedDeals.length}/3 selected
         </div>
       </div>
@@ -136,10 +138,10 @@ function DealComparison({ deals, onClose }) {
                   <small>{deal.vehicle.trim} • {parseInt(deal.vehicle.mileage).toLocaleString()} mi</small>
                 </div>
                 <div className="price-range">
-                  {formatPrice(deal.price.low)} - {formatPrice(deal.price.high)}
+                  {formatPrice(deal.price?.low || deal.price?.asking || 0)} - {formatPrice(deal.price?.high || deal.price?.asking || 0)}
                 </div>
                 <div className="monthly-payment">
-                  {formatPrice(deal.price.mid / 60)}/mo
+                  {formatPrice((deal.price?.mid || deal.price?.asking || 0) / 60)}/mo
                 </div>
                 <div className="value-score">
                   {Math.round(((deal.condition?.rating || 3) / 5) * 100)}%
