@@ -1,0 +1,5 @@
+# Force Vercel to use Node.js 22.x
+node_modules
+.git
+.env.local
+.env.*.local
