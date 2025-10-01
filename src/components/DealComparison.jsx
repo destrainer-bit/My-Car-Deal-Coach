@@ -42,36 +42,36 @@ function DealComparison({ deals, onClose }) {
 
   if (!deals || deals.length === 0) {
     return (
-      <div className="deal-comparison" style={{ background: '#1a1a1a', color: '#ffffff', padding: '20px', minHeight: '400px' }}>
-        <div className="comparison-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <h3 style={{ color: '#ffffff', margin: 0 }}>🔍 Deal Comparison</h3>
-          <button className="close-btn" onClick={onClose} style={{ background: '#3b82f6', color: '#ffffff', border: 'none', padding: '8px', borderRadius: '4px', cursor: 'pointer' }}>
+      <div className="deal-comparison">
+        <div className="comparison-header">
+          <h3>🔍 Deal Comparison</h3>
+          <button className="close-btn" onClick={onClose}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </button>
         </div>
-        <div className="no-deals" style={{ textAlign: 'center', padding: '40px', color: '#ffffff' }}>
-          <p style={{ color: '#ffffff', fontSize: '16px' }}>No deals available for comparison. Create some deals first!</p>
+        <div className="no-deals">
+          <p>No deals available for comparison. Create some deals first!</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="deal-comparison" style={{ background: '#1a1a1a', color: '#ffffff', padding: '20px', minHeight: '400px' }}>
-      <div className="comparison-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h3 style={{ color: '#ffffff', margin: 0 }}>🔍 Deal Comparison</h3>
-        <button className="close-btn" onClick={onClose} style={{ background: '#3b82f6', color: '#ffffff', border: 'none', padding: '8px', borderRadius: '4px', cursor: 'pointer' }}>
+    <div className="deal-comparison">
+      <div className="comparison-header">
+        <h3>🔍 Deal Comparison</h3>
+        <button className="close-btn" onClick={onClose}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
           </svg>
         </button>
       </div>
 
-      <div className="comparison-instructions" style={{ background: '#2a2a2a', padding: '15px', borderRadius: '8px', marginBottom: '20px' }}>
-        <p style={{ color: '#ffffff', margin: '0 0 10px 0' }}>Select up to 3 deals to compare side-by-side</p>
-        <div className="selection-count" style={{ background: '#3b82f6', color: '#ffffff', padding: '5px 10px', borderRadius: '4px', display: 'inline-block' }}>
+      <div className="comparison-instructions">
+        <p>Select up to 3 deals to compare side-by-side</p>
+        <div className="selection-count">
           {selectedDeals.length}/3 selected
         </div>
       </div>
