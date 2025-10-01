@@ -2,6 +2,9 @@
 import { Capacitor } from '@capacitor/core'
 import { PushNotifications } from '@capacitor/push-notifications'
 
+// VAPID public key for push notifications
+const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY
+
 export async function enableNativePush() {
   if (!Capacitor.isNativePlatform()) {
     return { ok: false, reason: 'not-native' }
@@ -60,13 +63,48 @@ export async function enableNativePush() {
   }
 }
 
+// Web push notifications using VAPID
+export async function enableWebPush() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    return { ok: false, reason: 'not-supported' }
+  }
+
+  try {
+    // Register service worker
+    const registration = await navigator.serviceWorker.register('/sw.js')
+    
+    // Request notification permission
+    const permission = await Notification.requestPermission()
+    if (permission !== 'granted') {
+      return { ok: false, reason: 'permission-denied' }
+    }
+
+    // Subscribe to push notifications
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: VAPID_PUBLIC_KEY
+    })
+
+    // Send subscription to backend
+    await fetch('/api/push/register-web', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subscription })
+    })
+
+    return { ok: true, subscription }
+  } catch (error) {
+    console.error('Web push setup error:', error)
+    return { ok: false, reason: 'setup-failed' }
+  }
+}
+
 // Unified push notification setup (works for both web and native)
 export async function enableNotifications() {
   if (Capacitor.isNativePlatform()) {
     return enableNativePush()
   } else {
-    // Web push fallback - you can implement this if needed
-    return { ok: false, reason: 'web-push-not-implemented' }
+    return enableWebPush()
   }
 }
 
