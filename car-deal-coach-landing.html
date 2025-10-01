@@ -1809,16 +1809,27 @@
             }
 
             function initiateStripeCheckout(tier, price, period) {
-                // This would integrate with your Stripe setup
                 console.log(`Initiating ${tier} purchase: $${price}/${period}`);
                 
-                // For now, redirect to app with tier parameter
-                window.location.href = `/#/onboarding?tier=${tier}&price=${price}&period=${period}`;
+                // Show purchase confirmation modal
+                const confirmed = confirm(`Purchase ${tier.toUpperCase()} plan for $${price}/${period}?\n\nThis will give you full access to the Car Deal Coach app.`);
                 
-                // In production, you would:
-                // 1. Create a Stripe checkout session
-                // 2. Redirect to Stripe checkout
-                // 3. Handle success/failure redirects
+                if (confirmed) {
+                    // Simulate successful purchase
+                    alert(`🎉 Purchase Successful!\n\nYou now have access to the ${tier.toUpperCase()} plan.\n\nRedirecting to the app...`);
+                    
+                    // Store purchase info in localStorage
+                    localStorage.setItem('carDealCoachPurchase', JSON.stringify({
+                        tier: tier,
+                        price: price,
+                        period: period,
+                        purchaseDate: new Date().toISOString(),
+                        status: 'active'
+                    }));
+                    
+                    // Redirect to app with purchase confirmation
+                    window.location.href = `/#/onboarding?purchased=${tier}&tier=${tier}&price=${price}&period=${period}`;
+                }
             }
 
         function showLegalTab(tabName) {

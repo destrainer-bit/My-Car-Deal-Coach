@@ -41,6 +41,14 @@ function App() {
         const savedChecklist = storage.get(storageKeys.CHECKLIST_PROGRESS) || {}
         const savedDarkMode = storage.get(storageKeys.DARK_MODE) || false
 
+        // Check for purchase status
+        const purchaseInfo = localStorage.getItem('carDealCoachPurchase')
+        if (purchaseInfo) {
+          const purchase = JSON.parse(purchaseInfo)
+          console.log('User has active purchase:', purchase)
+          // You could set a premium state here if needed
+        }
+
         setDeals(savedDeals)
         setNotes(savedNotes)
         setPhotos(savedPhotos)
