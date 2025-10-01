@@ -1341,9 +1341,10 @@ body {
   border-color: #3b82f6 !important;
 }
 
-/* Force all checklist text to be visible */
+/* Force all checklist text to be visible - NUCLEAR OPTION */
 .checklist * {
   color: #ffffff !important;
+  background: #1a1a1a !important;
 }
 
 .checklist h1,
@@ -1355,8 +1356,38 @@ body {
 .checklist p,
 .checklist span,
 .checklist div,
-.checklist label {
+.checklist label,
+.checklist button {
   color: #ffffff !important;
+  background: #1a1a1a !important;
+}
+
+/* Specific fixes for checklist items */
+.checklist .checklist-item {
+  background: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  color: #ffffff !important;
+}
+
+.checklist .checklist-item * {
+  color: #ffffff !important;
+}
+
+.checklist .item-text,
+.checklist .item-category {
+  color: #ffffff !important;
+}
+
+.checklist .research-btn,
+.checklist .budget-btn {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+}
+
+.checklist .research-btn:hover,
+.checklist .budget-btn:hover {
+  background: #2563eb !important;
 }
 
 .checklist .deal-summary,
@@ -1436,7 +1467,7 @@ body {
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  background: rgba(0, 0, 0, 0.8) !important;
+  background: rgba(0, 0, 0, 0.9) !important;
   z-index: 1000 !important;
   display: flex !important;
   align-items: center !important;
@@ -1451,6 +1482,26 @@ body {
   max-width: 90vw !important;
   max-height: 90vh !important;
   overflow-y: auto !important;
+  color: #ffffff !important;
+  position: relative !important;
+}
+
+/* Force modal content to be visible */
+.modal-content * {
+  color: #ffffff !important;
+  background: #1a1a1a !important;
+}
+
+.modal-content h1,
+.modal-content h2,
+.modal-content h3,
+.modal-content h4,
+.modal-content h5,
+.modal-content h6,
+.modal-content p,
+.modal-content span,
+.modal-content div,
+.modal-content button {
   color: #ffffff !important;
 }
 
@@ -1506,6 +1557,31 @@ body {
 .app div,
 .app label,
 .app button {
+  color: #ffffff !important;
+}
+
+/* ULTRA NUCLEAR OPTION - Force ALL text to be visible */
+* {
+  color: #ffffff !important;
+}
+
+body * {
+  color: #ffffff !important;
+}
+
+/* Force all buttons to be visible */
+button {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+}
+
+button:hover {
+  background: #2563eb !important;
+}
+
+/* Force all text elements */
+h1, h2, h3, h4, h5, h6, p, span, div, label {
   color: #ffffff !important;
 }
 
