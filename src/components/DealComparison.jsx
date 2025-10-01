@@ -97,7 +97,7 @@ function DealComparison({ deals, onClose }) {
               </div>
               <div className="detail-row">
                 <span>Condition:</span>
-                <span>{deal.condition.rating}/5</span>
+                <span>{deal.condition?.rating || 'N/A'}/5</span>
               </div>
             </div>
 
@@ -142,7 +142,7 @@ function DealComparison({ deals, onClose }) {
                   {formatPrice(deal.price.mid / 60)}/mo
                 </div>
                 <div className="value-score">
-                  {Math.round((deal.condition.rating / 5) * 100)}%
+                  {Math.round(((deal.condition?.rating || 3) / 5) * 100)}%
                 </div>
               </div>
             ))}
