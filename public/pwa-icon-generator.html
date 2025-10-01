@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PWA Icon Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .icon { margin: 10px; display: inline-block; }
+        canvas { border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>PWA Icon Generator</h1>
+    <p>This will generate the required PWA icons for The Car Coach App.</p>
+    
+    <div id="icons"></div>
+    
+    <script>
+        function generateIcon(size, filename) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#3b82f6');
+            gradient.addColorStop(1, '#1d4ed8');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Steering wheel icon
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size / 16;
+            ctx.lineCap = 'round';
+            
+            // Outer circle
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const radius = size * 0.3;
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            // Inner circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.6, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            // Center dot
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.2, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Add to page
+            const div = document.createElement('div');
+            div.className = 'icon';
+            div.innerHTML = `<h3>${size}x${size}</h3>`;
+            div.appendChild(canvas);
+            
+            // Download button
+            const button = document.createElement('button');
+            button.textContent = `Download ${filename}`;
+            button.onclick = () => {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+            div.appendChild(button);
+            
+            document.getElementById('icons').appendChild(div);
+        }
+        
+        // Generate icons
+        generateIcon(192, 'pwa-192x192.png');
+        generateIcon(512, 'pwa-512x512.png');
+    </script>
+</body>
+</html>

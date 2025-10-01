@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Test - Car Deal Coach</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-item { margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Car Deal Coach - PWA Test</h1>
+    
+    <div id="tests">
+        <div class="test-item" id="manifest-test">
+            <h3>📱 Manifest Test</h3>
+            <p>Checking if PWA manifest is valid...</p>
+        </div>
+        
+        <div class="test-item" id="sw-test">
+            <h3>⚙️ Service Worker Test</h3>
+            <p>Checking if service worker is registered...</p>
+        </div>
+        
+        <div class="test-item" id="install-test">
+            <h3>📲 Install Prompt Test</h3>
+            <p>Checking if install prompt appears...</p>
+        </div>
+        
+        <div class="test-item" id="offline-test">
+            <h3>🔌 Offline Test</h3>
+            <p>Testing offline functionality...</p>
+        </div>
+    </div>
+    
+    <div style="margin-top: 20px;">
+        <button onclick="runTests()">🧪 Run All Tests</button>
+        <button onclick="testOffline()">🔌 Test Offline</button>
+        <button onclick="window.location.href='/'">🏠 Go to App</button>
+    </div>
+
+    <script>
+        async function runTests() {
+            // Test 1: Manifest
+            try {
+                const manifest = await fetch('/manifest.webmanifest').then(r => r.json());
+                document.getElementById('manifest-test').innerHTML = `
+                    <h3>📱 Manifest Test ✅</h3>
+                    <p>Manifest found: ${manifest.name}</p>
+                    <p>Short name: ${manifest.short_name}</p>
+                    <p>Theme color: ${manifest.theme_color}</p>
+                `;
+                document.getElementById('manifest-test').className = 'test-item pass';
+            } catch (e) {
+                document.getElementById('manifest-test').innerHTML = `
+                    <h3>📱 Manifest Test ❌</h3>
+                    <p>Error: ${e.message}</p>
+                `;
+                document.getElementById('manifest-test').className = 'test-item fail';
+            }
+
+            // Test 2: Service Worker
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registration = await navigator.serviceWorker.getRegistration();
+                    if (registration) {
+                        document.getElementById('sw-test').innerHTML = `
+                            <h3>⚙️ Service Worker Test ✅</h3>
+                            <p>Service worker is registered and active</p>
+                        `;
+                        document.getElementById('sw-test').className = 'test-item pass';
+                    } else {
+                        document.getElementById('sw-test').innerHTML = `
+                            <h3>⚙️ Service Worker Test ❌</h3>
+                            <p>No service worker found</p>
+                        `;
+                        document.getElementById('sw-test').className = 'test-item fail';
+                    }
+                } catch (e) {
+                    document.getElementById('sw-test').innerHTML = `
+                        <h3>⚙️ Service Worker Test ❌</h3>
+                        <p>Error: ${e.message}</p>
+                    `;
+                    document.getElementById('sw-test').className = 'test-item fail';
+                }
+            } else {
+                document.getElementById('sw-test').innerHTML = `
+                    <h3>⚙️ Service Worker Test ❌</h3>
+                    <p>Service workers not supported</p>
+                `;
+                document.getElementById('sw-test').className = 'test-item fail';
+            }
+
+            // Test 3: Install Prompt
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                deferredPrompt = e;
+                document.getElementById('install-test').innerHTML = `
+                    <h3>📲 Install Prompt Test ✅</h3>
+                    <p>Install prompt is available</p>
+                    <button onclick="installApp()">Install App</button>
+                `;
+                document.getElementById('install-test').className = 'test-item pass';
+            });
+
+            setTimeout(() => {
+                if (!deferredPrompt) {
+                    document.getElementById('install-test').innerHTML = `
+                        <h3>📲 Install Prompt Test ⚠️</h3>
+                        <p>Install prompt not yet available (may appear on subsequent visits)</p>
+                    `;
+                    document.getElementById('install-test').className = 'test-item';
+                }
+            }, 2000);
+        }
+
+        async function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+            }
+        }
+
+        async function testOffline() {
+            document.getElementById('offline-test').innerHTML = `
+                <h3>🔌 Offline Test</h3>
+                <p>Testing offline functionality...</p>
+                <p>Status: ${navigator.onLine ? 'Online' : 'Offline'}</p>
+            `;
+        }
+
+        // Auto-run tests on load
+        window.addEventListener('load', () => {
+            setTimeout(runTests, 1000);
+        });
+    </script>
+</body>
+</html>
+
+
