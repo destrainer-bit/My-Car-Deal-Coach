@@ -12,17 +12,10 @@ export default defineConfig({
   build: {
     target: 'es2020',
     rollupOptions: {
-      external: [],
-      output: {
-        manualChunks: undefined,
-        format: 'es'
-      }
+      external: []
     }
   },
   optimizeDeps: {
     include: ['react', 'react-dom']
-  },
-  esbuild: {
-    target: 'es2020'
   }
 })
