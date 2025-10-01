@@ -9,7 +9,7 @@
   "framework": null,
   "build": {
     "env": {
-      "NODE_VERSION": "18.20.0",
+      "NODE_VERSION": "20",
       "NPM_CONFIG_IGNORE_OPTIONAL": "false",
       "NODE_OPTIONS": "--max-old-space-size=4096"
     }
