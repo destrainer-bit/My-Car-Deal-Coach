@@ -139,7 +139,7 @@ function DealershipLocator({ isOpen, onClose, vehicleData }) {
                       <h4>{dealership.name}</h4>
                       <p className="address">{dealership.address}</p>
                       <div className="dealership-meta">
-                        <span className="rating">⭐ {dealership.rating} ({dealership.reviews} reviews)</span>
+                        <span className="rating">⭐ {dealership.rating || 'N/A'} ({dealership.reviews || 0} reviews)</span>
                         <span className="distance">{dealership.distance}</span>
                         <span className="travel-time">{dealership.estimatedTravelTime}</span>
                       </div>
