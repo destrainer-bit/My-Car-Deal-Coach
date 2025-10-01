@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "npx vite",
+    "dev": "vite",
     "dev:api": "node server/dev-api.js",
     "dev:all": "npm-run-all --parallel dev dev:api",
     "build": "vite build",
