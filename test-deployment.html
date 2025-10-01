@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Deployment</title>
+</head>
+<body>
+    <div id="root">
+        <h1>Loading...</h1>
+        <p>If you see this, the app is not loading properly.</p>
+    </div>
+    <script>
+        console.log('Test script loaded');
+        setTimeout(() => {
+            if (document.getElementById('root').innerHTML.includes('Loading...')) {
+                console.error('App failed to load');
+                document.getElementById('root').innerHTML = '<h1>App Failed to Load</h1><p>Check console for errors.</p>';
+            }
+        }, 5000);
+    </script>
+    <script type="module" src="/main.js"></script>
+</body>
+</html>

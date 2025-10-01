@@ -44,6 +44,9 @@ export const useHashRoute = () => {
       window.location.hash = '#/onboarding'
     }
 
+    // Handle initial load
+    handleHashChange()
+
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
