@@ -2,7 +2,7 @@
 import OpenAI from "openai";
 import { z } from "zod";
 
-const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY || 'demo-key';
 const client = apiKey && apiKey !== 'OPENAI_API_KEY' ? new OpenAI({ apiKey }) : null;
 
 const StepSchema = z.object({

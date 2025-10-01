@@ -3,7 +3,7 @@ import { Capacitor } from '@capacitor/core'
 import { PushNotifications } from '@capacitor/push-notifications'
 
 // VAPID public key for push notifications
-const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY
+const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY || 'demo-key'
 
 export async function enableNativePush() {
   if (!Capacitor.isNativePlatform()) {
