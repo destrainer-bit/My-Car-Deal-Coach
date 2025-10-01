@@ -9,7 +9,8 @@
   "framework": "vite",
   "build": {
     "env": {
-      "NODE_VERSION": "20"
+      "NODE_VERSION": "20",
+      "NPM_CONFIG_IGNORE_OPTIONAL": "false"
     }
   },
   "installCommand": "npm install --legacy-peer-deps"
