@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../components/pricing.css'
 import { upgradePlans } from '../data/upgradePlans.js'
-
-type CheckoutState = {
-  loading: boolean
-  error: string | null
-}
-
-const initialState: CheckoutState = { loading: false, error: null }
+import { useSubscription } from '../hooks/useSubscription'
 
 function Pricing() {
-  const [state, setState] = useState<CheckoutState>(initialState)
   const [highlight, setHighlight] = useState<string | null>(null)
+  const { startCheckout, loading: subscriptionLoading, subscription } = useSubscription()
 
   useEffect(() => {
     const stored = localStorage.getItem('highlightTier')
@@ -31,36 +25,19 @@ function Pricing() {
     const plan = upgradePlans.find((p) => p.id === planId)
 
     if (!plan || !plan.priceId) {
-      setState({ loading: false, error: 'Checkout unavailable for this plan.' })
+      alert('This plan is not available. Please contact support.')
       return
     }
 
-    setState({ loading: true, error: null })
-
     try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ priceId: plan.priceId })
+      await startCheckout(plan.priceId, {
+        successUrl: `${window.location.origin}/app?upgrade=success`,
+        cancelUrl: `${window.location.origin}/pricing`,
+        mode: plan.mode || 'payment'
       })
-
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}))
-        throw new Error(err.error || 'Unable to start checkout.')
-      }
-
-      const data = await response.json()
-
-      if (data?.url) {
-        window.location.href = data.url
-        return
-      }
-
-      throw new Error('Checkout session did not return a URL.')
     } catch (error: any) {
-      setState({ loading: false, error: error.message || 'Something went wrong.' })
+      console.error('Checkout failed:', error)
+      alert('Failed to start checkout. Please try again.')
     }
   }
 
@@ -96,8 +73,12 @@ function Pricing() {
                 ))}
               </ul>
 
-              <button className="cta" onClick={() => handleSelect(plan.id)} disabled={state.loading || disabled}>
-                {plan.cta || 'Purchase Now!'}
+              <button 
+                className="cta" 
+                onClick={() => handleSelect(plan.id)} 
+                disabled={subscriptionLoading || disabled}
+              >
+                {subscriptionLoading ? 'Processing...' : (plan.cta || 'Purchase Now!')}
               </button>
 
               <p className="fineprint">
@@ -108,7 +89,12 @@ function Pricing() {
         })}
       </div>
 
-      {state.error && <p className="pricing-error">{state.error}</p>}
+      {/* Subscription status indicator */}
+      {subscription.isActive && (
+        <div className="subscription-status">
+          <p>✅ You have an active {subscription.tier} subscription</p>
+        </div>
+      )}
     </section>
   )
 }

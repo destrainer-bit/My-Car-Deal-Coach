@@ -22,6 +22,8 @@ import Shell from './components/Shell.jsx'
 import InstallPrompt from './components/InstallPrompt.jsx'
 import Pricing from './components/Pricing'
 import SavingsCalculator from './components/SavingsCalculator'
+import ProtectedRoute from './components/ProtectedRoute'
+import FeatureGate from './components/FeatureGate'
 
 function App() {
   const { currentPage, navigateTo } = useHashRoute()
