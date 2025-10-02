@@ -3492,3 +3492,99 @@ img, svg, canvas, video { max-width: 100% !important; height: auto !important; }
     display: flex !important;
   }
 }
+
+/* FINAL MOBILE FIX PATCH */
+/* 0) No horizontal scroll, ever */
+html, body {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* 1) Never use 100vw on layout sections (it includes the scrollbar on iOS) */
+section, header, footer, .hero, .container, .wrapper {
+  width: 100% !important;           /* not 100vw */
+  max-width: 100% !important;
+}
+
+/* 2) Hero container: center, safe padding, fluid text */
+.hero {
+  margin: 0 auto !important;
+  padding: 24px 16px !important;    /* prevents text hitting edges */
+  max-width: 720px !important;      /* nice on desktop, harmless on mobile */
+}
+.hero h1 { font-size: clamp(24px, 6.2vw, 44px) !important; line-height: 1.12 !important; }
+.hero p  { font-size: clamp(16px, 4.5vw, 20px) !important; line-height: 1.45 !important; }
+
+/* 3) CTA buttons: full width on mobile, no overflow */
+.hero .cta,
+.cta-row {
+  display: grid !important;
+  gap: 12px !important;
+}
+.hero .cta .button,
+.cta-row .button,
+.button.cta {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* 4) Kill the "seam": background layers/pseudo elements must not be wider than the viewport */
+.hero::before,
+.hero::after,
+.bg-layer,
+.parallax,
+.gradient-mask {
+  max-width: 100% !important;
+  left: 0 !important; 
+  right: 0 !important;     /* use inset instead of translateX tricks */
+  transform: none !important;   /* avoid translateX(-50%) centering */
+  pointer-events: none !important;         /* don't block taps */
+}
+
+/* If you previously used width:100vw on any bg layer, override it: */
+.bg-layer, .gradient-mask { width: 100% !important; }
+
+/* 5) iOS viewport truthiness (use var(--vh) if you need full-height blocks) */
+:root { --vh: 100vh; } /* JS below will set the real px */
+.full-height, .screen, .hero-full {
+  min-height: calc(var(--vh) - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+}
+
+/* 6) Respect notches and avoid content under the Safari bars */
+.safe {
+  padding-left:  max(16px, env(safe-area-inset-left)) !important;
+  padding-right: max(16px, env(safe-area-inset-right)) !important;
+}
+
+/* 7) No fixed pixel widths on cards/buttons on mobile */
+@media (max-width: 768px) {
+  .card, .panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+  }
+  
+  /* Ensure onboarding elements are mobile-friendly */
+  .onboarding-hero,
+  .onboarding-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px !important;
+  }
+  
+  .onboarding-hero h1 {
+    font-size: clamp(24px, 6.2vw, 44px) !important;
+    line-height: 1.12 !important;
+  }
+  
+  .onboarding-hero p {
+    font-size: clamp(16px, 4.5vw, 20px) !important;
+    line-height: 1.45 !important;
+  }
+  
+  .onboarding-cta {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
