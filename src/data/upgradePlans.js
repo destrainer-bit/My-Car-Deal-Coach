@@ -1,71 +1,86 @@
 export const upgradePlans = [
   {
     id: '72hours',
+    label: '72 Hours',
     price: '$19',
+    perDay: '$6.33/day',
     duration: '72 Hours',
     title: 'Your Emergency Shield',
+    blurb: 'Last-minute protection before you step into the dealership.',
     highlights: [
-      'Need quick protection before stepping into the dealership?',
-      'Real-time coaching, red-flag alerts, and negotiation scripts.',
-      'Perfect for last-minute buyers.'
+      'Real-time coaching',
+      'Red-flag alerts',
+      'Negotiation scripts'
     ],
-    cta: 'Purchase Now!',
+    cta: 'Activate 72-Hour Shield',
     priceId: import.meta.env.VITE_STRIPE_72HOURS_PRICE_ID || 'price_1SDFCfGGlhp8ceFI3DJvHpSX',
     mode: 'payment'
   },
   {
     id: '7days',
+    label: '7 Days',
     price: '$29',
+    perDay: '$4.14/day',
     duration: '7 Days',
     title: 'The Week of Wisdom',
+    blurb: 'One week of insider strategy and AI roleplay coaching.',
     highlights: [
-      'One week of insider strategies and AI roleplay coaching.',
-      'Just $4/day to outsmart every tactic they throw at you.',
-      'Ideal if you’re shopping dealerships this week.'
+      'Outsmart common tactics',
+      'Prep your offers',
+      'Walk-away power'
     ],
-    cta: 'Purchase Now!',
+    cta: 'Get 7 Days of Backup',
     priceId: import.meta.env.VITE_STRIPE_7DAYS_PRICE_ID || 'price_1SDFBcGGlhp8ceFIxyJYot3l',
     mode: 'payment'
   },
   {
     id: '30days',
+    label: '30 Days',
     price: '$59',
+    perDay: '$1.97/day',
     duration: '30 Days',
     title: 'The Smart Shopper’s Plan',
+    blurb: 'A full month to compare, plan, and pounce.',
     highlights: [
-      'A full month of protection for under $2/day.',
-      'Use the payment calculator, roleplay with the AI, and study tricks at your own pace.',
-      'Best for comparison shoppers.'
+      'Payment calculator',
+      'Psychology-trained AI',
+      'Deal breakdowns'
     ],
-    cta: 'Purchase Now!',
+    cta: 'Lock In 30-Day Coverage',
     priceId: import.meta.env.VITE_STRIPE_30DAYS_PRICE_ID || 'price_1SDFAnGGlhp8ceFIil6GisXL',
     mode: 'payment'
   },
   {
     id: '60days',
+    label: '60 Days',
     price: '$79',
+    perDay: '$1.32/day',
     duration: '60 Days',
     title: 'Double Your Defense',
+    blurb: 'Two months of bulletproof backup while you take your time.',
     highlights: [
-      'Two months of bulletproof backup for just $1.32/day.',
-      'Stretch out your car search without stress.',
-      'Great for buyers taking their time.'
+      'Longer runway',
+      'No pressure shopping',
+      'Keep control'
     ],
-    cta: 'Purchase Now!',
+    cta: 'Secure 60 Days Now',
     priceId: import.meta.env.VITE_STRIPE_60DAYS_PRICE_ID || 'price_1SDFEqGGlhp8ceFIIQmwntoT',
     mode: 'payment'
   },
   {
     id: '90days',
+    label: '90 Days',
     price: '$97',
+    perDay: '$1.08/day',
     duration: '90 Days',
     title: 'The Seasoned Negotiator',
+    blurb: 'Three months of car-buying intelligence, ready when the right deal appears.',
     highlights: [
-      'A full 3 months of car-buying intelligence.',
-      'For just $1.08/day, you’ll be ready when the right deal finally shows up.',
-      'Our most popular choice.'
+      'Most popular',
+      'Stop $1,000s in fees',
+      'Master the process'
     ],
-    cta: 'Purchase Now!',
+    cta: 'Get 90 Days – Best Value',
     badge: 'Best Value',
     featured: true,
     priceId: import.meta.env.VITE_STRIPE_90DAYS_PRICE_ID || 'price_1SDFDzGGlhp8ceFIydvjm413',
@@ -73,15 +88,18 @@ export const upgradePlans = [
   },
   {
     id: 'yearly',
+    label: '1 Year',
     price: '$199',
+    perDay: '$0.55/day',
     duration: 'Year',
     title: 'The Annual Armor',
+    blurb: 'A full year of defense for serial buyers or long planners.',
     highlights: [
-      'One full year of defense for only 55¢ a day.',
-      'Perfect if you buy multiple vehicles or want lifelong prep.',
-      'Save thousands on every purchase.'
+      'All features unlocked',
+      'Use for family purchases',
+      'Save $1,000s/year'
     ],
-    cta: 'Purchase Now!',
+    cta: 'Go All-In for a Year',
     priceId: import.meta.env.VITE_STRIPE_YEARLY_PRICE_ID || 'price_1SDXr3GGlhp8ceFI6GEUQIwL',
     billingPortalUrl: 'https://billing.stripe.com/p/login/test_123',
     mode: 'payment'

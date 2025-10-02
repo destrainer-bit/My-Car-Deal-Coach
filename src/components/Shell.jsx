@@ -51,6 +51,8 @@ export default function Shell({
   onSearchChange,
   onUpgrade
 }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
   return (
     <div className="app-shell theme-dark dark">
       <header className="app-shell__header">
@@ -64,12 +66,29 @@ export default function Shell({
             <span className="brand-tag">Buy smart. Negotiate smarter.</span>
           </div>
         </div>
-        <nav className="app-shell__nav">
+        
+        {/* Mobile menu button */}
+        <button 
+          className="mobile-menu-button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <nav className={`app-shell__nav ${mobileMenuOpen ? 'mobile-open' : ''}`}>
           {navigationItems.map((item) => (
             <button
               key={item.id}
               className={`nav-tab ${currentPage === item.id ? 'is-active' : ''}`}
-              onClick={() => onNavigate(item.id)}
+              onClick={() => {
+                onNavigate(item.id)
+                setMobileMenuOpen(false)
+              }}
             >
               <span className="nav-tab__icon">{buildIcon(item.icon)}</span>
               <span className="nav-tab__label">{item.label}</span>
@@ -77,7 +96,10 @@ export default function Shell({
           ))}
           <button
             className={`nav-tab nav-tab--accent ${currentPage === 'upgrade' ? 'is-active' : ''}`}
-            onClick={onUpgrade}
+            onClick={() => {
+              onUpgrade()
+              setMobileMenuOpen(false)
+            }}
           >
             <span className="nav-tab__label">Upgrade</span>
           </button>

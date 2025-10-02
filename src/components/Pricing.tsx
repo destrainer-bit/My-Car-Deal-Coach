@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { redirectToCheckout } from '../lib/stripe'
 import '../components/pricing.css'
 import { upgradePlans } from '../data/upgradePlans.js'
 
@@ -28,7 +27,7 @@ function Pricing() {
     }
   }, [])
 
-const handleSelect = async (planId: string) => {
+  const handleSelect = async (planId: string) => {
     const plan = upgradePlans.find((p) => p.id === planId)
 
     if (!plan || !plan.priceId) {
@@ -39,32 +38,27 @@ const handleSelect = async (planId: string) => {
     setState({ loading: true, error: null })
 
     try {
-    const response = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ priceId: plan.priceId })
-    })
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ priceId: plan.priceId })
+      })
 
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}))
-      throw new Error(err.error || 'Unable to start checkout.')
-    }
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}))
+        throw new Error(err.error || 'Unable to start checkout.')
+      }
 
-    const data = await response.json()
+      const data = await response.json()
 
-    if (data?.url) {
-      window.location.href = data.url
-      return
-    }
+      if (data?.url) {
+        window.location.href = data.url
+        return
+      }
 
-    if (data?.id) {
-      await redirectToCheckout(data.id)
-      return
-    }
-
-    throw new Error('Checkout session missing url or id.')
+      throw new Error('Checkout session did not return a URL.')
     } catch (error: any) {
       setState({ loading: false, error: error.message || 'Something went wrong.' })
     }
@@ -81,20 +75,20 @@ const handleSelect = async (planId: string) => {
         {upgradePlans.map((plan) => {
           const disabled = !plan.priceId
           const dynamicAccent =
-            plan.featured || plan.duration.toLowerCase() === (highlight || '').toLowerCase()
+            plan.featured || plan.label.toLowerCase() === (highlight || '').toLowerCase()
 
           return (
-            <article
-              key={plan.id}
-              className={`card ${dynamicAccent ? 'accent pulse' : ''}`}
-            >
+            <article key={plan.id} className={`card ${dynamicAccent ? 'accent pulse' : ''}`}>
               {plan.badge && <span className="ribbon">{plan.badge}</span>}
 
               <div className="price-row">
                 <span className="price">{plan.price}</span>
-                <span className="per"> · {plan.duration}</span>
+                <span className="per">{plan.perDay}</span>
               </div>
-              <div className="label">{plan.title}</div>
+              <div className="label">{plan.label}</div>
+
+              <h3 className="headline">{plan.title}</h3>
+              {plan.blurb && <p className="blurb">{plan.blurb}</p>}
 
               <ul className="bullets">
                 {plan.highlights.map((item) => (
