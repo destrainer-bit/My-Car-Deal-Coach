@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ConfirmModal from '../components/ConfirmModal.jsx'
 import SimpleNegotiatorAgent from '../components/SimpleNegotiatorAgent.jsx'
-import TestPaymentModal from '../components/TestPaymentModal.jsx'
+import PaymentModal from '../components/PaymentModal.jsx'
 import FinanceEstimator from '../components/FinanceEstimator.jsx'
 import PaymentCalculator from '../components/PaymentCalculator.jsx'
 import { 
@@ -13,14 +13,14 @@ import {
 } from '../lib/dataExport.js'
 import { triggerHaptic } from '../lib/gestures.js'
 
-function Settings({ darkMode, onToggleDarkMode, onClearData, onExportData, deals, notes, photos, navigateTo }) {
+function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo }) {
   const [clearModal, setClearModal] = useState(false)
   const [importModal, setImportModal] = useState(false)
   const [importFile, setImportFile] = useState(null)
-  const [paymentModal, setPaymentModal] = useState(false)
-  const [paymentType, setPaymentType] = useState('subscription')
   const [showFinanceEstimator, setShowFinanceEstimator] = useState(false)
   const [showPaymentCalculator, setShowPaymentCalculator] = useState(false)
+
+  const billingPortalUrl = import.meta.env.VITE_STRIPE_BILLING_PORTAL_URL || 'https://billing.stripe.com/p/login'
 
   const handleImportFile = (event) => {
     const file = event.target.files[0]
@@ -115,9 +115,9 @@ function Settings({ darkMode, onToggleDarkMode, onClearData, onExportData, deals
             </div>
             <button 
               className="btn btn-primary"
-              onClick={() => setPaymentModal(true)}
+              onClick={() => window.open('#/upgrade', '_self')}
             >
-              🚀 Upgrade to Pro
+              🚀 View Upgrade Options
             </button>
           </div>
           <div className="setting-item">
@@ -127,7 +127,7 @@ function Settings({ darkMode, onToggleDarkMode, onClearData, onExportData, deals
             </div>
             <button 
               className="btn btn-secondary"
-              onClick={() => window.open('https://billing.stripe.com/p/login/test_123', '_blank')}
+              onClick={() => window.open(billingPortalUrl, '_blank')}
             >
               💳 Manage Billing
             </button>
@@ -180,22 +180,6 @@ function Settings({ darkMode, onToggleDarkMode, onClearData, onExportData, deals
               onClick={() => navigateTo('legal')}
             >
               ⚖️ Legal Information
-            </button>
-          </div>
-        </div>
-
-        <div className="settings-section">
-          <h2 style={{ color: '#ffffff' }}>Appearance</h2>
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>Dark Mode</h3>
-              <p style={{ color: '#ffffff' }}>Switch between light and dark themes</p>
-            </div>
-            <button 
-              className={`toggle ${darkMode ? 'active' : ''}`}
-              onClick={onToggleDarkMode}
-            >
-              <div className="toggle-slider"></div>
             </button>
           </div>
         </div>
@@ -298,45 +282,6 @@ function Settings({ darkMode, onToggleDarkMode, onClearData, onExportData, deals
         </div>
 
         <div className="settings-section">
-          <h2 style={{ color: '#ffffff' }}>Premium Features</h2>
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>Access Plans</h3>
-              <p style={{ color: '#ffffff' }}>Choose from 72 hours to 90 days of premium access</p>
-            </div>
-            <div className="setting-actions">
-              <button 
-                className="btn btn-primary"
-                onClick={() => {
-                  setPaymentType('subscription')
-                  setPaymentModal(true)
-                }}
-              >
-                View Plans
-              </button>
-            </div>
-          </div>
-
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>One-Time Features</h3>
-              <p style={{ color: '#ffffff' }}>Premium negotiation scripts and advanced tools</p>
-            </div>
-            <div className="setting-actions">
-              <button 
-                className="btn btn-secondary"
-                onClick={() => {
-                  setPaymentType('oneTime')
-                  setPaymentModal(true)
-                }}
-              >
-                Buy Now
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="settings-section">
           <h2 style={{ color: '#ffffff' }}>Personal Negotiator Agent</h2>
           <div className="setting-item">
             <div className="setting-info">
@@ -406,14 +351,6 @@ function Settings({ darkMode, onToggleDarkMode, onClearData, onExportData, deals
             </div>
           </div>
         </div>
-      )}
-
-      {paymentModal && (
-        <TestPaymentModal
-          isOpen={paymentModal}
-          onClose={() => setPaymentModal(false)}
-          type={paymentType}
-        />
       )}
 
       {showFinanceEstimator && (

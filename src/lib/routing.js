@@ -8,6 +8,7 @@ const ROUTE_TO_PAGE = {
   '#/checklist': 'checklist',
   '#/notes': 'notes',
   '#/settings': 'settings',
+  '#/upgrade': 'upgrade',
   '#/how-to-use': 'how-to-use',
   '#/legal': 'legal'
 }
@@ -19,6 +20,7 @@ const PAGE_TO_ROUTE = {
   checklist: '#/checklist',
   notes: '#/notes',
   settings: '#/settings',
+  upgrade: '#/upgrade',
   'how-to-use': '#/how-to-use',
   legal: '#/legal'
 }

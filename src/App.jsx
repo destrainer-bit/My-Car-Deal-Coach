@@ -13,23 +13,23 @@ import TestSavedDeals from './pages/TestSavedDeals.jsx'
 import Checklist from './pages/Checklist.jsx'
 import Notes from './pages/Notes.jsx'
 import Settings from './pages/Settings.jsx'
+import Upgrade from './pages/Upgrade.jsx'
 import HowToUse from './pages/HowToUse.jsx'
 import Legal from './pages/Legal.jsx'
 
 // Import components
-import Header from './components/Header.jsx'
-import Footer from './components/Footer.jsx'
+import Shell from './components/Shell.jsx'
 import InstallPrompt from './components/InstallPrompt.jsx'
 
 function App() {
   const { currentPage, navigateTo } = useHashRoute()
   const [isLoading, setIsLoading] = useState(true)
-  const [darkMode, setDarkMode] = useState(false)
   const [deals, setDeals] = useState([])
   const [notes, setNotes] = useState('')
   const [photos, setPhotos] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [checklistProgress, setChecklistProgress] = useState({})
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false)
 
   // Load data from localStorage on mount
   useEffect(() => {
@@ -39,7 +39,6 @@ function App() {
         const savedNotes = storage.get(storageKeys.NOTES) || ''
         const savedPhotos = storage.get(storageKeys.PHOTOS) || []
         const savedChecklist = storage.get(storageKeys.CHECKLIST_PROGRESS) || {}
-        const savedDarkMode = storage.get(storageKeys.DARK_MODE) || false
 
         // Check for purchase status
         const purchaseInfo = localStorage.getItem('carDealCoachPurchase')
@@ -53,7 +52,6 @@ function App() {
         setNotes(savedNotes)
         setPhotos(savedPhotos)
         setChecklistProgress(savedChecklist)
-        setDarkMode(savedDarkMode)
 
         // Seed with example deals if no deals exist
         if (savedDeals.length === 0) {
@@ -143,11 +141,11 @@ function App() {
     storage.set(storageKeys.CHECKLIST_PROGRESS, progress)
   }
 
-  const onToggleDarkMode = () => {
-    const newDarkMode = !darkMode
-    setDarkMode(newDarkMode)
-    storage.set(storageKeys.DARK_MODE, newDarkMode)
-  }
+  useEffect(() => {
+    const classList = document.body.classList
+    classList.remove('theme-dark', 'theme-light')
+    classList.add('theme-dark')
+  }, [])
 
   const onClearData = () => {
     storage.clear()
@@ -162,8 +160,7 @@ function App() {
       deals,
       notes,
       photos,
-      checklistProgress,
-      darkMode
+      checklistProgress
     }
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
@@ -172,6 +169,12 @@ function App() {
     a.download = 'car-deal-coach-backup.json'
     a.click()
     URL.revokeObjectURL(url)
+  }
+
+  const onUpgrade = () => {
+    if (currentPage !== 'upgrade') {
+      navigateTo('upgrade')
+    }
   }
 
   if (isLoading) {
@@ -234,8 +237,6 @@ function App() {
       case 'settings':
         return (
           <Settings 
-            darkMode={darkMode}
-            onToggleDarkMode={onToggleDarkMode}
             onClearData={onClearData}
             onExportData={onExportData}
             deals={deals}
@@ -243,6 +244,10 @@ function App() {
             photos={photos}
             navigateTo={navigateTo}
           />
+        )
+      case 'upgrade':
+        return (
+          <Upgrade />
         )
       case 'how-to-use':
         return (
@@ -262,20 +267,19 @@ function App() {
   }
 
   return (
-    <div className={`app ${darkMode ? 'dark' : ''}`}>
-      <Header 
-        currentPage={currentPage}
-        onNavigate={navigateTo}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        darkMode={darkMode}
-        onToggleDarkMode={onToggleDarkMode}
+    <Shell
+      currentPage={currentPage}
+      onNavigate={navigateTo}
+      searchQuery={searchQuery}
+      onSearchChange={setSearchQuery}
+      onUpgrade={onUpgrade}
+    >
+      {renderPage()}
+      <InstallPrompt
+        show={showInstallPrompt}
+        onClose={() => setShowInstallPrompt(false)}
       />
-      <main className="main-content">
-        {renderPage()}
-      </main>
-      <Footer />
-    </div>
+    </Shell>
   )
 }
 

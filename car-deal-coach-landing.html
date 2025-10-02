@@ -1,1856 +1,1110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Car Deal Coach - Outsmart the Showroom</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #ffffff;
-            background: #0B0B0B;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #0B0B0B 0%, #0B84FE 50%, #FF6B35 100%);
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            line-height: 1.1;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: slideInUp 1s ease-out;
-        }
-
-        .hero .subtitle {
-            font-size: 1.4rem;
-            margin-bottom: 40px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0.95;
-            animation: slideInUp 1s ease-out 0.2s both;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #FF6B35, #FF8E53);
-            color: white;
-            padding: 20px 50px;
-            border-radius: 60px;
-            text-decoration: none;
-            font-size: 1.3rem;
-            font-weight: 800;
-            transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: slideInUp 1s ease-out 0.4s both;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
-        }
-
-        /* Feature Sections */
-        .feature {
-            padding: 120px 0;
-            display: flex;
-            align-items: center;
-            gap: 80px;
-            position: relative;
-            min-height: 600px;
-        }
-
-        .feature:nth-child(even) {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        }
-
-        /* First feature: text left, image right */
-        .feature:nth-child(2) {
-            flex-direction: row;
-        }
-        .feature:nth-child(2) .feature-content {
-            flex: 1;
-            padding-right: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .feature:nth-child(2) .feature-mockup {
-            flex: 1;
-            padding-left: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Second feature: image left, text right */
-        .feature:nth-child(3) {
-            flex-direction: row-reverse;
-        }
-        .feature:nth-child(3) .feature-content {
-            flex: 1;
-            padding-left: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .feature:nth-child(3) .feature-mockup {
-            flex: 1;
-            padding-right: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Third feature: text left, image right */
-        .feature:nth-child(4) {
-            flex-direction: row;
-        }
-        .feature:nth-child(4) .feature-content {
-            flex: 1;
-            padding-right: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .feature:nth-child(4) .feature-mockup {
-            flex: 1;
-            padding-left: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .feature-content {
-            animation: fadeInLeft 1s ease-out;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .feature h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 25px;
-            color: #ffffff;
-            line-height: 1.2;
-        }
-
-        .feature p {
-            font-size: 1.2rem;
-            color: #cccccc;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        .feature-highlight {
-            background: linear-gradient(135deg, #0B84FE, #0B0B0B);
-            color: white;
-            padding: 20px 30px;
-            border-radius: 15px;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 20px;
-        }
-
-        .feature-mockup {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: fadeInRight 1s ease-out;
-        }
-
-        .phone-mockup {
-            width: 320px;
-            height: 640px;
-            background: #0B0B0B;
-            border-radius: 35px;
-            padding: 25px;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
-            position: relative;
-            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
-            transition: transform 0.3s ease;
-        }
-
-        .phone-mockup:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-        }
-
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: #1a1a1a;
-            border-radius: 25px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .phone-header {
-            background: linear-gradient(135deg, #0B84FE, #0B0B0B);
-            color: white;
-            padding: 20px 25px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .phone-content {
-            padding: 25px;
-            height: calc(100% - 80px);
-            overflow-y: auto;
-        }
-
-        /* Final CTA Section */
-        .final-cta {
-            background: linear-gradient(135deg, #0B0B0B 0%, #0B84FE 50%, #FF6B35 100%);
-            color: white;
-            padding: 120px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .final-cta::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .final-cta-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Pricing Section Styles */
-        .pricing {
-            padding: 80px 20px;
-            background: #0B0B0B;
-            border-top: 1px solid #333;
-        }
-
-        .pricing h2 {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #0B84FE, #FF6B35);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .pricing-subtitle {
-            text-align: center;
-            font-size: 1.3rem;
-            color: #cccccc;
-            margin-bottom: 60px;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .pricing-card {
-            background: #1a1a1a;
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            position: relative;
-            border: 2px solid #333;
-            transition: all 0.3s ease;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            border-color: #0B84FE;
-            box-shadow: 0 20px 40px rgba(11, 132, 254, 0.2);
-        }
-
-        .pricing-card.popular {
-            border-color: #FF6B35;
-            transform: scale(1.05);
-        }
-
-        .pricing-card.popular:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-
-        .popular-badge {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #FF6B35, #ff8c42);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .pricing-header h3 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-
-        .price {
-            margin: 20px 0;
-        }
-
-        .currency {
-            font-size: 1.5rem;
-            color: #0B84FE;
-        }
-
-        .amount {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .period {
-            font-size: 1rem;
-            color: #888;
-        }
-
-        .pricing-description {
-            color: #cccccc;
-            margin-bottom: 30px;
-        }
-
-        .pricing-features {
-            list-style: none;
-            padding: 0;
-            margin: 30px 0;
-            text-align: left;
-        }
-
-        .pricing-features li {
-            padding: 8px 0;
-            color: #cccccc;
-            font-size: 1rem;
-        }
-
-        .pricing-btn {
-            width: 100%;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .basic-btn {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-        }
-
-        .basic-btn:hover {
-            background: linear-gradient(135deg, #20c997, #28a745);
-            transform: translateY(-2px);
-        }
-
-        .pro-btn {
-            background: linear-gradient(135deg, #0B84FE, #0066cc);
-            color: white;
-        }
-
-        .pro-btn:hover {
-            background: linear-gradient(135deg, #0066cc, #0B84FE);
-            transform: translateY(-2px);
-        }
-
-        .premium-btn {
-            background: linear-gradient(135deg, #FF6B35, #e55a2b);
-            color: white;
-        }
-
-        .premium-btn:hover {
-            background: linear-gradient(135deg, #e55a2b, #FF6B35);
-            transform: translateY(-2px);
-        }
-
-        .annual-discount {
-            text-align: center;
-            margin-top: 60px;
-            padding: 30px;
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            border-radius: 15px;
-            border: 1px solid #333;
-        }
-
-        .annual-discount h3 {
-            color: #FF6B35;
-            margin-bottom: 10px;
-        }
-
-        .annual-discount p {
-            color: #cccccc;
-            margin-bottom: 20px;
-        }
-
-        .annual-toggle {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .annual-toggle:hover {
-            background: linear-gradient(135deg, #20c997, #28a745);
-        }
-
-        /* FAQ Section Styles */
-        .faq {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 80px 20px;
-            background: #0B0B0B;
-            border-top: 1px solid #333;
-        }
-        
-        .faq h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-            color: #0B84FE;
-            font-weight: 700;
-        }
-        
-        .faq-item {
-            margin-bottom: 1rem;
-            border-bottom: 1px solid #333;
-            background: #1a1a1a;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .faq-question {
-            background: none;
-            border: none;
-            width: 100%;
-            text-align: left;
-            font-size: 1.1rem;
-            font-weight: 600;
-            padding: 1.5rem;
-            cursor: pointer;
-            color: #ffffff;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .faq-question:hover {
-            background: #2a2a2a;
-        }
-        
-        .faq-question::after {
-            content: '+';
-            font-size: 1.5rem;
-            color: #0B84FE;
-            transition: transform 0.3s ease;
-        }
-        
-        .faq-item.active .faq-question::after {
-            transform: rotate(45deg);
-        }
-        
-        .faq-answer {
-            display: none;
-            padding: 0 1.5rem 1.5rem 1.5rem;
-            color: #e0e0e0;
-            line-height: 1.7;
-        }
-        
-        .faq-item.active .faq-answer {
-            display: block;
-        }
-        
-        .faq-answer p {
-            margin-bottom: 1rem;
-        }
-        
-        .faq-answer ul {
-            margin: 1rem 0;
-            padding-left: 2rem;
-        }
-        
-        .faq-answer li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .faq-answer strong {
-            color: #0B84FE;
-            font-weight: 600;
-        }
-        
-        .faq-answer em {
-            color: #FF6B35;
-            font-style: italic;
-        }
-        
-        /* Mobile responsiveness for FAQ */
-        @media (max-width: 768px) {
-            .faq {
-                padding: 60px 15px;
-            }
-            
-            .faq h2 {
-                font-size: 2rem;
-                margin-bottom: 2rem;
-            }
-            
-            .faq-question {
-                font-size: 1rem;
-                padding: 1rem;
-            }
-            
-            .faq-answer {
-                padding: 0 1rem 1rem 1rem;
-            }
-        }
-
-        /* Legal Section Styles */
-        .legal-section {
-            background: #0B0B0B;
-            padding: 80px 0;
-            border-top: 1px solid #333;
-        }
-
-        .legal-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .legal-content h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            color: #0B84FE;
-        }
-
-        .legal-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .legal-tab {
-            padding: 15px 30px;
-            background: #1a1a1a;
-            border: 2px solid #333;
-            border-radius: 8px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .legal-tab:hover {
-            background: #0B84FE;
-            border-color: #0B84FE;
-            transform: translateY(-2px);
-        }
-
-        .legal-tab.active {
-            background: #0B84FE;
-            border-color: #0B84FE;
-            color: white;
-        }
-
-        .legal-tab-content {
-            display: none;
-            background: #1a1a1a;
-            padding: 40px;
-            border-radius: 12px;
-            border: 1px solid #333;
-        }
-
-        .legal-tab-content.active {
-            display: block;
-        }
-
-        .legal-tab-content h3 {
-            color: #0B84FE;
-            font-size: 2rem;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #0B84FE;
-            padding-bottom: 10px;
-        }
-
-        .legal-tab-content h4 {
-            color: #FF6B35;
-            font-size: 1.3rem;
-            margin: 30px 0 15px 0;
-            font-weight: 600;
-        }
-
-        .legal-tab-content p {
-            line-height: 1.7;
-            margin-bottom: 20px;
-            color: #e0e0e0;
-        }
-
-        .legal-tab-content ul {
-            margin: 20px 0;
-            padding-left: 30px;
-        }
-
-        .legal-tab-content li {
-            margin-bottom: 10px;
-            line-height: 1.6;
-            color: #e0e0e0;
-        }
-
-        .legal-tab-content strong {
-            color: #0B84FE;
-            font-weight: 600;
-        }
-
-        /* Mobile responsiveness for legal section */
-        @media (max-width: 768px) {
-            .legal-tabs {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .legal-tab {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .legal-tab-content {
-                padding: 20px;
-            }
-            
-            .legal-content h2 {
-                font-size: 2rem;
-            }
-            
-            .legal-tab-content h3 {
-                font-size: 1.5rem;
-            }
-            
-            .legal-tab-content h4 {
-                font-size: 1.1rem;
-            }
-        }
-
-        .final-cta h2 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .final-cta p {
-            font-size: 1.3rem;
-            margin-bottom: 50px;
-            opacity: 0.95;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Trust Elements */
-        .trust-elements {
-            background: #1a1a1a;
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .trust-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
-            margin-top: 60px;
-        }
-
-        .trust-item {
-            background: #2d2d2d;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .trust-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .stars {
-            color: #FFD700;
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .testimonial {
-            font-size: 1.1rem;
-            font-style: italic;
-            margin-bottom: 20px;
-            color: #ffffff;
-            line-height: 1.6;
-        }
-
-        .user {
-            font-weight: 700;
-            color: #0B84FE;
-            font-size: 1.1rem;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #0B84FE;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .stat-description {
-            color: #cccccc;
-            font-size: 1rem;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 15px;
-            }
-
-            .hero {
-                padding: 60px 0;
-                text-align: center;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-                line-height: 1.2;
-                margin-bottom: 20px;
-            }
-
-            .hero .subtitle {
-                font-size: 1rem;
-                line-height: 1.6;
-                margin-bottom: 30px;
-            }
-
-            .cta-button {
-                font-size: 1rem;
-                padding: 15px 30px;
-            }
-
-            .feature {
-                flex-direction: column !important;
-                text-align: center;
-                gap: 30px;
-                padding: 60px 0;
-                min-height: auto;
-            }
-
-            .feature-content {
-                padding: 0 !important;
-                order: 1 !important;
-            }
-
-            .feature-mockup {
-                padding: 0 !important;
-                order: 2 !important;
-            }
-
-            .feature h2 {
-                font-size: 1.8rem;
-                margin-bottom: 15px;
-            }
-
-            .feature p {
-                font-size: 1rem;
-                line-height: 1.6;
-                margin-bottom: 20px;
-            }
-
-            .feature-highlight {
-                font-size: 0.9rem;
-                padding: 15px 20px;
-                margin-top: 15px;
-            }
-
-            .phone-mockup {
-                width: 250px;
-                height: 500px;
-                margin-top: 20px;
-                transform: none;
-            }
-
-            .feature-mockup > div {
-                flex-direction: column !important;
-                gap: 15px !important;
-            }
-
-            .phone-header {
-                padding: 15px 20px;
-                font-size: 1rem;
-            }
-
-            .phone-content {
-                padding: 20px;
-            }
-
-            .trust-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            .trust-item {
-                padding: 20px;
-            }
-
-            .stat-number {
-                font-size: 2rem;
-            }
-
-            .final-cta {
-                padding: 80px 0;
-            }
-
-            .final-cta h2 {
-                font-size: 1.8rem;
-                margin-bottom: 20px;
-            }
-
-            .final-cta p {
-                font-size: 1rem;
-                margin-bottom: 30px;
-            }
-        }
-
-        /* Extra small mobile devices */
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .feature h2 {
-                font-size: 1.5rem;
-            }
-
-            .phone-mockup {
-                width: 220px;
-                height: 440px;
-                padding: 15px;
-            }
-
-            .feature-mockup > div {
-                flex-direction: column !important;
-                gap: 10px !important;
-            }
-        }
-
-        /* Animations */
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        /* Scroll animations */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Deal Coach – Buy Your Next Car With Confidence</title>
+  <style>
+    :root {
+      --bg-primary: #0b0b0f;
+      --bg-secondary: #111827;
+      --bg-panel: #1f2937;
+      --accent: #0b84fe;
+      --accent-alt: #ff6b35;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5f5;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 30px 60px rgba(11, 132, 254, 0.25);
+      --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.35);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1200px, 92vw);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, var(--accent) 0%, #2563eb 100%);
+      color: #fff;
+      padding: 0.9rem 2.6rem;
+      border-radius: 999px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 36px 50px rgba(11, 132, 254, 0.35);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.85rem 2.2rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(15, 23, 42, 0.45);
+      color: var(--text-secondary);
+      backdrop-filter: blur(12px);
+      transition: border 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(11, 11, 15, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .hero {
+      padding: 5.5rem 0 4rem;
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.35) 0%, transparent 45%),
+                  radial-gradient(circle at top right, rgba(255, 107, 53, 0.25) 0%, transparent 55%),
+                  var(--bg-primary);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 4vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.2) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: var(--radius-lg);
+      padding: 2.4rem;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(11, 132, 254, 0.18) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .screen {
+      background: #0f172a;
+      border-radius: 24px;
+      padding: 1.6rem;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+    }
+
+    .screen h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .screen-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .screen-card strong {
+      color: #38bdf8;
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.95rem;
+    }
+
+    .trust-section {
+      padding: 4.5rem 0;
+      background: var(--bg-secondary);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .trust-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .trust-card h4 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .trust-card p {
+      color: var(--text-secondary);
+    }
+
+    .problem-copy {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .problem-copy h2 {
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+    }
+
+    .problem-copy p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .problem-checklist {
+      margin-top: 2rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .problem-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: rgba(11, 132, 254, 0.08);
+      border: 1px solid rgba(11, 132, 254, 0.2);
+      padding: 0.9rem 1.2rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+    }
+
+    .feature-section {
+      padding: 5rem 0;
+    }
+
+    .feature-block {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .feature-block:nth-child(even) {
+      direction: rtl;
+      text-align: left;
+    }
+
+    .feature-block:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .feature-copy h3 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .feature-copy p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .feature-points {
+      list-style: none;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .feature-points li {
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+    }
+
+    .feature-visual {
+      background: rgba(11, 132, 254, 0.06);
+      border: 1px solid rgba(11, 132, 254, 0.18);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(11, 132, 254, 0.12) 0%, transparent 65%);
+    }
+
+    .feature-visual > div {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .social-proof {
+      padding: 4.5rem 0;
+      background: var(--bg-secondary);
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .testimonial {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      position: relative;
+    }
+
+    .testimonial::before {
+      content: "\201C";
+      font-size: 4rem;
+      position: absolute;
+      top: -0.6rem;
+      left: 1rem;
+      color: rgba(148, 163, 184, 0.25);
+    }
+
+    .testimonial p {
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+    }
+
+    .testimonial span {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .founder-note {
+      background: linear-gradient(135deg, rgba(11, 132, 254, 0.2) 0%, rgba(17, 24, 39, 0.8) 100%);
+      border-radius: var(--radius-md);
+      padding: 2.2rem;
+      border: 1px solid rgba(11, 132, 254, 0.25);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cta-section {
+      padding: 5rem 0 4rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(11, 132, 254, 0.28) 0%, rgba(255, 107, 53, 0.18) 100%);
+    }
+
+    .cta-section h2 {
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0.75rem auto 2rem;
+      font-size: 1.05rem;
+    }
+
+    /* Pricing / FAQ / Legal reuse existing styling but slightly updated */
+    .pricing {
+      padding: 5rem 0 4rem;
+      background: var(--bg-primary);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .pricing h2 {
+      text-align: center;
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      font-size: 1.05rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+
+    .pricing-card.popular {
+      border: 1px solid rgba(255, 107, 53, 0.4);
+      transform: translateY(-8px);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--accent-alt), #ff8f59);
+      color: #fff;
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .price {
+      margin: 1.2rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      gap: 0.25rem;
+      color: var(--text-primary);
+    }
+
+    .price .amount {
+      font-size: 2.8rem;
+      font-weight: 800;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: grid;
+      gap: 0.6rem;
+      margin: 1.4rem 0;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+    }
+
+    .pricing-btn {
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      background: linear-gradient(135deg, rgba(11, 132, 254, 0.9), rgba(11, 132, 254, 0.7));
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .pricing-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .annual-discount {
+      margin-top: 3rem;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .annual-toggle {
+      margin-top: 1.2rem;
+      padding: 0.75rem 2rem;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent-alt), #ff8f59);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .annual-toggle:hover {
+      transform: translateY(-2px);
+    }
+
+    .faq {
+      padding: 5rem 0;
+      background: var(--bg-secondary);
+    }
+
+    .faq h2 {
+      text-align: center;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      margin-bottom: 2.5rem;
+      font-weight: 800;
+    }
+
+    .faq-item {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 1.2rem 1.4rem;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 1.6rem;
+      color: var(--accent);
+      transition: transform 0.2s ease;
+    }
+
+    .faq-item.active .faq-question::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 1.4rem 1.3rem;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    .legal-section {
+      padding: 5rem 0;
+      background: var(--bg-primary);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .legal-tabs {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .legal-tab {
+      padding: 0.9rem 1.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--text-secondary);
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .legal-tab.active,
+    .legal-tab:hover {
+      background: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+      border-color: transparent;
+    }
+
+    .legal-tab-content {
+      display: none;
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .legal-tab-content.active {
+      display: block;
+    }
+
+    footer {
+      padding: 2.5rem 0;
+      background: #050509;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-link {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-bottom {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        position: static;
+      }
+
+      .hero {
+        padding-top: 3.5rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .feature-block:nth-child(even) {
+        direction: ltr;
+      }
+
+      .feature-block:nth-child(even) > * {
+        direction: ltr;
+      }
+
+      .feature-copy h3 {
+        font-size: 1.7rem;
+      }
+
+      .trust-card h4 {
+        font-size: 1.8rem;
+      }
+
+      .nav-bar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Outsmart the Showroom with The Car Deal Coach</h1>
-                <p class="subtitle">Stop being the victim of high-pressure sales tactics. The Car Deal Coach gives you the AI-powered negotiation skills, real-time market data, and psychological edge you need to walk into any dealership and drive away with the deal YOU want.</p>
-                <a href="#" class="cta-button">🚀 Download Now</a>
-            </div>
+  <header>
+    <div class="container nav-bar">
+      <div class="brand">
+        <span>Car Deal Coach</span>
+      </div>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn-secondary">View Plans</a>
+        <a href="#cta" class="btn-primary">Get Your Car Coach</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Car buying without the games</span>
+          <h1>Never Get Ripped Off at a Dealership Again 🚗💡</h1>
+          <p>Your AI-powered car buying coach gives you scripts, calculators, and negotiation tactics so you can push back on pressure, spot hidden fees, and walk away with the deal you want.</p>
+          <div class="hero-actions">
+            <a href="#pricing" class="btn-primary">Get Your Car Coach</a>
+            <a href="#features" class="btn-secondary">See How It Works</a>
+          </div>
         </div>
+        <div class="hero-visual">
+          <div class="screen">
+            <h3>Personal Negotiator Agent</h3>
+            <div class="screen-card">
+              <strong>Goal:</strong>
+              OTD under $25,000 for 2020 Civic EX
+            </div>
+            <div class="screen-card">
+              <strong>Red Flag:</strong>
+              Dealer added $1,200 "doc fee". Ask for itemized breakdown—standard is $300.
+            </div>
+            <div class="screen-card">
+              <strong>Say This:</strong>
+              "I've done my research and seen similar cars selling for $23,500 OTD. Can you match that?"
+            </div>
+            <div class="screen-card">
+              <strong>Next Move:</strong>
+              If they won't drop the add-ons, walk away. They'll call back.
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Feature 1: AI Negotiator -->
-    <section class="feature">
-        <div class="container">
-            <div class="feature-content">
-                <h2>Your Personal AI Negotiator That Never Sleeps</h2>
-                <p>Dealerships spend millions training their sales teams to manipulate you. Now you have an AI negotiator that's trained to protect YOUR interests. Get real-time scripts, red-flag alerts, and psychological tactics that turn the tables on even the most experienced salespeople.</p>
-                <p style="font-size: 1.1rem; color: #ffffff; margin-bottom: 25px; font-weight: 600;">🎯 <strong>What You Get:</strong></p>
-                <ul style="color: #cccccc; font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px; padding-left: 20px;">
-                    <li>Real-time negotiation scripts tailored to your specific situation</li>
-                    <li>Red-flag alerts when dealers try to add hidden fees</li>
-                    <li>Psychological tactics to maintain control of the conversation</li>
-                    <li>Step-by-step guidance through every negotiation phase</li>
-                    <li>Walk-away triggers so you never overpay</li>
-                </ul>
-                <div class="feature-highlight">💡 "I saved $4,200 in 15 minutes using the AI scripts" - Sarah M.</div>
-                <div class="feature-highlight" style="margin-top: 15px; background: linear-gradient(135deg, #FF6B35, #0B0B0B);">🔥 "The dealer was shocked when I knew exactly what to say" - Mike R.</div>
-            </div>
-            <div class="feature-mockup">
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-                    <div class="phone-mockup" style="width: 280px; height: 560px;">
-                        <div class="phone-screen">
-                            <div class="phone-header">🤖 The Negotiator Agent</div>
-                            <div class="phone-content">
-                                <div style="background: #f0f8ff; padding: 20px; border-radius: 15px; margin-bottom: 15px; border-left: 4px solid #0B84FE;">
-                                    <strong style="color: #0B84FE;">Goal:</strong> Get OTD for 2020 Honda Civic ≤ $25,000
-                                </div>
-                                <div style="background: #e8f5e8; padding: 18px; border-radius: 12px; margin-bottom: 12px;">
-                                    <strong style="color: #28a745;">Step 1:</strong> Research market prices and identify negotiation points
-                                    <div style="font-size: 0.9rem; color: #666; margin-top: 8px;">✓ Found 3 similar cars for $23,500-$24,800</div>
-                                </div>
-                                <div style="background: #fff3cd; padding: 18px; border-radius: 12px; margin-bottom: 12px;">
-                                    <strong style="color: #856404;">Step 2:</strong> Calculate all fees and taxes for true OTD cost
-                                    <div style="font-size: 0.9rem; color: #666; margin-top: 8px;">⚠️ Watch for: $2,500 dealer fee, $800 paint protection</div>
-                                </div>
-                                <div style="background: #d1ecf1; padding: 18px; border-radius: 12px;">
-                                    <strong style="color: #0c5460;">Step 3:</strong> Generate negotiation script and counter-offers
-                                    <div style="font-size: 0.9rem; color: #666; margin-top: 8px;">📝 "I've done my research and found similar vehicles for $23,500 OTD..."</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="phone-mockup" style="width: 280px; height: 560px;">
-                        <div class="phone-screen">
-                            <div class="phone-header">💬 Live Chat Support</div>
-                            <div class="phone-content">
-                                <div style="background: #e8f5e8; padding: 15px; border-radius: 15px; margin-bottom: 12px; margin-left: 20px;">
-                                    <strong style="color: #28a745;">AI Agent:</strong> "The dealer just added a $1,200 'documentation fee'. This is a red flag. Here's what to say..."
-                                </div>
-                                <div style="background: #f0f8ff; padding: 15px; border-radius: 15px; margin-bottom: 12px; margin-right: 20px;">
-                                    <strong style="color: #0B84FE;">You:</strong> "I see you've added a $1,200 doc fee. Can you explain what this covers?"
-                                </div>
-                                <div style="background: #fff3cd; padding: 15px; border-radius: 15px; margin-bottom: 12px; margin-left: 20px;">
-                                    <strong style="color: #856404;">AI Agent:</strong> "Good response! Now they'll likely say it's standard. Counter with: 'I've purchased 3 cars and never paid more than $300 for documentation.'"
-                                </div>
-                                <div style="background: #d1ecf1; padding: 15px; border-radius: 15px; margin-bottom: 12px; margin-right: 20px;">
-                                    <strong style="color: #0c5460;">You:</strong> "I've purchased 3 cars and never paid more than $300 for documentation."
-                                </div>
-                                <div style="background: #e8f5e8; padding: 15px; border-radius: 15px; margin-left: 20px;">
-                                    <strong style="color: #28a745;">AI Agent:</strong> "Perfect! They'll likely reduce it to $300-500. You just saved $700-900!"
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="trust-section" id="problem">
+      <div class="container">
+        <div class="problem-copy">
+          <h2>Car dealerships are trained to play games.</h2>
+          <p>Hidden fees, finance tricks, pressure tactics—buying a car without a plan costs the average shopper $2,137. Car Deal Coach flips the script so you stay in control.</p>
+          <div class="problem-checklist">
+            <div class="problem-item">❌ "Why is my payment higher than we agreed?"</div>
+            <div class="problem-item">❌ Surprise warranties, paint protection, GAP insurance adds</div>
+            <div class="problem-item">❌ Last-minute financing switch with worse rates</div>
+          </div>
         </div>
+
+        <div class="trust-grid" style="margin-top:3rem;">
+          <div class="trust-card">
+            <h4>$2,137</h4>
+            <p>Average buyer overpays per deal when they don't have a negotiation plan.</p>
+          </div>
+          <div class="trust-card">
+            <h4>73%</h4>
+            <p>Of customers sign paperwork they don't fully understand in the finance office.</p>
+          </div>
+          <div class="trust-card">
+            <h4>❓</h4>
+            <p>Have you felt pressured to sign fast, or told a deal "won't be here tomorrow"?</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Feature 2: Smart Price Estimator -->
-    <section class="feature">
-        <div class="container">
-            <div class="feature-mockup">
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-                    <div class="phone-mockup" style="width: 280px; height: 560px;">
-                        <div class="phone-screen">
-                            <div class="phone-header">💰 Smart Price Estimator</div>
-                            <div class="phone-content">
-                                <div style="text-align: center; margin-bottom: 25px;">
-                                    <h3 style="color: #0B84FE; margin-bottom: 10px; font-size: 1.3rem;">2020 Honda Civic EX</h3>
-                                    <p style="color: #cccccc; font-size: 0.95rem;">45,000 miles • Excellent Condition • Los Angeles, CA</p>
-                                </div>
-                                <div style="background: linear-gradient(135deg, #2d2d2d, #1a1a1a); padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 15px;">
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px; font-weight: 700;">
-                                        <div style="color: #28a745; text-align: center; padding: 12px;">
-                                            <div style="font-size: 0.8rem; opacity: 0.8; margin-bottom: 5px;">Low</div>
-                                            <div style="font-size: 1.1rem; font-weight: 800;">$22,500</div>
-                                        </div>
-                                        <div style="color: #0B84FE; text-align: center; padding: 12px; background: rgba(11, 132, 254, 0.1); border-radius: 8px;">
-                                            <div style="font-size: 0.8rem; opacity: 0.8; margin-bottom: 5px;">Fair</div>
-                                            <div style="font-size: 1.2rem; font-weight: 800;">$24,200</div>
-                                        </div>
-                                    </div>
-                                    <div style="background: #2d4a2d; padding: 15px; border-radius: 12px; font-size: 0.95rem; color: #90ee90;">
-                                        ✓ Based on 47 similar sales in your area<br>
-                                        ✓ Updated 2 hours ago<br>
-                                        ✓ Includes all fees and taxes
-                                    </div>
-                                </div>
-                                <div style="background: #4a3d1a; padding: 15px; border-radius: 12px; border-left: 4px solid #ffc107;">
-                                    <strong style="color: #ffc107;">💡 Pro Tip:</strong> Start negotiations at the "Low" price. Most dealers will meet you in the middle.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="phone-mockup" style="width: 280px; height: 560px;">
-                        <div class="phone-screen">
-                            <div class="phone-header">📊 Market Analysis</div>
-                            <div class="phone-content">
-                                <div style="background: #1a1a1a; padding: 20px; border-radius: 15px; margin-bottom: 15px;">
-                                    <h4 style="color: #0B84FE; margin-bottom: 15px; font-size: 1.1rem;">Market Trends</h4>
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                        <span style="color: #cccccc; font-size: 0.9rem;">30-day average:</span>
-                                        <span style="color: #28a745; font-weight: 600;">$23,800</span>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                        <span style="color: #cccccc; font-size: 0.9rem;">90-day average:</span>
-                                        <span style="color: #ffc107; font-weight: 600;">$24,100</span>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                                        <span style="color: #cccccc; font-size: 0.9rem;">Market trend:</span>
-                                        <span style="color: #28a745; font-weight: 600;">↓ 1.2%</span>
-                                    </div>
-                                    <div style="background: #2d4a2d; padding: 12px; border-radius: 8px; font-size: 0.85rem; color: #90ee90;">
-                                        📈 Prices are dropping - perfect time to buy!
-                                    </div>
-                                </div>
-                                <div style="background: #1a1a1a; padding: 20px; border-radius: 15px; margin-bottom: 15px;">
-                                    <h4 style="color: #0B84FE; margin-bottom: 15px; font-size: 1.1rem;">Dealer Inventory</h4>
-                                    <div style="margin-bottom: 10px;">
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                            <span style="color: #cccccc; font-size: 0.9rem;">Similar cars available:</span>
-                                            <span style="color: #ffffff; font-weight: 600;">12</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                            <span style="color: #cccccc; font-size: 0.9rem;">Days on lot (avg):</span>
-                                            <span style="color: #ffc107; font-weight: 600;">23 days</span>
-                                        </div>
-                                        <div style="background: #4a3d1a; padding: 10px; border-radius: 8px; font-size: 0.85rem; color: #ffc107; margin-top: 10px;">
-                                            ⚡ High inventory = better negotiation power!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="background: #1a1a1a; padding: 20px; border-radius: 15px;">
-                                    <h4 style="color: #0B84FE; margin-bottom: 15px; font-size: 1.1rem;">Negotiation Strategy</h4>
-                                    <div style="font-size: 0.9rem; color: #cccccc; line-height: 1.6;">
-                                        <div style="margin-bottom: 8px;">🎯 Start at: $22,500</div>
-                                        <div style="margin-bottom: 8px;">🎯 Target: $23,200</div>
-                                        <div style="margin-bottom: 8px;">🎯 Walk away: $24,500</div>
-                                        <div style="background: #2d4a2d; padding: 10px; border-radius: 8px; color: #90ee90; margin-top: 10px; font-size: 0.85rem;">
-                                            💪 You have strong leverage - use it!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <section class="feature-section" id="features">
+      <div class="container">
+        <div class="feature-block">
+          <div class="feature-copy">
+            <h3>Scripts &amp; Red Flags</h3>
+            <p>Use ready-to-go responses written by dealership insiders. When the sales manager plays a card, you already know the counter.</p>
+            <ul class="feature-points">
+              <li>Instant scripts for every objection</li>
+              <li>Red flag alerts when fees spike</li>
+              <li>Walk-away triggers to keep leverage</li>
+            </ul>
+          </div>
+          <div class="feature-visual">
+            <div>
+              <div class="screen-card">
+                <strong>AI Agent:</strong> "Doc fee is padded by $900. Counter with $300 max or ask to see it waived."
+              </div>
+              <div class="screen-card">
+                <strong>You:</strong> "I've purchased three cars and never paid more than $300. Can we adjust that?"
+              </div>
+              <div class="screen-card">
+                <strong>Result:</strong> Dealer drops fee to $325. Savings locked.
+              </div>
             </div>
-            <div class="feature-content">
-                <h2>Know the EXACT Price Before You Walk In</h2>
-                <p>Stop playing the guessing game. Our AI analyzes thousands of real sales, local market conditions, and dealer inventory to give you the precise price range that saves you thousands. Knowledge is power, and power saves you money.</p>
-                <p style="font-size: 1.1rem; color: #ffffff; margin-bottom: 25px; font-weight: 600;">📈 <strong>Real-Time Market Intelligence:</strong></p>
-                <ul style="color: #cccccc; font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px; padding-left: 20px;">
-                    <li>Live market trends and price movements</li>
-                    <li>Dealer inventory levels and days on lot</li>
-                    <li>Competitive analysis from 50+ data sources</li>
-                    <li>Seasonal pricing patterns and timing insights</li>
-                    <li>Regional market variations and opportunities</li>
-                </ul>
-                <div class="feature-highlight">💰 Average user saves $3,200 per purchase</div>
-                <div class="feature-highlight" style="margin-top: 15px; background: linear-gradient(135deg, #28a745, #0B0B0B);">📊 94% accuracy rate on price predictions</div>
-            </div>
+          </div>
         </div>
+
+        <div class="feature-block">
+          <div class="feature-copy">
+            <h3>Payment &amp; Rate Calculator</h3>
+            <p>Plug in the dealer worksheet and instantly see the real APR, total cost, and where they're padding the numbers.</p>
+            <ul class="feature-points">
+              <li>Flexible loan terms (60, 72, 86+ months)</li>
+              <li>Breakdown of principal vs. interest</li>
+              <li>Side-by-side monthly payment comparisons</li>
+            </ul>
+          </div>
+          <div class="feature-visual">
+            <div>
+              <div class="screen-card">
+                <strong>Vehicle:</strong> 2021 Toyota Camry SE – $24,800 asking
+              </div>
+              <div class="screen-card">
+                <strong>Dealer APR:</strong> 8.4% ⇒ Real APR should be 6.1%
+              </div>
+              <div class="screen-card">
+                <strong>Monthly:</strong> $512 dealer quote → $456 after negotiation
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-block">
+          <div class="feature-copy">
+            <h3>Dealership Psychology Training</h3>
+            <p>Role-play pressure scenarios with your Personal Negotiator Agent so you're never blindsided in the finance office.</p>
+            <ul class="feature-points">
+              <li>Simulated high-pressure finance conversations</li>
+              <li>Behavioral tactics to stay calm &amp; in control</li>
+              <li>Checklists to review paperwork before you sign</li>
+            </ul>
+          </div>
+          <div class="feature-visual">
+            <div>
+              <div class="screen-card">
+                <strong>Scenario:</strong> "If you leave, the car's gone."
+              </div>
+              <div class="screen-card">
+                <strong>Agent Response:</strong> "Stay firm. Dealers use scarcity to close. Counter with: 'I'm ready to buy when the numbers make sense.'"
+              </div>
+              <div class="screen-card">
+                <strong>Checklist:</strong> Warranty? GAP? Add-ons? All optional—only sign what you request.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Feature 3: Deal Tracker -->
-    <section class="feature">
-        <div class="container">
-            <div class="feature-content">
-                <h2>Stay Organized, Stay in Control</h2>
-                <p>No more scattered papers, forgotten conversations, or lost opportunities. Keep every detail, photo, and negotiation in one powerful dashboard. Track every offer, every visit, and every status until you drive away on YOUR terms.</p>
-                <p style="font-size: 1.1rem; color: #ffffff; margin-bottom: 25px; font-weight: 600;">📱 <strong>Complete Deal Management:</strong></p>
-                <ul style="color: #cccccc; font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px; padding-left: 20px;">
-                    <li>Photo documentation with VIN scanning</li>
-                    <li>Voice notes and conversation recordings</li>
-                    <li>Automated follow-up reminders</li>
-                    <li>Deal comparison and side-by-side analysis</li>
-                    <li>Export reports for financing and insurance</li>
-                </ul>
-                <div class="feature-highlight">📊 94% of users close deals within 30 days</div>
-                <div class="feature-highlight" style="margin-top: 15px; background: linear-gradient(135deg, #17a2b8, #0B0B0B);">📸 Unlimited photo storage and organization</div>
-            </div>
-            <div class="feature-mockup">
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-                    <div class="phone-mockup" style="width: 280px; height: 560px;">
-                        <div class="phone-screen">
-                            <div class="phone-header">📊 My Deals Dashboard</div>
-                            <div class="phone-content">
-                                <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid #28a745;">
-                                    <div style="font-weight: 700; margin-bottom: 8px; color: #333;">2020 Honda Civic EX</div>
-                                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">$24,200 • Researching • 3 days ago</div>
-                                    <div style="display: flex; gap: 10px; font-size: 0.8rem;">
-                                        <span style="background: #e8f5e8; padding: 4px 8px; border-radius: 12px; color: #155724;">📸 5 photos</span>
-                                        <span style="background: #d1ecf1; padding: 4px 8px; border-radius: 12px; color: #0c5460;">📝 3 notes</span>
-                                    </div>
-                                </div>
-                                <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid #ffc107;">
-                                    <div style="font-weight: 700; margin-bottom: 8px; color: #333;">2019 Toyota Camry LE</div>
-                                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">$21,800 • Visiting Today • 1 day ago</div>
-                                    <div style="display: flex; gap: 10px; font-size: 0.8rem;">
-                                        <span style="background: #fff3cd; padding: 4px 8px; border-radius: 12px; color: #856404;">⏰ 2:30 PM</span>
-                                        <span style="background: #d1ecf1; padding: 4px 8px; border-radius: 12px; color: #0c5460;">📝 7 notes</span>
-                                    </div>
-                                </div>
-                                <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; border-left: 5px solid #dc3545;">
-                                    <div style="font-weight: 700; margin-bottom: 8px; color: #333;">2021 Mazda CX-5</div>
-                                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">$28,500 • Walked Away • 5 days ago</div>
-                                    <div style="display: flex; gap: 10px; font-size: 0.8rem;">
-                                        <span style="background: #f8d7da; padding: 4px 8px; border-radius: 12px; color: #721c24;">❌ Too high</span>
-                                        <span style="background: #d1ecf1; padding: 4px 8px; border-radius: 12px; color: #0c5460;">📝 2 notes</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="phone-mockup" style="width: 280px; height: 560px;">
-                        <div class="phone-screen">
-                            <div class="phone-header">📝 Deal Details & Notes</div>
-                            <div class="phone-content">
-                                <div style="background: #1a1a1a; padding: 20px; border-radius: 15px; margin-bottom: 15px;">
-                                    <h4 style="color: #0B84FE; margin-bottom: 15px; font-size: 1.1rem;">2020 Honda Civic EX</h4>
-                                    <div style="margin-bottom: 15px;">
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                            <span style="color: #cccccc; font-size: 0.9rem;">VIN:</span>
-                                            <span style="color: #ffffff; font-weight: 600; font-size: 0.85rem;">1HGCV1F3XLA123456</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                            <span style="color: #cccccc; font-size: 0.9rem;">Mileage:</span>
-                                            <span style="color: #ffffff; font-weight: 600;">45,000</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                            <span style="color: #cccccc; font-size: 0.9rem;">Condition:</span>
-                                            <span style="color: #28a745; font-weight: 600;">Excellent</span>
-                                        </div>
-                                    </div>
-                                    <div style="background: #2d4a2d; padding: 12px; border-radius: 8px; font-size: 0.85rem; color: #90ee90;">
-                                        📸 5 photos • 📝 3 notes • 🎤 2 recordings
-                                    </div>
-                                </div>
-                                <div style="background: #1a1a1a; padding: 20px; border-radius: 15px; margin-bottom: 15px;">
-                                    <h4 style="color: #0B84FE; margin-bottom: 15px; font-size: 1.1rem;">Negotiation History</h4>
-                                    <div style="font-size: 0.9rem; color: #cccccc; line-height: 1.6;">
-                                        <div style="margin-bottom: 10px; padding: 8px; background: #2d2d2d; border-radius: 6px;">
-                                            <strong style="color: #ffc107;">Day 1:</strong> Initial offer $26,500
-                                        </div>
-                                        <div style="margin-bottom: 10px; padding: 8px; background: #2d2d2d; border-radius: 6px;">
-                                            <strong style="color: #28a745;">Day 2:</strong> Countered $24,200
-                                        </div>
-                                        <div style="margin-bottom: 10px; padding: 8px; background: #2d2d2d; border-radius: 6px;">
-                                            <strong style="color: #0B84FE;">Day 3:</strong> Dealer came down to $24,800
-                                        </div>
-                                        <div style="background: #4a3d1a; padding: 10px; border-radius: 8px; color: #ffc107; font-size: 0.85rem;">
-                                            💡 Next: Push for $23,500 with market data
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="background: #1a1a1a; padding: 20px; border-radius: 15px;">
-                                    <h4 style="color: #0B84FE; margin-bottom: 15px; font-size: 1.1rem;">Quick Actions</h4>
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                                        <button style="background: #0B84FE; color: white; border: none; padding: 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">📞 Call Dealer</button>
-                                        <button style="background: #28a745; color: white; border: none; padding: 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">📝 Add Note</button>
-                                        <button style="background: #ffc107; color: #333; border: none; padding: 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">📊 Compare</button>
-                                        <button style="background: #17a2b8; color: white; border: none; padding: 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">📤 Export</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="social-proof">
+      <div class="container social-grid">
+        <div class="testimonial">
+          <p>"I walked into the dealer with scripts on my phone. They tried the payment game, I pushed back, and left paying $3,900 less. The AI agent is the wingman every buyer needs."</p>
+          <span>— Sarah M., first-time buyer</span>
         </div>
+        <div class="testimonial">
+          <p>"Finance tried to sneak in a warranty and a GAP bundle. I had the checklist and knew exactly what to say. Signed only for what I approved."</p>
+          <span>— Mike R., repeat buyer</span>
+        </div>
+        <div class="founder-note">
+          <span class="eyebrow">Founder's Note</span>
+          <h3 style="margin:0.8rem 0 0.6rem; font-size:1.6rem; font-weight:800;">Built by dealership insiders</h3>
+          <p style="color:var(--text-secondary);">I created Car Deal Coach after watching friends get steamrolled in finance offices. This is the defense playbook I wish every buyer had—real scripts, real calculators, real backup when the dealer starts playing games.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Trust Elements -->
-    <section class="trust-elements">
-        <div class="container">
-            <div class="trust-grid">
-                <div class="trust-item">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial">"I saved $4,200 in 15 minutes using the AI negotiation scripts. The dealer was shocked when I knew exactly what to say."</div>
-                    <div class="user">– Sarah M., Verified User</div>
-                </div>
-                <div class="trust-item">
-                    <div class="stat-number" data-target="3200">$0</div>
-                    <div class="stat-label">Average Savings</div>
-                    <div class="stat-description">per car purchase</div>
-                </div>
-                <div class="trust-item">
-                    <div class="stat-number" data-target="10000">0</div>
-                    <div class="stat-label">Smart Buyers</div>
-                    <div class="stat-description">and counting</div>
-                </div>
-                <div class="trust-item">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial">"Finally, an app that levels the playing field. I walked into the dealership with confidence and walked out with the deal I wanted."</div>
-                    <div class="user">– Mike R., Verified User</div>
-                </div>
-                <div class="trust-item">
-                    <div style="font-size: 2.5rem; color: #FFD700; margin-bottom: 15px;">🏆</div>
-                    <div class="stat-label">Top-rated</div>
-                    <div class="stat-description">in Auto Buying Tools 2025</div>
-                </div>
-                <div class="trust-item">
-                    <div class="stat-number" data-target="94">0%</div>
-                    <div class="stat-label">Success Rate</div>
-                    <div class="stat-description">close deals within 30 days</div>
-                </div>
-            </div>
-        </div>
+    <section class="cta-section" id="cta">
+      <div class="container">
+        <h2>Ready to buy smarter?</h2>
+        <p>Join thousands of car buyers who refuse to overpay. Cancel anytime. No hidden fees. Built for buyers—not dealers.</p>
+        <a href="#pricing" class="btn-primary">Get Your Car Coach Today</a>
+      </div>
     </section>
 
-    <!-- Final CTA Section -->
-    <section class="final-cta">
-        <div class="container">
-            <div class="final-cta-content">
-                <h2>Dealerships Are Trained to Win. With Negotiator GPT, You're Trained Too.</h2>
-                <p>Get instant guidance, ready-to-use scripts, and red-flag alerts that show you exactly what to say and when it's time to walk away. Join thousands of savvy buyers flipping the script on dealerships and reclaiming control of the car-buying game.</p>
-                <a href="#" class="cta-button">🚀 Download Now</a>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections for animation
-        document.querySelectorAll('.feature, .trust-elements').forEach(section => {
-            section.classList.add('animate-on-scroll');
-            observer.observe(section);
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add click tracking for CTAs
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Add your analytics tracking here
-                console.log('CTA clicked:', this.textContent);
-                alert('🚀 Ready to download! (This would redirect to your app store)');
-            });
-        });
-
-        // Add urgency and scarcity
-        setTimeout(() => {
-            // CTA buttons remain as "Download Now" without Limited Time text
-        }, 5000);
-
-        // Live counter animation
-        function animateCounter(element, target, duration = 2000, prefix = '', suffix = '') {
-            const start = 0;
-            const increment = target / (duration / 16); // 60fps
-            let current = start;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                
-                if (prefix === '$') {
-                    element.textContent = prefix + Math.floor(current).toLocaleString();
-                } else if (suffix === '%') {
-                    element.textContent = Math.floor(current) + suffix;
-                } else {
-                    element.textContent = Math.floor(current).toLocaleString() + suffix;
-                }
-            }, 16);
-        }
-
-        // Start counter animation when trust section comes into view
-        const trustObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counters = entry.target.querySelectorAll('.stat-number[data-target]');
-                    counters.forEach(counter => {
-                        const target = parseInt(counter.getAttribute('data-target'));
-                        const text = counter.textContent;
-                        
-                        if (text.includes('$')) {
-                            animateCounter(counter, target, 2500, '$');
-                        } else if (text.includes('%')) {
-                            animateCounter(counter, target, 2000, '', '%');
-                        } else {
-                            animateCounter(counter, target, 3000, '', '+');
-                        }
-                    });
-                    trustObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        const trustSection = document.querySelector('.trust-elements');
-        if (trustSection) {
-            trustObserver.observe(trustSection);
-        }
-    </script>
-
-    <!-- Pricing Section -->
     <section id="pricing" class="pricing">
-        <div class="container">
-            <h2>Choose Your Plan</h2>
-            <p class="pricing-subtitle">Choose your plan and start saving thousands on your next car purchase</p>
-            
-            <div class="pricing-grid">
-                <!-- Basic Tier -->
-                <div class="pricing-card basic">
-                    <div class="pricing-header">
-                        <h3>Basic</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">9.99</span>
-                            <span class="period">/month</span>
-                        </div>
-                        <p class="pricing-description">Perfect for first-time car buyers</p>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>✅ Smart price estimator</li>
-                        <li>✅ Unlimited deals</li>
-                        <li>✅ AI negotiation agent</li>
-                        <li>✅ Basic market data</li>
-                        <li>✅ Financing calculator</li>
-                        <li>✅ Deal comparison tools</li>
-                        <li>✅ Email support</li>
-                    </ul>
-                    <button class="pricing-btn basic-btn" onclick="purchaseBasic()">
-                        Get Basic - $9.99/month
-                    </button>
-                </div>
+      <div class="container">
+        <h2>Choose Your Plan</h2>
+        <p class="pricing-subtitle">Your first saved fee pays for the app. Pick the plan that matches your buying timeline.</p>
 
-                <!-- Pro Tier -->
-                <div class="pricing-card pro popular">
-                    <div class="popular-badge">Most Popular</div>
-                    <div class="pricing-header">
-                        <h3>Pro</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">19.99</span>
-                            <span class="period">/month</span>
-                        </div>
-                        <p class="pricing-description">For serious car buyers & repeat customers</p>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>✅ Everything in Basic</li>
-                        <li>✅ Real-time market alerts</li>
-                        <li>✅ Advanced analytics</li>
-                        <li>✅ Bulk deal management</li>
-                        <li>✅ Custom negotiation scripts</li>
-                        <li>✅ Priority support</li>
-                        <li>✅ 1-on-1 consultation</li>
-                    </ul>
-                    <button class="pricing-btn pro-btn" onclick="purchasePro()">
-                        Get Pro - $19.99/month
-                    </button>
-                </div>
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="pricing-header">
+              <h3>Basic</h3>
+              <div class="price">
+                <span class="currency">$</span>
+                <span class="amount">9.99</span>
+                <span class="period">/month</span>
+              </div>
+              <p class="pricing-description">Essential tools for a single purchase.</p>
             </div>
+            <ul class="pricing-features">
+              <li>✅ Smart price estimator</li>
+              <li>✅ Unlimited deals &amp; notes</li>
+              <li>✅ AI negotiation scripts</li>
+              <li>✅ Financing calculator</li>
+              <li>✅ Email support</li>
+            </ul>
+            <button class="pricing-btn" onclick="purchaseBasic()">Get Basic - $9.99/month</button>
+          </div>
 
-            <!-- Annual Discount -->
-            <div class="annual-discount">
-                <h3>💰 Save 20% with Annual Plans</h3>
-                <p>Basic: $95.90/year (save $24) | Pro: $191.90/year (save $48)</p>
-                <button class="annual-toggle" onclick="toggleAnnual()">Switch to Annual</button>
+          <div class="pricing-card popular">
+            <div class="popular-badge">Most Popular</div>
+            <div class="pricing-header">
+              <h3>Pro</h3>
+              <div class="price">
+                <span class="currency">$</span>
+                <span class="amount">19.99</span>
+                <span class="period">/month</span>
+              </div>
+              <p class="pricing-description">For families or repeat buyers who want mastery.</p>
             </div>
+            <ul class="pricing-features">
+              <li>✅ Everything in Basic</li>
+              <li>✅ Real-time market alerts</li>
+              <li>✅ Advanced analytics &amp; export</li>
+              <li>✅ Custom negotiation playbooks</li>
+              <li>✅ Priority support</li>
+            </ul>
+            <button class="pricing-btn" onclick="purchasePro()">Get Pro - $19.99/month</button>
+          </div>
         </div>
+
+        <div class="annual-discount">
+          <h3>💰 Save 20% with annual plans</h3>
+          <p>Basic: $95.90/year (save $24) • Pro: $191.90/year (save $48)</p>
+          <button class="annual-toggle" onclick="toggleAnnual()">Switch to Annual</button>
+        </div>
+      </div>
     </section>
 
-    <!-- FAQ Section -->
     <section id="faq" class="faq">
+      <div class="container">
         <h2>Frequently Asked Questions</h2>
-        
         <div class="faq-item">
-            <button class="faq-question">What is Car Deal Coach?</button>
-            <div class="faq-answer">
-                <p>Car Deal Coach is your personal guide through the car-buying battlefield. It gives you real-time scripts, red-flag alerts, a payment calculator, and negotiation strategies so you never feel pressured or blindsided in the dealership. Think of it as having an experienced negotiator riding shotgun.</p>
-            </div>
+          <button class="faq-question">What is Car Deal Coach?</button>
+          <div class="faq-answer">
+            <p>Car Deal Coach is your personal playbook for the dealership. It combines an AI negotiator, price intelligence, and checklists so you know exactly what to say, what to sign, and what to refuse.</p>
+          </div>
         </div>
-
         <div class="faq-item">
-            <button class="faq-question">How does it work?</button>
-            <div class="faq-answer">
-                <p>When you're at the dealership, simply open the app. Enter details about the car and the deal you're being offered, and the app will provide:</p>
-                <ul>
-                    <li>Live talking points so you know exactly what to say.</li>
-                    <li>Warnings when something looks shady.</li>
-                    <li>Step-by-step checklists so you don't miss any details before signing.</li>
-                    <li>A built-in payment calculator to compare options in real time.</li>
-                </ul>
-            </div>
+          <button class="faq-question">How does it work?</button>
+          <div class="faq-answer">
+            <p>Open the app at any stage of your buying journey. Enter deal details and the Personal Negotiator Agent generates scripts, red-flag alerts, and a to-do list so you never miss a step.</p>
+          </div>
         </div>
-
         <div class="faq-item">
-            <button class="faq-question">Is it just for when I'm in the dealership?</button>
-            <div class="faq-answer">
-                <p>No. The longer you have the app, the smarter you get. Car Deal Coach doubles as a <strong>how-to-buy-a-car course</strong>, giving you lessons, examples, and practice scenarios. You can study at your own pace, interact with the built-in Agent GPT, and role-play negotiations before you ever step foot in a showroom. </p>
-                <p>The GPT Agent is trained in the <em>psychology of selling</em> and the <em>tricks and tactics of the automotive industry</em>, so you can practice against the same pressure strategies salespeople use. By the time you walk in, you've already been through the playbook.</p>
-            </div>
+          <button class="faq-question">Will it save me money?</button>
+          <div class="faq-answer">
+            <p>Yes. Most drivers recover the cost of the app the moment they decline a padded fee or rate. Members report saving hundreds to thousands of dollars per purchase.</p>
+          </div>
         </div>
-
         <div class="faq-item">
-            <button class="faq-question">Do I need to know anything about cars to use it?</button>
-            <div class="faq-answer">
-                <p>Not at all. Car Deal Coach is designed for everyone, whether you're buying your first car or your tenth. The app translates dealership jargon into plain English so you always know what's going on.</p>
-            </div>
+          <button class="faq-question">Does it cover leases?</button>
+          <div class="faq-answer">
+            <p>Absolutely. The same negotiation tactics, scripts, and calculators work for leases. We highlight money factor markups, residual traps, and insurance bundles.</p>
+          </div>
         </div>
-
         <div class="faq-item">
-            <button class="faq-question">Will this app really save me money?</button>
-            <div class="faq-answer">
-                <p>Yes. Most users save hundreds to thousands of dollars by avoiding hidden fees, inflated interest rates, or overpriced add-ons. Even if you walk away from a bad deal, the app has done its job by protecting your wallet.</p>
-            </div>
+          <button class="faq-question">Is my data private?</button>
+          <div class="faq-answer">
+            <p>Your notes stay yours. We don't sell data—ever. Everything you store in Car Deal Coach is encrypted and used only to deliver your coaching experience.</p>
+          </div>
         </div>
-
-        <div class="faq-item">
-            <button class="faq-question">Does Car Deal Coach replace a lawyer or financial advisor?</button>
-            <div class="faq-answer">
-                <p>No. Car Deal Coach is a guide and tool for consumer empowerment, not legal or financial advice. Always review your contracts carefully and consult a professional if needed.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <button class="faq-question">Can I use it for leasing as well as buying?</button>
-            <div class="faq-answer">
-                <p>Yes! The strategies and alerts work for both purchases and leases, helping you spot traps and negotiate terms you're comfortable with.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <button class="faq-question">Is my information private?</button>
-            <div class="faq-answer">
-                <p>Absolutely. We never sell or share your personal data. Everything you enter is protected and used only to give you personalized guidance.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <button class="faq-question">What happens if I already signed paperwork?</button>
-            <div class="faq-answer">
-                <p>Car Deal Coach has a "Post-Deal Review" checklist that helps you go over your finance paperwork the next morning. This way, you can catch if anything was slipped in when you were distracted in the finance office.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <button class="faq-question">Do dealerships hate this app?</button>
-            <div class="faq-answer">
-                <p>Some do—but that's because it levels the playing field. Honest dealers don't mind informed buyers. The ones who thrive on confusion and pressure? They'd rather you didn't use it.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <button class="faq-question">How much does it cost?</button>
-            <div class="faq-answer">
-                <p>We offer flexible plans that cost far less than what you'd lose in a single bad deal. A few bucks now could save you thousands later.</p>
-            </div>
-        </div>
+      </div>
     </section>
 
-    <!-- Legal Disclaimers Section -->
-    <section class="legal-section">
-        <div class="container">
-            <div class="legal-content">
-                <h2>Legal Information</h2>
-                
-                <div class="legal-tabs">
-                    <button class="legal-tab active" onclick="showLegalTab('disclaimer')">Legal Disclaimer</button>
-                    <button class="legal-tab" onclick="showLegalTab('terms')">Terms of Use</button>
-                    <button class="legal-tab" onclick="showLegalTab('privacy')">Privacy Policy</button>
-                </div>
-
-                <div id="disclaimer" class="legal-tab-content active">
-                    <h3>Legal Disclaimer</h3>
-                    <h4>Informational Purposes Only</h4>
-                    <p>Car Deal Coach ("App") provides educational resources, scripts, alerts, and general guidance designed to help consumers navigate the car-buying process. The content is for informational purposes only and should not be interpreted as legal, financial, or professional advice.</p>
-
-                    <h4>No Guarantee of Outcomes</h4>
-                    <p>The App does not guarantee savings, approval, financing terms, or successful negotiations. Each car purchase involves unique circumstances—including credit history, dealership policies, lender requirements, and market conditions—outside the control of the App.</p>
-
-                    <h4>No Liability</h4>
-                    <p>To the fullest extent permitted by law, the creators, owners, and affiliates of Car Deal Coach are not liable for any direct, indirect, incidental, consequential, or punitive damages arising from use of the App. This includes, but is not limited to:</p>
-                    <ul>
-                        <li>Vehicle purchase decisions</li>
-                        <li>Financing agreements</li>
-                        <li>Dealer negotiations</li>
-                        <li>Contract terms or errors</li>
-                        <li>Unexpected costs, fees, or losses</li>
-                    </ul>
-                    <p>Users accept full responsibility for their car-buying decisions and any contracts they enter into.</p>
-
-                    <h4>Not a Substitute for Professional Advice</h4>
-                    <p>Users are encouraged to consult qualified professionals (e.g., attorneys, financial advisors, or certified credit counselors) before making purchase decisions or signing any legal agreements.</p>
-
-                    <h4>Third-Party Content</h4>
-                    <p>The App may reference third-party institutions, lenders, credit unions, or dealerships. These references are provided for convenience only. Car Deal Coach has no control over, and accepts no responsibility for, the accuracy, products, or services of any third parties. Accessing or relying on such third-party content is at the user's own risk.</p>
-
-                    <h4>Data and Security</h4>
-                    <p>While the App takes reasonable measures to protect user data, no system is entirely secure. By using the App, you acknowledge and accept the risk of potential data breaches, unauthorized access, or errors in third-party integrations.</p>
-
-                    <h4>Indemnification</h4>
-                    <p>By using Car Deal Coach, you agree to indemnify and hold harmless its creators, owners, and affiliates against any claims, damages, liabilities, or expenses (including attorney's fees) arising from your use of the App, your reliance on its content, or any agreements you enter into.</p>
-
-                    <h4>Jurisdiction</h4>
-                    <p>This Disclaimer shall be governed by the laws of the United States. By using Car Deal Coach, you consent to the exclusive jurisdiction of the courts located in the United States for resolution of any disputes.</p>
-                </div>
-
-                <div id="terms" class="legal-tab-content">
-                    <h3>Terms of Use</h3>
-                    <h4>Acceptance of Terms</h4>
-                    <p>By downloading, accessing, or using Car Deal Coach ("App"), you agree to be bound by these Terms of Use. If you do not agree, you must not use the App.</p>
-
-                    <h4>License to Use</h4>
-                    <p>Car Deal Coach grants you a limited, non-exclusive, non-transferable, revocable license to use the App for personal, non-commercial purposes. You may not:</p>
-                    <ul>
-                        <li>Copy, modify, or distribute the App's content without written permission</li>
-                        <li>Use the App for unlawful purposes</li>
-                        <li>Attempt to hack, reverse-engineer, or disrupt the App's functionality</li>
-                    </ul>
-
-                    <h4>User Responsibilities</h4>
-                    <p>You are solely responsible for:</p>
-                    <ul>
-                        <li>The accuracy of any information you provide in the App</li>
-                        <li>Decisions you make based on scripts, alerts, or guidance from the App</li>
-                        <li>Reviewing and understanding all documents and contracts you sign in connection with car purchases</li>
-                    </ul>
-
-                    <h4>Intellectual Property</h4>
-                    <p>All content, branding, logos, scripts, alerts, and features within Car Deal Coach are the property of its creators and protected under applicable intellectual property laws. Unauthorized use may result in legal action.</p>
-
-                    <h4>Prohibited Conduct</h4>
-                    <p>You agree not to:</p>
-                    <ul>
-                        <li>Misuse the App to mislead others or commit fraud</li>
-                        <li>Upload harmful code, viruses, or attempt to disrupt the service</li>
-                        <li>Resell or redistribute content without authorization</li>
-                    </ul>
-
-                    <h4>Termination</h4>
-                    <p>Car Deal Coach reserves the right to suspend or terminate access at any time, with or without notice, if these Terms of Use are violated or if the App is misused.</p>
-
-                    <h4>Third-Party Services</h4>
-                    <p>The App may link or refer to third-party services (dealerships, lenders, credit unions). Use of such services is at your own risk, and Car Deal Coach is not responsible for their content, products, or practices.</p>
-
-                    <h4>Disclaimers</h4>
-                    <p>The App is provided "as is" and "as available," without warranties of any kind. Please review our Legal Disclaimer for more details.</p>
-
-                    <h4>Limitation of Liability</h4>
-                    <p>To the fullest extent permitted by law, Car Deal Coach, its creators, and affiliates are not liable for any damages arising from the use or misuse of the App.</p>
-
-                    <h4>Indemnification</h4>
-                    <p>You agree to indemnify and hold harmless Car Deal Coach and its affiliates against any claims, liabilities, or expenses arising from your use of the App.</p>
-
-                    <h4>Changes to Terms</h4>
-                    <p>We reserve the right to update or modify these Terms at any time. Continued use of the App after changes are posted constitutes acceptance of those changes.</p>
-                </div>
-
-                <div id="privacy" class="legal-tab-content">
-                    <h3>Privacy Policy</h3>
-                    <p><strong>Effective Date: September 27, 2025</strong></p>
-                    
-                    <p>Car Deal Coach ("App," "we," "our," or "us") respects your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use the App. By accessing or using Car Deal Coach, you agree to the terms of this Privacy Policy.</p>
-
-                    <h4>1. Information We Collect</h4>
-                    <p>We may collect the following types of information when you use the App:</p>
-                    <ul>
-                        <li><strong>Personal Information:</strong> Name, email address, and any details you voluntarily provide.</li>
-                        <li><strong>Car-Buying Data:</strong> Information you input about budgets, financing preferences, or dealership interactions.</li>
-                        <li><strong>Technical Information:</strong> Device type, operating system, IP address, and usage data (e.g., pages viewed, features used).</li>
-                        <li><strong>Sensitive Financial Inputs (if applicable):</strong> Credit score range or related financial info, entered voluntarily by the user.</li>
-                    </ul>
-
-                    <h4>2. How We Use Your Information</h4>
-                    <p>We use the collected information to:</p>
-                    <ul>
-                        <li>Provide you with tailored scripts, alerts, and tools</li>
-                        <li>Improve App functionality and user experience</li>
-                        <li>Communicate with you (updates, customer support, promotions)</li>
-                        <li>Analyze usage patterns to enhance services</li>
-                        <li>Comply with legal obligations</li>
-                    </ul>
-
-                    <h4>3. Data Sharing and Disclosure</h4>
-                    <p>We do not sell, rent, or trade your personal information. However, we may share information:</p>
-                    <ul>
-                        <li>With trusted service providers who help operate the App</li>
-                        <li>If required by law, regulation, or legal process</li>
-                        <li>In connection with a business transfer (merger, acquisition, etc.)</li>
-                    </ul>
-                    <p>Any third-party links or services accessed through the App are governed by their own privacy policies. We are not responsible for their practices.</p>
-
-                    <h4>4. Data Security</h4>
-                    <p>We take reasonable administrative, technical, and physical measures to protect your information. However, no system is completely secure. By using the App, you acknowledge and accept the risk of potential data breaches or unauthorized access.</p>
-
-                    <h4>5. User Choices and Rights</h4>
-                    <p>Depending on your location, you may have the right to:</p>
-                    <ul>
-                        <li>Access, correct, or delete your personal information</li>
-                        <li>Restrict or object to certain data processing</li>
-                        <li>Request data portability</li>
-                        <li>Withdraw consent for data collection (where applicable)</li>
-                    </ul>
-                    <p>To exercise these rights, contact us at: legal@cardealcoach.com</p>
-
-                    <h4>6. Children's Privacy</h4>
-                    <p>Car Deal Coach is not directed at children under 18. We do not knowingly collect personal data from minors. If we become aware that we have inadvertently collected such data, we will delete it.</p>
-
-                    <h4>7. International Users</h4>
-                    <p>If you access the App from outside the United States, you understand that your data may be transferred, stored, and processed in a country with different data protection laws.</p>
-
-                    <h4>8. Updates to This Policy</h4>
-                    <p>We may update this Privacy Policy from time to time. Changes will be posted within the App with a new effective date. Continued use of the App constitutes acceptance of the updated policy.</p>
-                </div>
-            </div>
+    <section class="legal-section" id="legal">
+      <div class="container">
+        <h2 style="text-align:center; font-size:2.6rem; font-weight:800; margin-bottom:2.5rem;">Legal Information</h2>
+        <div class="legal-tabs">
+          <button class="legal-tab active" onclick="showLegalTab('disclaimer', event)">Legal Disclaimer</button>
+          <button class="legal-tab" onclick="showLegalTab('terms', event)">Terms of Use</button>
+          <button class="legal-tab" onclick="showLegalTab('privacy', event)">Privacy Policy</button>
         </div>
+        <div id="disclaimer" class="legal-tab-content active">
+          <h3 style="color:var(--accent); margin-bottom:1rem;">Legal Disclaimer</h3>
+          <p>Car Deal Coach provides educational scripts, calculators, and negotiation guidance. It does not replace legal, financial, or professional advice. Every dealership experience is unique; you are responsible for the decisions you make and the contracts you sign.</p>
+          <p>We are not liable for outcomes of your car purchase, negotiation, or financing decisions. Consult an attorney, financial advisor, or certified professional when you need specific advice.</p>
+        </div>
+        <div id="terms" class="legal-tab-content">
+          <h3 style="color:var(--accent); margin-bottom:1rem;">Terms of Use</h3>
+          <p>By using Car Deal Coach, you accept a limited, non-transferable license for personal use. Do not copy, re-sell, reverse engineer, or misuse the platform. We reserve the right to suspend accounts that violate these terms.</p>
+          <p>All content and features belong to Car Deal Coach. You agree not to upload harmful code, misrepresent data, or use the app to defraud others.</p>
+        </div>
+        <div id="privacy" class="legal-tab-content">
+          <h3 style="color:var(--accent); margin-bottom:1rem;">Privacy Policy</h3>
+          <p>We collect only the information required to personalize your coaching experience (e.g., deals you log, loan data you enter). We never sell user data. You may request access, correction, or deletion of your information by contacting privacy@cardealcoach.com.</p>
+          <p>By using the app, you consent to data processing in the United States and acknowledge that no digital system is 100% secure, though we take industry-standard precautions.</p>
+        </div>
+      </div>
     </section>
+  </main>
 
-        <script>
-            // FAQ functionality
-            document.querySelectorAll('.faq-question').forEach(button => {
-                button.addEventListener('click', () => {
-                    button.parentElement.classList.toggle('active');
-                });
-            });
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4 style="color:var(--text-primary); margin-bottom:0.8rem;">Car Deal Coach</h4>
+          <p style="color:var(--text-muted); font-size:0.95rem;">AI-powered playbook for car buyers. Scripts, calculators, and negotiation tactics in your pocket.</p>
+        </div>
+        <div>
+          <a href="#hero" class="footer-link">Home</a>
+          <a href="#features" class="footer-link">Features</a>
+          <a href="#pricing" class="footer-link">Pricing</a>
+          <a href="#faq" class="footer-link">FAQ</a>
+        </div>
+        <div>
+          <a href="#legal" class="footer-link">Legal Disclaimer</a>
+          <a href="#legal" class="footer-link">Terms of Use</a>
+          <a href="#legal" class="footer-link">Privacy Policy</a>
+          <a href="mailto:hello@cardealcoach.com" class="footer-link">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> Car Deal Coach. All rights reserved.</span>
+        <span>Built for buyers, not dealers.</span>
+      </div>
+    </div>
+  </footer>
 
-            // Pricing functionality
-            let isAnnual = false;
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-            // Removed free tier - users must purchase to access app
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach((button) => {
+      button.addEventListener('click', () => {
+        button.parentElement.classList.toggle('active');
+      });
+    });
 
-            function purchaseBasic() {
-                const price = isAnnual ? '95.90' : '9.99';
-                const period = isAnnual ? 'year' : 'month';
-                initiateStripeCheckout('basic', price, period);
-            }
+    let isAnnual = false;
 
-            function purchasePro() {
-                const price = isAnnual ? '191.90' : '19.99';
-                const period = isAnnual ? 'year' : 'month';
-                initiateStripeCheckout('pro', price, period);
-            }
+    function purchaseBasic() {
+      const price = isAnnual ? '95.90' : '9.99';
+      const period = isAnnual ? 'year' : 'month';
+      confirmPurchase('Basic', price, period);
+    }
 
-            function toggleAnnual() {
-                isAnnual = !isAnnual;
-                updatePricing();
-            }
+    function purchasePro() {
+      const price = isAnnual ? '191.90' : '19.99';
+      const period = isAnnual ? 'year' : 'month';
+      confirmPurchase('Pro', price, period);
+    }
 
-            function updatePricing() {
-                const amounts = document.querySelectorAll('.amount');
-                const periods = document.querySelectorAll('.period');
-                const buttons = document.querySelectorAll('.pricing-btn');
+    function confirmPurchase(tier, price, period) {
+      const approved = confirm(`Purchase ${tier} plan for $${price}/${period}?\n\nYou'll unlock full access to the Car Deal Coach app.`);
+      if (approved) {
+        localStorage.setItem('carDealCoachPurchase', JSON.stringify({ tier, price, period, purchasedAt: new Date().toISOString() }));
+        alert('🎉 Purchase confirmed! Redirecting you to the app…');
+        window.location.href = `/#/onboarding?purchased=${tier.toLowerCase()}&tier=${tier.toLowerCase()}&price=${price}&period=${period}`;
+      }
+    }
 
-                if (isAnnual) {
-                    // Update Basic pricing
-                    amounts[0].textContent = '95.90';
-                    periods[0].textContent = '/year';
-                    buttons[0].textContent = 'Get Basic - $95.90/year';
+    function toggleAnnual() {
+      isAnnual = !isAnnual;
+      updatePricing();
+    }
 
-                    // Update Pro pricing
-                    amounts[1].textContent = '191.90';
-                    periods[1].textContent = '/year';
-                    buttons[1].textContent = 'Get Pro - $191.90/year';
+    function updatePricing() {
+      const amounts = document.querySelectorAll('.amount');
+      const periods = document.querySelectorAll('.period');
+      const buttons = document.querySelectorAll('.pricing-btn');
+      const toggle = document.querySelector('.annual-toggle');
 
-                    // Update toggle button
-                    document.querySelector('.annual-toggle').textContent = 'Switch to Monthly';
-                } else {
-                    // Update Basic pricing
-                    amounts[0].textContent = '9.99';
-                    periods[0].textContent = '/month';
-                    buttons[0].textContent = 'Get Basic - $9.99/month';
+      if (isAnnual) {
+        amounts[0].textContent = '95.90';
+        periods[0].textContent = '/year';
+        buttons[0].textContent = 'Get Basic - $95.90/year';
 
-                    // Update Pro pricing
-                    amounts[1].textContent = '19.99';
-                    periods[1].textContent = '/month';
-                    buttons[1].textContent = 'Get Pro - $19.99/month';
+        amounts[1].textContent = '191.90';
+        periods[1].textContent = '/year';
+        buttons[1].textContent = 'Get Pro - $191.90/year';
 
-                    // Update toggle button
-                    document.querySelector('.annual-toggle').textContent = 'Switch to Annual';
-                }
-            }
+        toggle.textContent = 'Switch to Monthly';
+      } else {
+        amounts[0].textContent = '9.99';
+        periods[0].textContent = '/month';
+        buttons[0].textContent = 'Get Basic - $9.99/month';
 
-            function initiateStripeCheckout(tier, price, period) {
-                console.log(`Initiating ${tier} purchase: $${price}/${period}`);
-                
-                // Show purchase confirmation modal
-                const confirmed = confirm(`Purchase ${tier.toUpperCase()} plan for $${price}/${period}?\n\nThis will give you full access to the Car Deal Coach app.`);
-                
-                if (confirmed) {
-                    // Simulate successful purchase
-                    alert(`🎉 Purchase Successful!\n\nYou now have access to the ${tier.toUpperCase()} plan.\n\nRedirecting to the app...`);
-                    
-                    // Store purchase info in localStorage
-                    localStorage.setItem('carDealCoachPurchase', JSON.stringify({
-                        tier: tier,
-                        price: price,
-                        period: period,
-                        purchaseDate: new Date().toISOString(),
-                        status: 'active'
-                    }));
-                    
-                    // Redirect to app with purchase confirmation
-                    window.location.href = `/#/onboarding?purchased=${tier}&tier=${tier}&price=${price}&period=${period}`;
-                }
-            }
+        amounts[1].textContent = '19.99';
+        periods[1].textContent = '/month';
+        buttons[1].textContent = 'Get Pro - $19.99/month';
 
-        function showLegalTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.legal-tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
+        toggle.textContent = 'Switch to Annual';
+      }
+    }
 
-            // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.legal-tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Show selected tab content
-            document.getElementById(tabName).classList.add('active');
-            
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-        }
-    </script>
+    function showLegalTab(id, event) {
+      document.querySelectorAll('.legal-tab').forEach((tab) => tab.classList.remove('active'));
+      document.querySelectorAll('.legal-tab-content').forEach((content) => content.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+  </script>
 </body>
 </html>

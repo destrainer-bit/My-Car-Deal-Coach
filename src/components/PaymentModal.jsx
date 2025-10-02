@@ -1,16 +1,38 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { redirectToCheckout } from '../lib/stripe';
+import { upgradePlans } from '../data/upgradePlans.js';
 
-export default function PaymentModal({ isOpen, onClose, type = 'subscription' }) {
+export default function PaymentModal({
+  isOpen,
+  onClose,
+  type = 'subscription',
+  planOverride
+}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handlePayment = async (priceId) => {
+  const plansToShow = useMemo(() => {
+    if (planOverride) {
+      return [planOverride];
+    }
+    return upgradePlans.map((plan) => ({
+      ...plan,
+      planName: plan.title
+    }));
+  }, [planOverride]);
+
+  const handlePayment = async (plan) => {
+    if (!plan || !plan.priceId) {
+      setError('Checkout is not available for this plan.');
+      return;
+    }
+
     setLoading(true);
     setError('');
-    
+
     try {
-      await redirectToCheckout(priceId, type);
+      const checkoutMode = plan.mode === 'one-time' || type === 'oneTime' ? 'payment' : 'subscription';
+      await redirectToCheckout(plan.priceId, checkoutMode);
     } catch (err) {
       setError(err.message || 'Payment failed. Please try again.');
       setLoading(false);
@@ -19,152 +41,74 @@ export default function PaymentModal({ isOpen, onClose, type = 'subscription' })
 
   if (!isOpen) return null;
 
-  const plans = {
-    subscription: [
-      {
-        id: '72hours',
-        name: 'Quick Access',
-        price: '$19',
-        period: '72 hours',
-        features: [
-          'Smart negotiation assistance',
-          'Basic market data',
-          'Priority support',
-          'Quick deal analysis'
-        ],
-        priceId: import.meta.env.VITE_STRIPE_72HOURS_PRICE_ID
-      },
-      {
-        id: '7days',
-        name: 'Weekly Pro',
-        price: '$29',
-        period: '7 days',
-        features: [
-          'Everything in 72 hours',
-          'Advanced market insights',
-          'Deal comparison tools',
-          'Export capabilities'
-        ],
-        priceId: import.meta.env.VITE_STRIPE_7DAYS_PRICE_ID
-      },
-      {
-        id: '30days',
-        name: 'Monthly Pro',
-        price: '$59',
-        period: '30 days',
-        features: [
-          'Everything in Weekly',
-          'Unlimited negotiations',
-          'Advanced analytics',
-          'Priority support'
-        ],
-        priceId: import.meta.env.VITE_STRIPE_30DAYS_PRICE_ID,
-        popular: true
-      },
-      {
-        id: '60days',
-        name: 'Extended Pro',
-        price: '$79',
-        period: '60 days',
-        features: [
-          'Everything in Monthly',
-          'Premium negotiation scripts',
-          'Market trend analysis',
-          'Advanced reporting'
-        ],
-        priceId: import.meta.env.VITE_STRIPE_60DAYS_PRICE_ID
-      },
-              {
-                id: '90days',
-                name: 'Ultimate Pro',
-                price: '$97',
-                period: '90 days',
-                features: [
-                  'Everything in Extended',
-                  'Lifetime deal tracking',
-                  'Advanced market intelligence',
-                  'Premium support'
-                ],
-                priceId: import.meta.env.VITE_STRIPE_90DAYS_PRICE_ID
-              },
-              {
-                id: 'yearly',
-                name: 'Annual Pro',
-                price: '$199',
-                period: '1 year',
-                features: [
-                  'Everything in Ultimate',
-                  'Full year of premium access',
-                  'Priority customer support',
-                  'Exclusive features & updates'
-                ],
-                priceId: import.meta.env.VITE_STRIPE_YEARLY_PRICE_ID,
-                popular: true
-              }
-    ],
-    oneTime: [
-      {
-        id: 'premium',
-        name: 'Premium Features',
-        price: '$19.99',
-        period: 'one-time',
-        features: [
-          'Advanced negotiation scripts',
-          'Market analysis tools',
-          'Priority support',
-          'Lifetime access'
-        ],
-        priceId: import.meta.env.VITE_STRIPE_ONE_TIME_PRICE_ID
-      }
-    ]
+  const currentPlans = plansToShow.map((plan) => ({
+    ...plan,
+    price: plan.price || '',
+    duration: plan.duration || '',
+    highlights: plan.highlights || [],
+    cta: plan.cta || 'Purchase Now!'
+  }));
+
+  const handleClose = () => {
+    if (!loading) {
+      onClose();
+    }
   };
 
-  const currentPlans = plans[type] || plans.subscription;
-
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={handleClose}>
       <div className="modal-content payment-modal" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Choose Your Plan</h2>
-          <button className="close-button" onClick={onClose}>×</button>
+          <h2>{planOverride ? 'Confirm Your Plan' : 'Choose Your Plan'}</h2>
+          <button className="close-button" onClick={handleClose}>×</button>
         </div>
-        
+
         <div className="payment-plans">
           {currentPlans.map((plan) => (
-            <div key={plan.id} className={`payment-plan ${plan.popular ? 'popular' : ''}`}>
-              {plan.popular && <div className="popular-badge">Most Popular</div>}
-              
+            <div key={plan.id} className={`payment-plan ${plan.featured ? 'popular' : ''}`}>
+              {plan.badge && <div className="popular-badge">{plan.badge}</div>}
+
               <div className="plan-header">
-                <h3>{plan.name}</h3>
-                <div className="plan-price">
-                  <span className="price">{plan.price}</span>
-                  <span className="period">{plan.period}</span>
-                </div>
+                <h3>{plan.title || plan.name}</h3>
+                {(plan.price || plan.duration) && (
+                  <div className="plan-price">
+                    <span className="price">{plan.price}</span>
+                    <span className="period">{plan.duration}</span>
+                  </div>
+                )}
               </div>
-              
-              <ul className="plan-features">
-                {plan.features.map((feature, index) => (
-                  <li key={index}>✓ {feature}</li>
-                ))}
-              </ul>
-              
-              <button 
-                className={`plan-button ${plan.popular ? 'popular' : ''}`}
-                onClick={() => handlePayment(plan.priceId)}
+
+              {plan.highlights.length > 0 && (
+                <ul className="plan-features">
+                  {plan.highlights.map((feature, index) => (
+                    <li key={index}>✓ {feature}</li>
+                  ))}
+                </ul>
+              )}
+
+              <button
+                className={`plan-button ${plan.featured ? 'popular' : ''}`}
+                onClick={() => handlePayment(plan)}
                 disabled={loading || !plan.priceId}
               >
-                {loading ? 'Processing...' : `Choose ${plan.name}`}
+                {loading ? 'Processing...' : plan.cta}
               </button>
+
+              {!plan.priceId && (
+                <p className="pricing-tile__note" style={{ marginTop: '0.75rem', textAlign: 'center' }}>
+                  Checkout unavailable – contact support.
+                </p>
+              )}
             </div>
           ))}
         </div>
-        
+
         {error && (
           <div className="payment-error">
             {error}
           </div>
         )}
-        
+
         <div className="payment-footer">
           <p>Secure payment powered by Stripe</p>
           <p>Cancel anytime • No hidden fees</p>

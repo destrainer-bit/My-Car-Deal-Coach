@@ -202,3 +202,5 @@ function Legal({ onBack }) {
 }
 
 export default Legal
+
+

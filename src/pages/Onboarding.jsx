@@ -1,145 +1,180 @@
 import React from 'react'
 
 function Onboarding({ onStart }) {
-  const steps = [
+  const problemItems = [
+    '“Why is my payment higher than we agreed?”',
+    'Surprise warranties, paint protection, and GAP bundles you never asked for',
+    'Finance office rate bumps and “sign now or lose the deal” pressure'
+  ]
+
+  const featureBlocks = [
     {
-      icon: (
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" className="animate-float">
-          <rect width="64" height="64" rx="16" fill="#3b82f6" opacity="0.1"/>
-          <circle cx="32" cy="32" r="20" fill="none" stroke="#3b82f6" strokeWidth="3"/>
-          <circle cx="32" cy="32" r="16" fill="none" stroke="#3b82f6" strokeWidth="2" opacity="0.6"/>
-          <circle cx="32" cy="32" r="6" fill="none" stroke="#3b82f6" strokeWidth="2" opacity="0.3"/>
-          <circle cx="32" cy="32" r="3" fill="#3b82f6"/>
-        </svg>
-      ),
-      title: "Smart Price Estimator",
-      description: "A built-in pricing engine that turns your car's details into a clear low, mid, and high range. You'll walk in knowing exactly what's fair before you even see the sticker.",
-      color: "blue"
+      title: 'Scripts & Red Flags',
+      description: 'Hit the dealership with responses written by insiders. When the sales manager pulls a tactic, you already know the counter move.',
+      points: [
+        'Instant scripts for every objection',
+        'Red-flag alerts when fees spike',
+        'Walk-away triggers to keep leverage'
+      ],
+      callout: {
+        label: 'Coach insight',
+        body: 'Doc fee is padded by $900. Counter with $300 max or ask for it waived.'
+      }
     },
     {
-      icon: (
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" className="animate-float">
-          <rect width="64" height="64" rx="16" fill="#10b981" opacity="0.1"/>
-          <path d="M20 32h24M32 20v24" stroke="#10b981" strokeWidth="3" strokeLinecap="round"/>
-          <circle cx="32" cy="32" r="8" fill="none" stroke="#10b981" strokeWidth="2"/>
-        </svg>
-      ),
-      title: "Saved Deals & Notes Hub",
-      description: "Keep all your potential deals, photos, and notes organized in one place. Track where you're at so you always stay in control.",
-      color: "green"
+      title: 'Payment Calculator & Rate Decoder',
+      description: 'Plug in any dealer worksheet and expose the true APR, payment, and where the numbers are padded.',
+      points: [
+        'Flexible loan terms (60, 72, 84+ months)',
+        'Breakdown of principal vs. interest',
+        'Side-by-side monthly payment comparisons'
+      ],
+      callout: {
+        label: 'After analysis',
+        body: 'Dealer APR is 8.4%. Real rate should be 6.1%. Monthly drops from $512 to $456 when you push back.'
+      }
     },
     {
-      icon: (
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" className="animate-float">
-          <rect width="64" height="64" rx="16" fill="#f59e0b" opacity="0.1"/>
-          <path d="M20 32h8l4-8 8 16 4-8h8" stroke="#f59e0b" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-          <circle cx="24" cy="32" r="3" fill="#f59e0b"/>
-          <circle cx="40" cy="32" r="3" fill="#f59e0b"/>
-        </svg>
-      ),
-      title: "Step-by-Step Negotiation Checklist",
-      description: "No more second-guessing. A guided checklist keeps you steady during the deal from setting your budget to reviewing contracts before you sign.",
-      color: "orange"
+      title: 'Dealership Psychology Training',
+      description: 'Role-play pressure scenarios with the Personal Negotiator Agent so “sign now or lose the car” never rattles you again.',
+      points: [
+        'Simulated high-pressure finance conversations',
+        'Behavioral tactics to stay calm and in control',
+        'Paperwork review checklists before you sign'
+      ],
+      callout: {
+        label: 'Stay ready',
+        body: '“I’m ready to buy when the numbers match what we agreed.” Scarcity pressure handled—on your terms.'
+      }
+    }
+  ]
+
+  const testimonials = [
+    {
+      quote: '“I walked in with scripts on my phone. Finance tried to add a warranty—Car Deal Coach told me exactly what to say. Saved $3,900.”',
+      author: 'Sarah M., first-time buyer'
     },
     {
-      icon: (
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" className="animate-float">
-          <rect width="64" height="64" rx="16" fill="#8b5cf6" opacity="0.1"/>
-          <path d="M20 20h24v24H20z" stroke="#8b5cf6" strokeWidth="2" fill="none"/>
-          <path d="M28 28h8v8h-8z" fill="#8b5cf6" opacity="0.3"/>
-          <circle cx="32" cy="32" r="2" fill="#8b5cf6"/>
-          <path d="M24 24l16 16M40 24l-16 16" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round"/>
-        </svg>
-      ),
-      title: "The Negotiator – Your Deal-Making Edge",
-      description: "A smart coach that preps you for every step of the dealership game. Get negotiation scripts, red-flag alerts, and paperwork review checklists so you never miss hidden fees.",
-      color: "purple"
+      quote: '“The dealer flipped the rate in the back office. The calculator exposed it and I renegotiated on the spot.”',
+      author: 'Mike R., repeat buyer'
     }
   ]
 
   return (
     <div className="onboarding">
-      <div className="onboarding-header">
-        <h1>The Car Deal Coach</h1>
-        <p className="tagline">Because An Informed Purchase, Is a Smart Purchase!</p>
-        <p>Four Core Benefits of The Car Deal Coach</p>
-      </div>
-
-      <div className="onboarding-steps">
-        {steps.map((step, index) => {
-          const getCardStyle = (color) => {
-            const styles = {
-              blue: {
-                backgroundColor: '#1e3a8a',
-                borderColor: '#3b82f6',
-                buttonColor: '#3b82f6'
-              },
-              green: {
-                backgroundColor: '#14532d',
-                borderColor: '#10b981',
-                buttonColor: '#10b981'
-              },
-              orange: {
-                backgroundColor: '#9a3412',
-                borderColor: '#f59e0b',
-                buttonColor: '#f59e0b'
-              },
-              purple: {
-                backgroundColor: '#581c87',
-                borderColor: '#8b5cf6',
-                buttonColor: '#8b5cf6'
-              }
-            }
-            return styles[color] || styles.blue
-          }
-
-          const cardStyle = getCardStyle(step.color)
-
-          return (
-            <div 
-              key={index} 
-              className={`onboarding-step step-${index + 1}`}
-              style={{
-                backgroundColor: cardStyle.backgroundColor,
-                borderColor: cardStyle.borderColor,
-                borderWidth: '2px',
-                borderStyle: 'solid'
-              }}
-            >
-              <div className="step-icon">
-                {step.icon}
-              </div>
-              <h2>{step.title}</h2>
-              <p>{step.description}</p>
-              <button 
-                className="btn btn-primary"
-                style={{
-                  backgroundColor: cardStyle.buttonColor,
-                  borderColor: cardStyle.buttonColor,
-                  color: 'white'
-                }}
-                onClick={() => {
-                  alert(`Learn more about: ${step.title}`)
-                }}
-              >
-                Learn More
-              </button>
+    <section className="onboarding-hero" id="hero">
+        <div className="onboarding-hero-content">
+          <span className="onboarding-eyebrow">Car buying without the games</span>
+          <h1>Never Get Ripped Off at a Dealership Again</h1>
+          <p>
+            Your AI-powered car buying coach gives you scripts, calculators, and negotiation tactics so you can push back on pressure, spot hidden fees, and walk away with the deal you want.
+          </p>
+          <div className="onboarding-hero-actions">
+            <button className="btn btn-primary btn-large" onClick={onStart}>
+              Start a Deal
+            </button>
+            <button className="btn btn-secondary btn-outline" onClick={onStart}>
+              Explore the Coach
+            </button>
+          </div>
+        </div>
+        <div className="onboarding-hero-visual">
+          <div className="onboarding-screen">
+            <h3>Personal Negotiator Agent</h3>
+            <div className="onboarding-screen-card">
+              <strong>Goal:</strong>
+              OTD under $25,000 for 2020 Civic EX
             </div>
-          )
-        })}
-      </div>
+            <div className="onboarding-screen-card">
+              <strong>Red Flag:</strong>
+              Dealer added $1,200 “doc fee”. Standard is $300—ask for itemized breakdown.
+            </div>
+            <div className="onboarding-screen-card">
+              <strong>Say This:</strong>
+              “I’ve researched and seen comparable cars at $23,500 OTD. Can you match that?”
+            </div>
+            <div className="onboarding-screen-card">
+              <strong>Next Move:</strong>
+              If they won’t drop the add-ons, walk away. They’ll call back.
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <div className="onboarding-actions">
-        <button 
-          className="btn btn-primary btn-large"
-          onClick={onStart}
-        >
-          Start a Deal
-        </button>
-        <p className="onboarding-note">
-          Ready to find your next car? Let's get started!
+      <section className="onboarding-problem">
+        <h2>Car dealerships are trained to play games.</h2>
+        <p>
+          Hidden fees, finance tricks, pressure tactics—buyers lose thousands every day. Car Deal Coach flips the script so you stay in control.
         </p>
-      </div>
+        <div className="onboarding-problem-grid">
+          <div className="onboarding-problem-card">
+            <h3>$2,137</h3>
+            <p>Average buyer overpays when they walk in without a plan.</p>
+          </div>
+          <div className="onboarding-problem-card">
+            <h3>73%</h3>
+            <p>Of drivers sign finance paperwork they don’t fully understand.</p>
+          </div>
+          <div className="onboarding-problem-card checklist">
+            <h4>Have you experienced this?</h4>
+            <ul>
+              {problemItems.map(item => (
+              <li key={item}><span>{item}</span></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="onboarding-features" id="features">
+        {featureBlocks.map((feature) => (
+          <article className="onboarding-feature" key={feature.title}>
+            <div className="onboarding-feature-copy">
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+              <ul className="feature-points">
+                {feature.points.map(point => (
+                  <li key={point}>
+                    <span className="feature-pill">{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="onboarding-feature-visual">
+              <div className="onboarding-callout">
+                <span className="callout-label">{feature.callout.label}</span>
+                <p>{feature.callout.body}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section className="onboarding-social">
+        <div className="onboarding-testimonials">
+          {testimonials.map(testimonial => (
+            <div className="onboarding-testimonial" key={testimonial.author}>
+              <p>{testimonial.quote}</p>
+              <span>{testimonial.author}</span>
+            </div>
+          ))}
+        </div>
+        <div className="onboarding-founder">
+          <span className="onboarding-eyebrow">Founder’s Note</span>
+          <h3>Built by dealership insiders</h3>
+          <p>
+            I built Car Deal Coach after watching friends get steamrolled in finance offices. This is the defense playbook I wish every buyer had—real scripts, calculators, and backup when the dealer starts playing games.
+          </p>
+        </div>
+      </section>
+
+      <section className="onboarding-cta" id="cta">
+        <h2>Ready to buy smarter?</h2>
+        <p>Cancel anytime. No hidden fees. Built for buyers—not dealers.</p>
+        <button className="btn btn-primary btn-large" onClick={onStart}>
+          Get Your Car Coach Today
+        </button>
+      </section>
     </div>
   )
 }
