@@ -10,9 +10,8 @@ export const upgradePlans = [
       'Perfect for last-minute buyers.'
     ],
     cta: 'Purchase Now!',
-    priceId: import.meta.env.VITE_STRIPE_72HOURS_PRICE_ID || null,
-    checkoutUrl: 'https://buy.stripe.com/00w14naiA7ob8ks5il1ck04',
-    mode: 'subscription'
+    priceId: import.meta.env.VITE_STRIPE_72HOURS_PRICE_ID || 'price_1SDFCfGGlhp8ceFI3DJvHpSX',
+    mode: 'payment'
   },
   {
     id: '7days',
@@ -25,9 +24,8 @@ export const upgradePlans = [
       'Ideal if you’re shopping dealerships this week.'
     ],
     cta: 'Purchase Now!',
-    priceId: import.meta.env.VITE_STRIPE_7DAYS_PRICE_ID || null,
-    checkoutUrl: 'https://buy.stripe.com/dRmaEXfCU0ZNasA8ux1ck05',
-    mode: 'subscription'
+    priceId: import.meta.env.VITE_STRIPE_7DAYS_PRICE_ID || 'price_1SDFBcGGlhp8ceFIxyJYot3l',
+    mode: 'payment'
   },
   {
     id: '30days',
@@ -40,9 +38,8 @@ export const upgradePlans = [
       'Best for comparison shoppers.'
     ],
     cta: 'Purchase Now!',
-    priceId: import.meta.env.VITE_STRIPE_30DAYS_PRICE_ID || null,
-    checkoutUrl: 'https://buy.stripe.com/aFa00j4Yg37VdEM4eh1ck06',
-    mode: 'subscription'
+    priceId: import.meta.env.VITE_STRIPE_30DAYS_PRICE_ID || 'price_1SDFAnGGlhp8ceFIil6GisXL',
+    mode: 'payment'
   },
   {
     id: '60days',
@@ -55,9 +52,8 @@ export const upgradePlans = [
       'Great for buyers taking their time.'
     ],
     cta: 'Purchase Now!',
-    priceId: import.meta.env.VITE_STRIPE_60DAYS_PRICE_ID || null,
-    checkoutUrl: 'https://buy.stripe.com/5kQdR976ocIvdEM5il1ck02',
-    mode: 'subscription'
+    priceId: import.meta.env.VITE_STRIPE_60DAYS_PRICE_ID || 'price_1SDFEqGGlhp8ceFIIQmwntoT',
+    mode: 'payment'
   },
   {
     id: '90days',
@@ -72,9 +68,8 @@ export const upgradePlans = [
     cta: 'Purchase Now!',
     badge: 'Best Value',
     featured: true,
-    priceId: import.meta.env.VITE_STRIPE_90DAYS_PRICE_ID || null,
-    checkoutUrl: 'https://buy.stripe.com/dRmeVdbmEbEr3089yB1ck03',
-    mode: 'subscription'
+    priceId: import.meta.env.VITE_STRIPE_90DAYS_PRICE_ID || 'price_1SDFDzGGlhp8ceFIydvjm413',
+    mode: 'payment'
   },
   {
     id: 'yearly',
@@ -89,6 +84,6 @@ export const upgradePlans = [
     cta: 'Purchase Now!',
     priceId: import.meta.env.VITE_STRIPE_YEARLY_PRICE_ID || 'price_1SDXr3GGlhp8ceFI6GEUQIwL',
     billingPortalUrl: 'https://billing.stripe.com/p/login/test_123',
-    mode: 'subscription'
+    mode: 'payment'
   }
 ];

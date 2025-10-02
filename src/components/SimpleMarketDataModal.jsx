@@ -110,3 +110,4 @@ function SimpleMarketDataModal({ isOpen, onClose, vehicleData }) {
 export default SimpleMarketDataModal
 
 
+

@@ -20,6 +20,8 @@ import Legal from './pages/Legal.jsx'
 // Import components
 import Shell from './components/Shell.jsx'
 import InstallPrompt from './components/InstallPrompt.jsx'
+import Pricing from './components/Pricing'
+import SavingsCalculator from './components/SavingsCalculator'
 
 function App() {
   const { currentPage, navigateTo } = useHashRoute()
@@ -279,6 +281,8 @@ function App() {
         show={showInstallPrompt}
         onClose={() => setShowInstallPrompt(false)}
       />
+      <Pricing />
+      <SavingsCalculator />
     </Shell>
   )
 }
