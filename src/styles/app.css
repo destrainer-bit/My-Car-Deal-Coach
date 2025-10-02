@@ -493,7 +493,7 @@ body {
   background: var(--bg-hover);
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .upgrade-page__header {
     padding: 0 var(--space-md);
   }
@@ -513,20 +513,20 @@ body {
 
   /* Show mobile menu button */
   .mobile-menu-button {
-    display: block;
+    display: block !important;
   }
 
   .app-shell__header {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-md);
-    padding: var(--space-lg);
-    position: sticky;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: var(--space-md) !important;
+    padding: var(--space-lg) !important;
+    position: sticky !important;
   }
 
   .app-shell__brand {
-    flex: 1;
+    flex: 1 !important;
   }
 
   /* Hide nav by default on mobile */
@@ -559,23 +559,23 @@ body {
   }
 
   .app-shell__search {
-    display: none; /* Hide search on mobile for now */
+    display: none !important; /* Hide search on mobile for now */
   }
 
   .app-shell__actions {
-    display: none;
+    display: none !important;
   }
 
   .app-shell__layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .app-shell__sidebar {
-    display: none; /* Hide sidebar on mobile */
+    display: none !important; /* Hide sidebar on mobile */
   }
 
   .app-shell__main {
-    padding: var(--space-lg) var(--space-md);
+    padding: var(--space-lg) var(--space-md) !important;
   }
 }
 
