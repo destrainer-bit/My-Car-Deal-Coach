@@ -68,8 +68,55 @@ create index if not exists profiles_stripe_customer_id_idx on public.profiles(st
 create index if not exists profiles_subscription_status_idx on public.profiles(subscription_status);
 create index if not exists profiles_subscription_tier_idx on public.profiles(subscription_tier);
 
--- 9) Grant permissions
+-- 9) Create savings_scenarios table
+create table if not exists public.savings_scenarios (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  name text not null,
+  created_at timestamptz default now(),
+  -- inputs
+  price numeric, 
+  down numeric, 
+  apr numeric, 
+  term int,
+  fees numeric, 
+  addons numeric, 
+  trade numeric,
+  price_cut_pct numeric, 
+  apr_cut_pct numeric, 
+  drop_addons_pct numeric,
+  doc_fee_cap numeric, 
+  trade_bump_pct numeric,
+  -- results (denormalized for quick display)
+  base_monthly numeric, 
+  with_monthly numeric,
+  total_savings numeric, 
+  monthly_delta numeric
+);
+
+-- 10) Enable RLS for savings_scenarios
+alter table public.savings_scenarios enable row level security;
+
+-- 11) RLS Policies for savings_scenarios
+create policy "owner can read own scenarios"
+  on public.savings_scenarios for select
+  using (auth.uid() = user_id);
+
+create policy "owner can insert their scenarios"
+  on public.savings_scenarios for insert
+  with check (auth.uid() = user_id);
+
+create policy "owner can delete own scenarios"
+  on public.savings_scenarios for delete
+  using (auth.uid() = user_id);
+
+-- 12) Create indexes for savings_scenarios
+create index if not exists savings_scenarios_user_id_idx on public.savings_scenarios(user_id);
+create index if not exists savings_scenarios_created_at_idx on public.savings_scenarios(created_at);
+
+-- 13) Grant permissions
 grant usage on schema public to anon, authenticated;
 grant all on public.profiles to anon, authenticated;
+grant all on public.savings_scenarios to anon, authenticated;
 grant execute on function public.has_active_subscription to anon, authenticated;
 grant execute on function public.has_tier_access to anon, authenticated;

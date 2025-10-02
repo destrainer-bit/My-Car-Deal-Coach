@@ -1,276 +1,401 @@
-import React, { useMemo, useState } from 'react'
-import './savings-calculator.css'
+import React, { useMemo, useRef, useState, useEffect } from "react";
+import { supabase } from "../lib/supabaseClient";
+import { useSubscription } from "../hooks/useSubscription";
+import "./savings-calculator.css";
 
-function monthlyPayment(principal: number, aprPercent: number, months: number): number {
-  const i = (aprPercent / 100) / 12
-  if (principal <= 0 || months <= 0) return 0
-  if (i === 0) return principal / months
-  return principal * (i / (1 - Math.pow(1 + i, -months)))
+function monthlyPayment(P: number, aprPct: number, months: number) {
+  const r = (aprPct / 100) / 12;
+  if (r === 0) return P / months;
+  return (P * r) / (1 - Math.pow(1 + r, -months));
 }
 
 function clamp(n: number, min: number, max: number) {
-  return Math.min(Math.max(n, min), max)
+  return Math.min(Math.max(n, min), max);
 }
 
-export default function SavingsCalculator() {
-  const [vehiclePrice, setVehiclePrice] = useState(30000)
-  const [downPayment, setDownPayment] = useState(3000)
-  const [termMonths, setTermMonths] = useState(60)
+const currency0 = (n: number) =>
+  n.toLocaleString(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
-  const [aprWithout, setAprWithout] = useState(9.5)
-  const [aprWith, setAprWith] = useState(7.5)
+type Props = { isPaid?: boolean };
 
-  const [dealerMarkupPct, setDealerMarkupPct] = useState(3)
-  const [addOnsAvoided, setAddOnsAvoided] = useState(800)
-  const [docFeesAvoided, setDocFeesAvoided] = useState(200)
-  const [tradeInImprovement, setTradeInImprovement] = useState(500)
+export default function SavingsCalculator({ isPaid }: Props) {
+  // Get subscription status
+  const { subscription } = useSubscription();
+  const isUserPaid = isPaid ?? subscription.isActive;
 
-  const price = Math.max(0, vehiclePrice)
-  const down = clamp(downPayment, 0, price)
-  const markupPct = clamp(dealerMarkupPct, 0, 25)
+  // Inputs
+  const [price, setPrice] = useState(30000);
+  const [down, setDown] = useState(3000);
+  const [apr, setApr] = useState(9.0);
+  const [term, setTerm] = useState(72);
+  const [fees, setFees] = useState(1200);
+  const [addons, setAddons] = useState(1800);
+  const [trade, setTrade] = useState(0);
 
-  const inflatedPrice = useMemo(() => price * (1 + markupPct / 100), [price, markupPct])
-  const principalWithout = Math.max(0, inflatedPrice - down)
-  const monthlyWithout = monthlyPayment(principalWithout, aprWithout, termMonths)
-  const totalPayWithout = monthlyWithout * termMonths
-  const totalInterestWithout = Math.max(0, totalPayWithout - principalWithout)
+  const [priceCutPct, setPriceCutPct] = useState(3.0);
+  const [aprCutPct, setAprCutPct] = useState(1.0);
+  const [dropAddonsPct, setDropAddonsPct] = useState(70);
+  const [docFeeCap, setDocFeeCap] = useState(599);
+  const [tradeBumpPct, setTradeBumpPct] = useState(5.0);
 
-  const principalWith = Math.max(0, price - down)
-  const monthlyWith = monthlyPayment(principalWith, aprWith, termMonths)
-  const totalPayWith = monthlyWith * termMonths
-  const totalInterestWith = Math.max(0, totalPayWith - principalWith)
+  const result = useMemo(() => {
+    const baselineDocPart = fees;
+    const principalBase = Math.max(0, price + baselineDocPart + addons - down - trade);
+    const basePmt = monthlyPayment(principalBase, apr, term);
+    const baseTotalPaid = basePmt * term + down;
 
-  const extrasSavings =
-    Math.max(0, addOnsAvoided) + Math.max(0, docFeesAvoided) + Math.max(0, tradeInImprovement)
+    const priceCut = price * (clamp(priceCutPct, 0, 20) / 100);
+    const aprBetter = clamp(apr - aprCutPct, 0, 40);
+    const addonsKept = addons * (1 - clamp(dropAddonsPct, 0, 100) / 100);
+    const docAdjusted = Math.min(baselineDocPart, Math.max(0, docFeeCap));
+    const tradeBetter = trade * (1 + clamp(tradeBumpPct, 0, 30) / 100);
 
-  const coreDelta = (inflatedPrice + totalInterestWithout) - (price + totalInterestWith)
+    const principalWithApp = Math.max(0, (price - priceCut) + docAdjusted + addonsKept - down - tradeBetter);
+    const withPmt = monthlyPayment(principalWithApp, aprBetter, term);
+    const withTotalPaid = withPmt * term + down;
 
-  const estimatedSavings = Math.max(0, coreDelta + extrasSavings)
+    const paymentDelta = basePmt - withPmt;
+    const totalSavings = baseTotalPaid - withTotalPaid;
 
-  const usd = (n: number) =>
-    n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
+    const lineItems = [
+      { label: "Price negotiation", value: priceCut },
+      { label: "APR improvement (interest over term)", value: (basePmt - withPmt) * term },
+      { label: "Add-ons removed", value: addons - addonsKept },
+      { label: "Doc/dealer fee reduction", value: baselineDocPart - docAdjusted },
+      { label: "Better trade-in value", value: tradeBetter - trade },
+    ];
 
-  const usdCents = (n: number) =>
-    n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })
+    return {
+      base: { principalBase, basePmt, baseTotalPaid },
+      withApp: { principalWithApp, withPmt, withTotalPaid },
+      paymentDelta,
+      totalSavings,
+      lineItems,
+    };
+  }, [price, down, apr, term, fees, addons, trade, priceCutPct, aprCutPct, dropAddonsPct, docFeeCap, tradeBumpPct]);
+
+  const printableRef = useRef<HTMLDivElement>(null);
+  const [saving, setSaving] = useState(false);
+  const [savedList, setSavedList] = useState<any[]>([]);
+
+  // Export PDF - opens a clean window and triggers print (user chooses Save as PDF)
+  const exportPDF = () => {
+    const node = printableRef.current;
+    if (!node) return;
+    const html = `
+<!doctype html><html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Car Deal Coach – Savings Estimate</title>
+  <style>
+    body{font: 14px system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin:24px; color:#111}
+    h1{font-size:22px;margin:0 0 8px}
+    h2{font-size:16px;margin:16px 0 8px}
+    .box{border:1px solid #ddd;border-radius:12px;padding:16px;margin:12px 0}
+    table{width:100%;border-collapse:collapse}
+    td{padding:6px 0;border-bottom:1px solid #eee}
+    td:last-child{text-align:right}
+    .muted{color:#666}
+    .result-block{margin:12px 0;padding:12px;border:1px solid #eee;border-radius:8px}
+    .row{display:flex;justify-content:space-between;margin:4px 0}
+    .highlight{background:#f8f9fa}
+    .total{font-weight:bold;border-top:1px solid #ddd;padding-top:8px;margin-top:8px}
+  </style>
+</head>
+<body>
+  <h1>Savings Estimate</h1>
+  <div class="muted">Generated by Car Deal Coach</div>
+  ${node.innerHTML}
+  <script>window.onload = () => window.print();</script>
+</body></html>`;
+    const w = window.open("", "_blank");
+    if (w) { w.document.write(html); w.document.close(); }
+  };
+
+  // Export CSV
+  const exportCSV = () => {
+    const rows = [
+      ["Vehicle price", price],
+      ["Down payment", down],
+      ["APR %", apr],
+      ["Term months", term],
+      ["Fees", fees],
+      ["Add-ons", addons],
+      ["Trade-in", trade],
+      ["Price cut %", priceCutPct],
+      ["APR better (pp)", aprCutPct],
+      ["Drop add-ons %", dropAddonsPct],
+      ["Doc fee cap", docFeeCap],
+      ["Trade bump %", tradeBumpPct],
+      ["Base monthly", result.base.basePmt],
+      ["With-app monthly", result.withApp.withPmt],
+      ["Monthly delta", result.paymentDelta],
+      ["Total savings", result.totalSavings],
+    ];
+    const csv = rows.map(([k, v]) => `${k},${v}`).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "cdc-savings-estimate.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // Save scenario to Supabase
+  const saveScenario = async () => {
+    setSaving(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { 
+        alert("Please sign in to save scenarios."); 
+        setSaving(false); 
+        return; 
+      }
+      const name = prompt("Name this scenario (e.g., '2020 Camry SE 72m')") || "My Scenario";
+      const { error } = await supabase.from("savings_scenarios").insert({
+        user_id: user.id, 
+        name,
+        price, 
+        down, 
+        apr, 
+        term, 
+        fees, 
+        addons, 
+        trade,
+        price_cut_pct: priceCutPct, 
+        apr_cut_pct: aprCutPct, 
+        drop_addons_pct: dropAddonsPct,
+        doc_fee_cap: docFeeCap, 
+        trade_bump_pct: tradeBumpPct,
+        base_monthly: result.base.basePmt, 
+        with_monthly: result.withApp.withPmt,
+        total_savings: result.totalSavings, 
+        monthly_delta: result.paymentDelta
+      });
+      if (error) throw error;
+      alert("Scenario saved successfully!");
+      loadList(); // Refresh the list
+    } catch (e: any) {
+      alert(e.message ?? "Save failed");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // Load user's saved scenarios
+  const loadList = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { 
+      alert("Sign in to load saved scenarios."); 
+      return; 
+    }
+    const { data, error } = await supabase.from("savings_scenarios")
+      .select("id,name,created_at,price,down,apr,term,fees,addons,trade,price_cut_pct,apr_cut_pct,drop_addons_pct,doc_fee_cap,trade_bump_pct")
+      .order("created_at", { ascending: false });
+    if (error) { 
+      alert(error.message); 
+      return; 
+    }
+    setSavedList(data || []);
+  };
+
+  const applyScenario = (row: any) => {
+    setPrice(row.price); 
+    setDown(row.down); 
+    setApr(row.apr); 
+    setTerm(row.term);
+    setFees(row.fees); 
+    setAddons(row.addons); 
+    setTrade(row.trade);
+    setPriceCutPct(row.price_cut_pct); 
+    setAprCutPct(row.apr_cut_pct); 
+    setDropAddonsPct(row.drop_addons_pct);
+    setDocFeeCap(row.doc_fee_cap); 
+    setTradeBumpPct(row.trade_bump_pct);
+  };
+
+  // Trigger highlight when savings >= $1000
+  useEffect(() => {
+    if (result.totalSavings >= 1000) {
+      localStorage.setItem("highlightTier", "90 Days");
+    }
+  }, [result.totalSavings]);
 
   return (
-    <section className="calc-wrap" aria-labelledby="savings-heading">
-      <header className="calc-header">
-        <h2 id="savings-heading">Estimate Your Savings</h2>
-        <p className="sub">
-          Plug in your numbers. See the difference your coach makes—before you step into the dealership.
-        </p>
-      </header>
+    <div className="calc-wrap">
+      {/* ACTION BAR */}
+      <div className="action-bar">
+        <button className="action-btn" onClick={exportPDF}>
+          📄 Export PDF
+        </button>
+        <button className="action-btn" onClick={exportCSV}>
+          📊 Export CSV
+        </button>
+        <button 
+          className="action-btn action-btn--primary" 
+          onClick={saveScenario} 
+          disabled={saving}
+        >
+          {saving ? "Saving…" : "💾 Save Scenario"}
+        </button>
+        <button className="action-btn" onClick={loadList}>
+          📂 Load Saved
+        </button>
+      </div>
 
-      <div className="calc-grid">
-        <div className="card form">
-          <h3>Your Deal Inputs</h3>
-
-          <div className="field">
-            <label htmlFor="vehiclePrice">Vehicle Price</label>
-            <input
-              id="vehiclePrice"
-              type="number"
-              min={0}
-              step={100}
-              value={vehiclePrice}
-              onChange={(e) => setVehiclePrice(Number(e.target.value))}
-            />
-          </div>
-
-          <div className="field">
-            <label htmlFor="downPayment">Down Payment</label>
-            <input
-              id="downPayment"
-              type="number"
-              min={0}
-              step={100}
-              value={downPayment}
-              onChange={(e) => setDownPayment(Number(e.target.value))}
-            />
-          </div>
-
-          <div className="field">
-            <label htmlFor="termMonths">Loan Term</label>
-            <select
-              id="termMonths"
-              value={termMonths}
-              onChange={(e) => setTermMonths(Number(e.target.value))}
-            >
-              <option value={36}>36 months</option>
-              <option value={48}>48 months</option>
-              <option value={60}>60 months</option>
-              <option value={72}>72 months</option>
-            </select>
-          </div>
-
-          <div className="split">
-            <div className="field">
-              <label htmlFor="aprWithout">APR (Without App)</label>
-              <input
-                id="aprWithout"
-                type="number"
-                min={0}
-                max={40}
-                step={0.1}
-                value={aprWithout}
-                onChange={(e) => setAprWithout(Number(e.target.value))}
-              />
-            </div>
-            <div className="field">
-              <label htmlFor="aprWith">APR (With App)</label>
-              <input
-                id="aprWith"
-                type="number"
-                min={0}
-                max={40}
-                step={0.1}
-                value={aprWith}
-                onChange={(e) => setAprWith(Number(e.target.value))}
-              />
-            </div>
-          </div>
-
-          <hr className="divider" />
-
-          <h4>Dealer Tactics You Avoid</h4>
-
-          <div className="field">
-            <label htmlFor="dealerMarkupPct">Dealer Markup Avoided (%)</label>
-            <input
-              id="dealerMarkupPct"
-              type="number"
-              min={0}
-              max={25}
-              step={0.5}
-              value={dealerMarkupPct}
-              onChange={(e) => setDealerMarkupPct(Number(e.target.value))}
-            />
-          </div>
-
-          <div className="split">
-            <div className="field">
-              <label htmlFor="addOnsAvoided">Add-Ons Avoided ($)</label>
-              <input
-                id="addOnsAvoided"
-                type="number"
-                min={0}
-                step={50}
-                value={addOnsAvoided}
-                onChange={(e) => setAddOnsAvoided(Number(e.target.value))}
-              />
-            </div>
-            <div className="field">
-              <label htmlFor="docFeesAvoided">Doc/Admin Fees Reduced ($)</label>
-              <input
-                id="docFeesAvoided"
-                type="number"
-                min={0}
-                step={25}
-                value={docFeesAvoided}
-                onChange={(e) => setDocFeesAvoided(Number(e.target.value))}
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label htmlFor="tradeInImprovement">Trade-In Improvement ($)</label>
-            <input
-              id="tradeInImprovement"
-              type="number"
-              min={0}
-              step={50}
-              value={tradeInImprovement}
-              onChange={(e) => setTradeInImprovement(Number(e.target.value))}
-            />
-          </div>
-
-          <p className="hint">
-            Tip: Set “Dealer Markup Avoided” to 0–5% (typical). Add-ons often run $500–$2,000.
+      {/* PRINTABLE AREA */}
+      <div ref={printableRef}>
+        <header className="calc-header">
+          <h2>Estimate Your Savings</h2>
+          <p className="sub">
+            Adjust the numbers. See how smarter negotiation, cleaner financing, and fewer add-ons change the math.
           </p>
-        </div>
+        </header>
 
-        <div className="card results">
-          <h3>Results</h3>
+        <div className="calc-grid">
+          {/* Input Form */}
+          <div className="card form">
+            <h3>Your Deal Inputs</h3>
+            
+            <Field label="Vehicle price" value={price} setValue={setPrice} />
+            <Field label="Down payment" value={down} setValue={setDown} />
+            <Field label="APR (%)" value={apr} setValue={setApr} step={0.1} />
+            <Field label="Term (months)" value={term} setValue={setTerm} step={12} />
+            <Field label="Fees (doc/TTL)" value={fees} setValue={setFees} />
+            <Field label="Add-ons" value={addons} setValue={setAddons} />
+            <Field label="Trade-in value" value={trade} setValue={setTrade} />
 
-          <div className="result-block">
-            <div className="row">
-              <span>Price w/ Markup (No App)</span>
-              <strong>{usd(inflatedPrice)}</strong>
-            </div>
-            <div className="row">
-              <span>Principal (No App)</span>
-              <strong>{usd(principalWithout)}</strong>
-            </div>
-            <div className="row">
-              <span>Monthly (No App @ {aprWithout.toFixed(1)}%)</span>
-              <strong>{usdCents(monthlyWithout)}</strong>
-            </div>
-            <div className="row">
-              <span>Total Interest (No App)</span>
-              <strong>{usd(totalInterestWithout)}</strong>
-            </div>
+            <details className="assumptions">
+              <summary>Assumptions (tweak these)</summary>
+              <div className="assumptions-grid">
+                <Field label="Price cut (%)" value={priceCutPct} setValue={setPriceCutPct} step={0.5} />
+                <Field label="APR better by (pp)" value={aprCutPct} setValue={setAprCutPct} step={0.25} />
+                <Field label="Drop add-ons (%)" value={dropAddonsPct} setValue={setDropAddonsPct} step={5} />
+                <Field label="Doc fee cap $" value={docFeeCap} setValue={setDocFeeCap} />
+                <Field label="Trade bump (%)" value={tradeBumpPct} setValue={setTradeBumpPct} step={1} />
+              </div>
+            </details>
           </div>
 
-          <div className="result-block">
-            <div className="row">
-              <span>Price (With App)</span>
-              <strong>{usd(price)}</strong>
+          {/* Results */}
+          <div className="card results">
+            <h3>Results</h3>
+
+            {/* Headline result */}
+            <div className="result-block highlight">
+              <div className="headline-savings">
+                <div className="savings-label">Estimated total savings</div>
+                <div className="savings-amount">{currency0(Math.max(0, result.totalSavings))}</div>
+              </div>
+              
+              <div className="monthly-comparison">
+                <div className="monthly-item">
+                  <div className="monthly-label">Monthly (baseline)</div>
+                  <div className="monthly-value">{currency0(result.base.basePmt)}</div>
+                </div>
+                <div className="monthly-item">
+                  <div className="monthly-label">Monthly (with app)</div>
+                  <div className="monthly-value">{currency0(result.withApp.withPmt)}</div>
+                </div>
+                <div className="monthly-delta">
+                  <div className="monthly-label">Monthly difference</div>
+                  <div className="monthly-value">
+                    {currency0(Math.max(0, result.paymentDelta))} / mo
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="row">
-              <span>Principal (With App)</span>
-              <strong>{usd(principalWith)}</strong>
+
+            {/* Breakdown (gated for non-paid users) */}
+            <div className="breakdown-section">
+              <div className={`breakdown-content ${!isUserPaid ? "breakdown-gated" : ""}`}>
+                <div className="breakdown-title">Where the savings come from</div>
+                <ul className="breakdown-list">
+                  {result.lineItems.map((li) => (
+                    <li key={li.label} className="breakdown-item">
+                      <span className="breakdown-label">{li.label}</span>
+                      <span className="breakdown-value">{currency0(Math.max(0, li.value))}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {!isUserPaid && (
+                <div className="breakdown-overlay">
+                  <button
+                    className="unlock-btn"
+                    onClick={() => (window.location.href = "/pricing")}
+                  >
+                    🔓 Unlock full breakdown
+                  </button>
+                </div>
+              )}
             </div>
-            <div className="row">
-              <span>Monthly (With App @ {aprWith.toFixed(1)}%)</span>
-              <strong>{usdCents(monthlyWith)}</strong>
-            </div>
-            <div className="row">
-              <span>Total Interest (With App)</span>
-              <strong>{usd(totalInterestWith)}</strong>
-            </div>
+
+            {/* CTA for high savings */}
+            {result.totalSavings >= 1000 && (
+              <div className="cta-block">
+                <button
+                  className="cta"
+                  onClick={() => {
+                    localStorage.setItem("highlightTier", "90 Days");
+                    const el = document.getElementById("pricing");
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    } else {
+                      window.location.hash = "#pricing";
+                    }
+                  }}
+                >
+                  You're set to save {currency0(result.totalSavings)} — Get 90 Days (Best Value)
+                </button>
+              </div>
+            )}
           </div>
-
-          <div className="result-block highlight">
-            <div className="row">
-              <span>Core Deal Delta (Markup + APR)</span>
-              <strong>{usd(Math.max(0, coreDelta))}</strong>
-            </div>
-            <div className="row">
-              <span>Extras Saved (Add-Ons + Fees + Trade-In)</span>
-              <strong>{usd(extrasSavings)}</strong>
-            </div>
-            <div className="row total">
-              <span>Estimated Total Savings</span>
-              <strong>{usd(estimatedSavings)}</strong>
-            </div>
-          </div>
-
-          {estimatedSavings >= 1000 && (
-            <div className="cta-block">
-              <button
-                className="cta"
-                onClick={() => {
-                  localStorage.setItem('highlightTier', '90 Days')
-                  const el = document.getElementById('pricing')
-                  if (el) {
-                    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  } else {
-                    window.location.hash = '#pricing'
-                  }
-                }}
-              >
-                You’re set to save {usd(estimatedSavings)} — Get 90 Days (Best Value)
-              </button>
-            </div>
-          )}
-
-          <p className="fineprint">
-            Estimates only. Real savings vary by lender, market conditions, credit profile, and negotiation outcomes.
-          </p>
         </div>
       </div>
-    </section>
-  )
+
+      {/* Saved scenarios drawer */}
+      {savedList.length > 0 && (
+        <div className="saved-scenarios">
+          <div className="saved-header">Saved Scenarios</div>
+          <ul className="saved-list">
+            {savedList.map((row) => (
+              <li key={row.id} className="saved-item">
+                <div className="saved-info">
+                  <div className="saved-name">{row.name}</div>
+                  <div className="saved-date">{new Date(row.created_at).toLocaleString()}</div>
+                </div>
+                <button className="apply-btn" onClick={() => applyScenario(row)}>
+                  Apply
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <p className="disclaimer">
+        This is an estimate, not financial advice. Real outcomes vary by lender, region, taxes, and the deal you negotiate.
+      </p>
+    </div>
+  );
 }
 
+function Field({
+  label, value, setValue, step = 100,
+}: { label: string; value: number; setValue: (n: number) => void; step?: number; }) {
+  return (
+    <div className="field">
+      <label className="field-label">{label}</label>
+      <input
+        type="number"
+        inputMode="decimal"
+        className="field-input"
+        value={value}
+        step={step}
+        onChange={(e) => setValue(Number(e.target.value || 0))}
+      />
+    </div>
+  );
+}
