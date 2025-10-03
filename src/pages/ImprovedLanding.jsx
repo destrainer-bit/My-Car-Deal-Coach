@@ -32,11 +32,13 @@ export default function ImprovedLanding() {
           font-size: 1rem;
         }
         .page {
-          padding: 24px 16px;
-          padding-bottom: max(24px, env(safe-area-inset-bottom));
+          padding: 20px 16px;
+          padding-bottom: max(32px, env(safe-area-inset-bottom));
           background: #000;
           color: #fff;
           min-height: 100vh;
+          max-width: 100%;
+          box-sizing: border-box;
         }
         .section { 
           margin-top: 32px; 
@@ -45,30 +47,38 @@ export default function ImprovedLanding() {
           margin-top: 0;
         }
         .btn--primary { 
-          display: inline-block; 
-          padding: 14px 18px; 
+          display: block; 
+          padding: 16px 24px; 
           border-radius: 12px; 
           font-weight: 700; 
+          font-size: 18px;
           background: #3b82f6;
           color: #fff;
           text-decoration: none;
           width: 100%;
           text-align: center;
-          margin-bottom: 16px;
+          margin-bottom: 20px;
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
         .action-list {
-          margin-top: 24px;
+          margin-top: 32px;
         }
         .action-list a { 
           display: block; 
-          padding: 10px 12px; 
+          padding: 12px 16px; 
           border-radius: 10px; 
-          background: #0f172a; 
-          margin-top: 8px; 
-          color: #fff;
+          background: #1f2937; 
+          margin-bottom: 12px; 
+          color: #e5e7eb;
           text-decoration: none;
           text-align: center;
-          border: 1px solid #1e293b;
+          border: 1px solid #374151;
+          font-size: 16px;
+          transition: all 0.2s ease;
+        }
+        .action-list a:hover {
+          background: #374151;
+          border-color: #4b5563;
         }
         .fineprint {
           margin-top: 32px;
@@ -79,16 +89,18 @@ export default function ImprovedLanding() {
           line-height: 1.4;
         }
         h2 {
-          font-size: 2rem;
+          font-size: 2.2rem;
           font-weight: 700;
-          margin-bottom: 16px;
+          margin-bottom: 20px;
           line-height: 1.2;
+          color: #fff;
         }
         p {
           font-size: 1.1rem;
-          line-height: 1.5;
-          margin-bottom: 24px;
-          color: #cbd5e1;
+          line-height: 1.6;
+          margin-bottom: 32px;
+          color: #d1d5db;
+          max-width: 100%;
         }
       `}</style>
       
