@@ -65,7 +65,7 @@ function Onboarding({ onStart }) {
     <section className="onboarding-hero" id="hero">
         <div className="onboarding-hero-content">
           <span className="onboarding-eyebrow">Car buying without the games</span>
-          <h1>Never Get Ripped Off at a Dealership Again</h1>
+          <h1>Imagine a world where car buying no longer feels like a battle against pressure, persuasion, or dishonest sales tactics. Instead, it's smooth, honest, and genuinely enjoyable. Welcome to a new way of car shopping, the way it should be.</h1>
           <p>
             Your AI-powered car buying coach gives you scripts, calculators, and negotiation tactics so you can push back on pressure, spot hidden fees, and walk away with the deal you want.
           </p>
