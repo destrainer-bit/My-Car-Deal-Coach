@@ -7,6 +7,7 @@ import { initializeNativeFeatures } from './lib/native/polish.js'
 
 // Import pages
 import Onboarding from './pages/Onboarding.jsx'
+import ImprovedLanding from './pages/ImprovedLanding.jsx'
 import CreateDeal from './pages/CreateDeal.jsx'
 import SavedDeals from './pages/SavedDeals.jsx'
 import TestSavedDeals from './pages/TestSavedDeals.jsx'
@@ -193,7 +194,7 @@ function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'onboarding':
-        return <Onboarding onStart={() => navigateTo('create')} />
+        return <ImprovedLanding />
       case 'create':
         return (
           <CreateDeal 
