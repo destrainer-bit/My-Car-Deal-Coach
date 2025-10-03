@@ -12,15 +12,15 @@ export default function Landing() {
           Get insider coaching, negotiation scripts, and real-time alerts. 
           Save thousands on your next car purchase.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col gap-4 justify-center max-w-md mx-auto">
           <button 
-            className="px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors"
+            className="px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors w-full"
             onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Calculate Your Savings
           </button>
           <button 
-            className="px-8 py-4 border border-white/20 text-white rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors"
+            className="px-8 py-4 border border-white/20 text-white rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors w-full"
             onClick={() => window.location.href = '/pricing'}
           >
             View Plans
