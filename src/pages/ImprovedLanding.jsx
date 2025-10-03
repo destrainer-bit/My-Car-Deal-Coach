@@ -1,6 +1,9 @@
 import React from 'react';
 
 export default function ImprovedLanding() {
+  // Force cache bust
+  console.log('🎯 ImprovedLanding component is rendering!');
+  
   return (
     <>
       <style>{`
