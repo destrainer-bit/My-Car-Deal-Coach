@@ -15,18 +15,41 @@ export default function Landing() {
           Save thousands on your next car purchase.
         </p>
         <div className="flex flex-col gap-4 justify-center max-w-md mx-auto">
-          <button 
+          {/* Primary CTAs */}
+          <button
             className="px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors w-full"
-            onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Calculate Your Savings
-          </button>
-          <button 
-            className="px-8 py-4 border border-white/20 text-white rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors w-full"
             onClick={() => window.location.href = '/pricing'}
           >
-            View Plans
+            Get your plan →
           </button>
+          <button
+            className="px-8 py-4 border border-white/20 text-white rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors w-full"
+            onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Try savings demo
+          </button>
+          <button
+            className="px-8 py-4 border border-white/20 text-white rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors w-full"
+            onClick={() => window.location.href = '/onboarding'}
+          >
+            Take Tour 🎯
+          </button>
+
+          {/* Secondary utilities */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button
+              className="py-3 px-4 border border-white/15 text-white rounded-lg font-medium hover:bg-white/10 transition-colors w-full"
+              onClick={() => window.location.href = '/app/checklist'}
+            >
+              Show Checklist
+            </button>
+            <button
+              className="py-3 px-4 border border-white/15 text-white rounded-lg font-medium hover:bg-white/10 transition-colors w-full"
+              onClick={() => window.location.href = '/app'}
+            >
+              Test Premium Access
+            </button>
+          </div>
         </div>
       </section>
 
