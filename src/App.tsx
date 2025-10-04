@@ -3,6 +3,7 @@ import Landing from './pages/Landing';
 import Pricing from './pages/Pricing';
 import AppHome from './pages/AppHome';
 import ProtectedRoute from './components/ProtectedRoute';
+import Onboarding from './pages/Onboarding.jsx';
 
 // Import existing pages for backward compatibility
 import Settings from './pages/Settings.jsx';
@@ -19,7 +20,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Onboarding onStart={() => (window.location.href = '/pricing')} />} />
+        <Route path="/landing" element={<Landing />} />
         <Route path="/pricing" element={<Pricing />} />
         
         {/* Protected App Routes */}

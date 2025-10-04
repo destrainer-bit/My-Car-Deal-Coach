@@ -1,12 +1,14 @@
 import SavingsCalculator from '../components/SavingsCalculator';
 
 export default function Landing() {
+  // Cache bust: 2025-01-03-20:48
+  console.log('🎯 Landing component rendering with updated title');
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-6">
       {/* Hero Section */}
       <section className="text-center py-12">
         <h1 className="text-4xl md:text-6xl font-bold mb-6">
-          Stop Overpaying at the Dealership
+          Imagine a world where car buying no longer feels like a battle against pressure, persuasion, or dishonest sales tactics. Instead, it's smooth, honest, and genuinely enjoyable. Welcome to a new way of car shopping, the way it should be.
         </h1>
         <p className="text-xl md:text-2xl opacity-90 mb-8 max-w-3xl mx-auto">
           Get insider coaching, negotiation scripts, and real-time alerts. 
