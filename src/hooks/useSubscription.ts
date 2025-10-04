@@ -82,7 +82,12 @@ export function useSubscription() {
         throw new Error('User not authenticated. Please sign in first.');
       }
 
-      const response = await fetch('/functions/v1/create-checkout', {
+      const supabaseBaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL?.replace(/\/$/, '') || '';
+      const checkoutUrl = supabaseBaseUrl
+        ? `${supabaseBaseUrl}/functions/v1/create-checkout`
+        : '/functions/v1/create-checkout';
+
+      const response = await fetch(checkoutUrl, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${session.access_token}`,
