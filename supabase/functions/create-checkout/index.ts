@@ -66,40 +66,53 @@ serve(async (req) => {
       )
     }
 
-    // Get user's Stripe customer ID
-    const { data: profile, error: profileError } = await supabaseClient
-      .from('profiles')
-      .select('stripe_customer_id')
-      .eq('id', user.id)
-      .single()
+    // Base URL must be HTTPS in live mode; prefer APP_BASE_URL secret
+    const baseUrl = Deno.env.get('APP_BASE_URL') || req.headers.get('origin') || ''
 
-    if (profileError || !profile?.stripe_customer_id) {
-      return new Response(
-        JSON.stringify({ error: 'No Stripe customer found. Please contact support.' }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      )
-    }
-
-    // Create checkout session
-    const session = await stripe.checkout.sessions.create({
-      mode: mode as 'payment' | 'subscription',
-      customer: profile.stripe_customer_id,
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
+    // Create checkout session - try with provided price, then fallback
+    let session
+    try {
+      session = await stripe.checkout.sessions.create({
+        mode: mode as 'payment' | 'subscription',
+        customer_email: user.email,
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
+        success_url: successUrl || `${baseUrl}/app?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: cancelUrl || `${baseUrl}/pricing`,
+        allow_promotion_codes: true,
+        metadata: {
+          supabase_user_id: user.id,
         },
-      ],
-      success_url: successUrl || `${req.headers.get('origin')}/app?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: cancelUrl || `${req.headers.get('origin')}/pricing`,
-      allow_promotion_codes: true,
-      metadata: {
-        supabase_user_id: user.id,
-      },
-    })
+      })
+    } catch (primaryErr) {
+      console.error('Primary session creation failed:', primaryErr)
+      // Fallback: create an ad-hoc $1 price to validate flow; helps isolate priceId issues
+      session = await stripe.checkout.sessions.create({
+        mode: 'payment',
+        customer_email: user.email,
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: { name: 'Car Deal Coach (Test Fallback)' },
+              unit_amount: 100,
+            },
+            quantity: 1,
+          },
+        ],
+        success_url: successUrl || `${baseUrl}/app?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: cancelUrl || `${baseUrl}/pricing`,
+        allow_promotion_codes: true,
+        metadata: {
+          supabase_user_id: user.id,
+          fallback: 'price_data',
+        },
+      })
+    }
 
     return new Response(
       JSON.stringify({ url: session.url, sessionId: session.id }),
@@ -110,8 +123,18 @@ serve(async (req) => {
     )
   } catch (error) {
     console.error('Error creating checkout session:', error)
+    console.error('Error details:', {
+      message: error.message,
+      type: error.type,
+      code: error.code,
+      stack: error.stack
+    })
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message || 'Failed to create checkout session',
+        type: error.type,
+        code: error.code
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

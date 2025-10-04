@@ -2,10 +2,27 @@ import React, { useEffect, useState } from 'react'
 import '../components/pricing.css'
 import { upgradePlans } from '../data/upgradePlans.js'
 import { useSubscription } from '../hooks/useSubscription'
+import { supabase } from '../lib/supabaseClient'
 
 function Pricing() {
   const [highlight, setHighlight] = useState<string | null>(null)
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const { startCheckout, loading: subscriptionLoading, subscription } = useSubscription()
+
+  useEffect(() => {
+    // Check if user is authenticated
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthenticated(!!session)
+    })
+
+    // Listen for auth changes
+    const { data: { subscription: authSub } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session)
+    })
+
+    return () => authSub.unsubscribe()
+  }, [])
 
   useEffect(() => {
     const stored = localStorage.getItem('highlightTier')
@@ -22,6 +39,12 @@ function Pricing() {
   }, [])
 
   const handleSelect = async (planId: string) => {
+    // Check if user is authenticated first
+    if (!isAuthenticated) {
+      setShowAuthModal(true)
+      return
+    }
+
     const plan = upgradePlans.find((p) => p.id === planId)
 
     if (!plan || !plan.priceId) {
@@ -30,6 +53,7 @@ function Pricing() {
     }
 
     try {
+      // Start the checkout (it will create Stripe customer automatically if needed)
       await startCheckout(plan.priceId, {
         successUrl: `${window.location.origin}/app?upgrade=success`,
         cancelUrl: `${window.location.origin}/pricing`,
@@ -37,7 +61,23 @@ function Pricing() {
       })
     } catch (error: any) {
       console.error('Checkout failed:', error)
-      alert('Failed to start checkout. Please try again.')
+      alert(`Failed to start checkout: ${error.message || 'Please try again.'}`)
+    }
+  }
+
+  const handleAuth = async (email: string, password: string, isSignUp: boolean) => {
+    try {
+      if (isSignUp) {
+        const { error } = await supabase.auth.signUp({ email, password })
+        if (error) throw error
+        alert('Check your email for the confirmation link!')
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({ email, password })
+        if (error) throw error
+      }
+      setShowAuthModal(false)
+    } catch (error: any) {
+      alert(error.message)
     }
   }
 
@@ -93,6 +133,103 @@ function Pricing() {
       {subscription.isActive && (
         <div className="subscription-status">
           <p>✅ You have an active {subscription.tier} subscription</p>
+        </div>
+      )}
+
+      {/* Simple Auth Modal */}
+      {showAuthModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0,0,0,0.8)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            background: 'var(--bg-panel)',
+            padding: '2rem',
+            borderRadius: 'var(--radius-lg)',
+            maxWidth: '400px',
+            width: '90%'
+          }}>
+            <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>Sign in to continue</h3>
+            <form onSubmit={(e) => {
+              e.preventDefault()
+              const formData = new FormData(e.currentTarget)
+              const email = formData.get('email') as string
+              const password = formData.get('password') as string
+              const isSignUp = formData.get('signup') === 'true'
+              handleAuth(email, password, isSignUp)
+            }}>
+              <input
+                name="email"
+                type="email"
+                placeholder="Email"
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  marginBottom: '0.75rem',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border-soft)',
+                  background: 'var(--bg-secondary)',
+                  color: 'var(--text-primary)'
+                }}
+              />
+              <input
+                name="password"
+                type="password"
+                placeholder="Password"
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  marginBottom: '1rem',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border-soft)',
+                  background: 'var(--bg-secondary)',
+                  color: 'var(--text-primary)'
+                }}
+              />
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  type="submit"
+                  name="signup"
+                  value="false"
+                  className="cta"
+                  style={{ flex: 1 }}
+                >
+                  Sign In
+                </button>
+                <button
+                  type="submit"
+                  name="signup"
+                  value="true"
+                  className="cta"
+                  style={{ flex: 1, background: 'var(--accent)' }}
+                >
+                  Sign Up
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAuthModal(false)}
+                style={{
+                  width: '100%',
+                  marginTop: '0.75rem',
+                  padding: '0.5rem',
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--text-secondary)',
+                  cursor: 'pointer'
+                }}
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </section>

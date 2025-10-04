@@ -1324,6 +1324,27 @@ body {
   margin: 0 auto;
 }
 
+.onboarding-problem p.orange-text {
+  color: #ff6b35 !important;
+}
+
+.onboarding-hero-content p.orange-text,
+.onboarding-hero-content h2.orange-text {
+  color: #ff6b35 !important;
+}
+
+.onboarding-hero-content .onboarding-eyebrow.orange-text {
+  color: #10b981 !important;
+}
+
+.onboarding-cta p.orange-text {
+  color: #ff6b35 !important;
+}
+
+.onboarding-feature-copy p.green-text {
+  color: #10b981 !important;
+}
+
 .onboarding-problem-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

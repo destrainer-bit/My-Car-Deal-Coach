@@ -121,7 +121,12 @@ export function useSubscription() {
       const { data: { session } } = await supabase.auth.getSession()
       if (!session) throw new Error('Not authenticated')
 
-      const response = await fetch('/functions/v1/create-stripe-customer', {
+      const supabaseBaseUrl = (import.meta && import.meta.env && import.meta.env.VITE_SUPABASE_URL ? import.meta.env.VITE_SUPABASE_URL.replace(/\/$/, '') : '')
+      const endpoint = supabaseBaseUrl
+        ? `${supabaseBaseUrl}/functions/v1/create-stripe-customer`
+        : '/functions/v1/create-stripe-customer'
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${session.access_token}`,
@@ -150,8 +155,12 @@ export function useSubscription() {
       if (!subscription.customerId) {
         await createStripeCustomer()
       }
+      const supabaseBaseUrl = (import.meta && import.meta.env && import.meta.env.VITE_SUPABASE_URL ? import.meta.env.VITE_SUPABASE_URL.replace(/\/$/, '') : '')
+      const checkoutUrl = supabaseBaseUrl
+        ? `${supabaseBaseUrl}/functions/v1/create-checkout`
+        : '/functions/v1/create-checkout'
 
-      const response = await fetch('/functions/v1/create-checkout', {
+      const response = await fetch(checkoutUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${session.access_token}`,

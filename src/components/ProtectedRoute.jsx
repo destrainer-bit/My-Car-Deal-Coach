@@ -1,6 +1,6 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSubscription } from '../hooks/useSubscription'
-import { useHashRoute } from '../lib/routing'
 
 const UpgradePrompt = ({ tier, onUpgrade }) => (
   <div className="upgrade-prompt">
@@ -33,10 +33,10 @@ export default function ProtectedRoute({
   children, 
   requiredTiers = [], 
   fallback = null,
-  redirectTo = 'upgrade'
+  redirectTo = '/pricing'
 }) {
   const { loading, hasAccess } = useSubscription()
-  const { navigateTo } = useHashRoute()
+  const navigate = useNavigate()
 
   // Show loading state
   if (loading) {
@@ -61,7 +61,7 @@ export default function ProtectedRoute({
     return (
       <UpgradePrompt
         tier={requiredTiers.length > 0 ? requiredTiers.join(' or ') : null}
-        onUpgrade={() => navigateTo(redirectTo)}
+        onUpgrade={() => navigate(redirectTo)}
       />
     )
   }

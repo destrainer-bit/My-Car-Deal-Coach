@@ -19,7 +19,7 @@ serve(async (req) => {
       apiVersion: '2024-06-20',
     })
 
-    // Initialize Supabase client
+    // Initialize Supabase client (for auth)
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
@@ -28,6 +28,12 @@ serve(async (req) => {
           headers: { Authorization: req.headers.get('Authorization')! },
         },
       }
+    )
+
+    // Initialize admin client for database operations
+    const supabaseAdmin = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
     )
 
     // Get the authenticated user
@@ -46,8 +52,8 @@ serve(async (req) => {
       )
     }
 
-    // Check if user already has a Stripe customer ID
-    const { data: profile, error: profileError } = await supabaseClient
+    // Check if user already has a Stripe customer ID (use admin client)
+    const { data: profile, error: profileError } = await supabaseAdmin
       .from('profiles')
       .select('stripe_customer_id')
       .eq('id', user.id)
@@ -76,11 +82,13 @@ serve(async (req) => {
       },
     })
 
-    // Update user profile with Stripe customer ID
-    const { error: updateError } = await supabaseClient
+    // Update user profile with Stripe customer ID (use admin client)
+    const { error: updateError } = await supabaseAdmin
       .from('profiles')
-      .update({ stripe_customer_id: customer.id })
-      .eq('id', user.id)
+      .upsert({ 
+        id: user.id,
+        stripe_customer_id: customer.id 
+      })
 
     if (updateError) {
       throw updateError
@@ -95,8 +103,17 @@ serve(async (req) => {
     )
   } catch (error) {
     console.error('Error creating Stripe customer:', error)
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name,
+      cause: error.cause
+    })
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message || 'Unknown error',
+        details: error.stack
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

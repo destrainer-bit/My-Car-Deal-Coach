@@ -45,22 +45,41 @@ serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
   )
 
+  // Helper: find user id by stripe customer id or provided session metadata
+  const findUserId = async (
+    customerId: string,
+    metadataUserId?: string
+  ): Promise<string | null> => {
+    // 1) Prefer mapping from our DB
+    const { data: byCustomer, error: byCustomerErr } = await supabaseAdmin
+      .from('profiles')
+      .select('id')
+      .eq('stripe_customer_id', customerId)
+      .maybeSingle()
+
+    if (!byCustomerErr && byCustomer?.id) return byCustomer.id as string
+
+    // 2) Fall back to metadata supplied by session
+    if (metadataUserId) return metadataUserId
+
+    // 3) Final fallback: try Stripe customer metadata
+    try {
+      const customer = await stripe.customers.retrieve(customerId) as Stripe.Customer
+      return (customer?.metadata as any)?.supabase_user_id || null
+    } catch {
+      return null
+    }
+  }
+
   // Helper function to update user subscription
   const updateSubscription = async (
-    customerId: string,
+    userId: string,
     status: string,
     tier?: string,
-    periodEnd?: number
+    periodEnd?: number,
+    customerIdForSave?: string
   ) => {
     try {
-      // Get the customer to find the Supabase user ID
-      const customer = await stripe.customers.retrieve(customerId) as Stripe.Customer
-      const userId = customer?.metadata?.supabase_user_id
-
-      if (!userId) {
-        console.error('No Supabase user ID found in customer metadata:', customerId)
-        return
-      }
 
       // Calculate period end for one-time purchases (72h, 7d, etc.)
       let calculatedPeriodEnd: string | null = null
@@ -94,6 +113,7 @@ serve(async (req) => {
           subscription_status: status,
           subscription_tier: tier || null,
           current_period_end: calculatedPeriodEnd,
+          ...(customerIdForSave ? { stripe_customer_id: customerIdForSave } : {}),
           updated_at: new Date().toISOString(),
         })
         .eq('id', userId)
@@ -119,23 +139,36 @@ serve(async (req) => {
         const lineItems = await stripe.checkout.sessions.listLineItems(session.id)
         const priceId = lineItems.data[0]?.price?.id
         const tier = priceId ? PRICE_TO_TIER_MAP[priceId] : undefined
-
+        const metadataUserId = (session.metadata as any)?.supabase_user_id as string | undefined
+        const resolvedUserId = await findUserId(session.customer as string, metadataUserId)
+        if (!resolvedUserId) {
+          console.error('Unable to resolve user for customer', session.customer)
+          break
+        }
         await updateSubscription(
-          session.customer as string,
+          resolvedUserId,
           'active',
-          tier
+          tier,
+          undefined,
+          session.customer as string
         )
       } else if (session.mode === 'subscription' && session.subscription) {
         // Subscription created
         const subscription = await stripe.subscriptions.retrieve(session.subscription as string)
         const priceId = subscription.items.data[0]?.price?.id
         const tier = priceId ? PRICE_TO_TIER_MAP[priceId] : undefined
-
+        const metadataUserId = (session.metadata as any)?.supabase_user_id as string | undefined
+        const resolvedUserId = await findUserId(session.customer as string, metadataUserId)
+        if (!resolvedUserId) {
+          console.error('Unable to resolve user for customer', session.customer)
+          break
+        }
         await updateSubscription(
-          session.customer as string,
+          resolvedUserId,
           subscription.status,
           tier,
-          subscription.current_period_end
+          subscription.current_period_end,
+          session.customer as string
         )
       }
       break
@@ -147,8 +180,10 @@ serve(async (req) => {
       const priceId = subscription.items.data[0]?.price?.id
       const tier = priceId ? PRICE_TO_TIER_MAP[priceId] : undefined
 
+      const resolvedUserId = await findUserId(subscription.customer as string)
+      if (!resolvedUserId) break
       await updateSubscription(
-        subscription.customer as string,
+        resolvedUserId,
         subscription.status,
         tier,
         subscription.current_period_end
@@ -158,8 +193,10 @@ serve(async (req) => {
 
     case 'customer.subscription.deleted': {
       const subscription = event.data.object as Stripe.Subscription
+      const resolvedUserId = await findUserId(subscription.customer as string)
+      if (!resolvedUserId) break
       await updateSubscription(
-        subscription.customer as string,
+        resolvedUserId,
         'canceled'
       )
       break
@@ -168,8 +205,10 @@ serve(async (req) => {
     case 'invoice.payment_failed': {
       const invoice = event.data.object as Stripe.Invoice
       if (invoice.customer) {
+        const resolvedUserId = await findUserId(invoice.customer as string)
+        if (!resolvedUserId) break
         await updateSubscription(
-          invoice.customer as string,
+          resolvedUserId,
           'past_due'
         )
       }
@@ -183,8 +222,10 @@ serve(async (req) => {
         const priceId = subscription.items.data[0]?.price?.id
         const tier = priceId ? PRICE_TO_TIER_MAP[priceId] : undefined
 
+        const resolvedUserId = await findUserId(invoice.customer as string)
+        if (!resolvedUserId) break
         await updateSubscription(
-          invoice.customer as string,
+          resolvedUserId,
           'active',
           tier,
           subscription.current_period_end

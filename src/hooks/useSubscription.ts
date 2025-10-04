@@ -102,8 +102,22 @@ export function useSubscription() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to create checkout session');
+        // Read body safely and surface full details
+        let message = 'Failed to create checkout session';
+        try {
+          const text = await response.text();
+          try {
+            const errJson = JSON.parse(text);
+            const parts = [errJson.error || errJson.message || message];
+            if (errJson.code) parts.unshift(`[${errJson.code}]`);
+            if (errJson.type) parts.unshift(`${errJson.type}`);
+            message = parts.join(' ');
+          } catch {
+            // Not JSON, use raw text if present
+            if (text) message = text;
+          }
+        } catch {}
+        throw new Error(message);
       }
 
       const { url } = await response.json();

@@ -1,6 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import SavingsCalculator from '../components/SavingsCalculator'
 
 function Onboarding({ onStart }) {
+  const navigate = useNavigate()
   const problemItems = [
     '“Why is my payment higher than we agreed?”',
     'Surprise warranties, paint protection, and GAP bundles you never asked for',
@@ -64,17 +67,22 @@ function Onboarding({ onStart }) {
     <div className="onboarding">
     <section className="onboarding-hero" id="hero">
         <div className="onboarding-hero-content">
-          <span className="onboarding-eyebrow">Car buying without the games</span>
-          <h1>Imagine a world where car buying no longer feels like a battle against pressure, persuasion, or dishonest sales tactics. Instead, it's smooth, honest, and genuinely enjoyable. Welcome to a new way of car shopping, the way it should be.</h1>
-          <p>
+          <span className="onboarding-eyebrow orange-text">Car buying without the games</span>
+          <h1 style={{ fontSize: '2.5rem', lineHeight: '1.4', marginBottom: '1.5rem', letterSpacing: '0.02em' }}>
+            Imagine a world where car buying no longer feels like a battle against pressure, persuasion, or dishonest sales tactics.
+          </h1>
+          <h1 style={{ fontSize: '2.5rem', lineHeight: '1.4', marginBottom: '1.5rem', letterSpacing: '0.02em' }}>
+            Instead, it's smooth, honest, and genuinely enjoyable. Welcome to a new way of car shopping, the way it should be.
+          </h1>
+          <p className="orange-text" style={{ marginBottom: '2rem', fontSize: '1.05rem', maxWidth: '100%', lineHeight: '1.2' }}>
             Your AI-powered car buying coach gives you scripts, calculators, and negotiation tactics so you can push back on pressure, spot hidden fees, and walk away with the deal you want.
           </p>
           <div className="onboarding-hero-actions">
-            <button className="btn btn-primary btn-large" onClick={onStart}>
+            <button className="btn btn-primary btn-large" onClick={() => navigate('/pricing')}>
               Start a Deal
             </button>
-            <button className="btn btn-secondary btn-outline" onClick={onStart}>
-              Explore the Coach
+            <button className="btn btn-secondary btn-outline" onClick={() => navigate('/app/how-to-use')}>
+              Take the tour
             </button>
           </div>
         </div>
@@ -103,8 +111,8 @@ function Onboarding({ onStart }) {
 
       <section className="onboarding-problem">
         <h2>Car dealerships are trained to play games.</h2>
-        <p>
-          Hidden fees, finance tricks, pressure tactics—buyers lose thousands every day. Car Deal Coach flips the script so you stay in control.
+        <p className="orange-text">
+          Hidden fees, finance tricks, and high-pressure tactics cost buyers thousands every day. Car Deal Coach flips the script and puts you back in control.
         </p>
         <div className="onboarding-problem-grid">
           <div className="onboarding-problem-card">
@@ -131,7 +139,7 @@ function Onboarding({ onStart }) {
           <article className="onboarding-feature" key={feature.title}>
             <div className="onboarding-feature-copy">
               <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
+              <p className={feature.title === 'Payment Calculator & Rate Decoder' ? 'green-text' : ''}>{feature.description}</p>
               <ul className="feature-points">
                 {feature.points.map(point => (
                   <li key={point}>
@@ -150,6 +158,19 @@ function Onboarding({ onStart }) {
         ))}
       </section>
 
+      {/* Savings Calculator Section */}
+      <section className="onboarding-calculator" style={{ marginTop: 'var(--space-2xl)', marginBottom: 'var(--space-2xl)' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'var(--space-xl)' }}>
+          <h2 style={{ fontSize: 'clamp(2rem, 3vw, 2.8rem)', fontWeight: '800', marginBottom: 'var(--space-md)' }}>
+            Estimate your savings
+          </h2>
+          <p style={{ fontSize: '1.05rem', opacity: '0.9', maxWidth: '640px', margin: '0 auto' }}>
+            Adjust the numbers and watch the story lose its grip. Full line-by-line breakdown unlocks with your plan.
+          </p>
+        </div>
+        <SavingsCalculator isPaid={false} />
+      </section>
+
       <section className="onboarding-social">
         <div className="onboarding-testimonials">
           {testimonials.map(testimonial => (
@@ -160,17 +181,17 @@ function Onboarding({ onStart }) {
           ))}
         </div>
         <div className="onboarding-founder">
-          <span className="onboarding-eyebrow">Founder’s Note</span>
+          <span className="onboarding-eyebrow">Founder's Note</span>
           <h3>Built by dealership insiders</h3>
           <p>
-            I built Car Deal Coach after watching friends get steamrolled in finance offices. This is the defense playbook I wish every buyer had—real scripts, calculators, and backup when the dealer starts playing games.
+            I built Car Deal Coach after watching buyer after buyer get steamrolled in finance offices. This is the defense playbook I wish every customer had, real scripts, calculators, and backup when the dealer starts playing games.
           </p>
         </div>
       </section>
 
       <section className="onboarding-cta" id="cta">
         <h2>Ready to buy smarter?</h2>
-        <p>Cancel anytime. No hidden fees. Built for buyers—not dealers.</p>
+        <p className="orange-text">Cancel anytime. No hidden fees. Built for buyers, not dealers.</p>
         <button className="btn btn-primary btn-large" onClick={onStart}>
           Get Your Car Coach Today
         </button>

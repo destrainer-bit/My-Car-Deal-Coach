@@ -2,6 +2,24 @@ import { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { upgradePlans } from '../data/upgradePlans';
 
+// Type for upgrade plans
+interface UpgradePlan {
+  id: string;
+  label: string;
+  price: string;
+  perDay: string;
+  duration: string;
+  title: string;
+  blurb: string;
+  highlights: string[];
+  cta: string;
+  priceId: string;
+  mode: string;
+  badge?: string;
+  featured?: boolean;
+  billingPortalUrl?: string;
+}
+
 async function upgrade(priceId: string) {
   try {
     const { data: { session } } = await supabase.auth.getSession();
@@ -77,9 +95,9 @@ export default function Pricing() {
 
       {/* Pricing Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {upgradePlans.map((plan) => {
+        {(upgradePlans as UpgradePlan[]).map((plan) => {
           const isLoading = loading === plan.id;
-          const isPopular = plan.accent || plan.label === '90 Days';
+          const isPopular = plan.featured || plan.label === '90 Days';
           
           return (
             <div 
@@ -94,7 +112,7 @@ export default function Pricing() {
               {isPopular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <span className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    {plan.ribbon || 'Most Popular'}
+                    {plan.badge || 'Most Popular'}
                   </span>
                 </div>
               )}
@@ -108,16 +126,16 @@ export default function Pricing() {
 
               {/* Plan Description */}
               <div className="mb-6">
-                <h4 className="font-semibold mb-2">{plan.headline}</h4>
+                <h4 className="font-semibold mb-2">{plan.title}</h4>
                 <p className="text-sm opacity-80 mb-4">{plan.blurb}</p>
               </div>
 
               {/* Features */}
               <ul className="space-y-2 mb-8">
-                {plan.bullets.map((bullet, index) => (
+                {plan.highlights.map((highlight, index) => (
                   <li key={index} className="flex items-center text-sm">
                     <span className="text-green-400 mr-2">✓</span>
-                    {bullet}
+                    {highlight}
                   </li>
                 ))}
               </ul>
@@ -129,14 +147,14 @@ export default function Pricing() {
                     ? 'bg-blue-600 hover:bg-blue-700 text-white'
                     : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
                 } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                onClick={() => handleUpgrade(plan.id, plan.id)}
-                disabled={isLoading || !plan.id}
+                onClick={() => handleUpgrade(plan.priceId, plan.id)}
+                disabled={isLoading || !plan.priceId}
               >
                 {isLoading ? 'Processing...' : plan.cta}
               </button>
 
               {/* Unavailable Notice */}
-              {!plan.id && (
+              {!plan.priceId && (
                 <p className="text-center text-sm opacity-60 mt-2">
                   Contact support for this plan
                 </p>
@@ -159,7 +177,7 @@ export default function Pricing() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-purple-400">↩️</span>
-            <span className="text-sm">30-Day Guarantee</span>
+            <span className="text-sm">7-Day Guarantee</span>
           </div>
         </div>
         <p className="text-sm opacity-70">
@@ -188,7 +206,7 @@ export default function Pricing() {
           <details className="p-4 bg-white/5 rounded-lg">
             <summary className="font-semibold cursor-pointer">Is there a money-back guarantee?</summary>
             <p className="mt-2 opacity-80">
-              Yes! If you're not satisfied within 30 days, we'll refund your purchase. 
+              Yes! If you're not satisfied within 7 days, we'll refund your purchase. 
               We're confident you'll save more than you paid.
             </p>
           </details>

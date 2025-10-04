@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Landing from './pages/Landing';
-import Pricing from './pages/Pricing';
+import Pricing from './components/Pricing';
 import AppHome from './pages/AppHome';
 import ProtectedRoute from './components/ProtectedRoute';
 import Onboarding from './pages/Onboarding.jsx';
@@ -15,12 +16,13 @@ import Notes from './pages/Notes.jsx';
 import HowToUse from './pages/HowToUse.jsx';
 import Legal from './pages/Legal.jsx';
 
-export default function App() {
+function AppRoutes() {
+  const navigate = useNavigate();
+  
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Onboarding onStart={() => (window.location.href = '/pricing')} />} />
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<Onboarding onStart={() => navigate('/pricing')} />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/pricing" element={<Pricing />} />
         
@@ -109,6 +111,13 @@ export default function App() {
         {/* Fallback - redirect to landing */}
         <Route path="*" element={<Landing />} />
       </Routes>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
     </BrowserRouter>
   );
 }
