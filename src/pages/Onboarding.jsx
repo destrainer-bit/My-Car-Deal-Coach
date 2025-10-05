@@ -272,38 +272,34 @@ function Onboarding({ onStart }) {
                 {feature.points.map(point => {
                   let pillColor = '#ffffff';
                   let pillBg = '#3b82f6'; // Default blue background
-                  let pillBorder = '#3b82f6';
                   
                   if (feature.title === 'Scripts & Red Flags') {
                     pillColor = '#ffffff';
                     pillBg = '#f59e0b'; // Orange background
-                    pillBorder = '#f59e0b';
                   } else if (feature.title === 'Payment Calculator & Rate Decoder') {
                     pillColor = '#ffffff';
                     pillBg = '#3b82f6'; // Blue background
-                    pillBorder = '#3b82f6';
                   } else if (feature.title === 'Dealership Psychology Training') {
                     pillColor = '#ffffff';
                     pillBg = '#10b981'; // Emerald Green background
-                    pillBorder = '#10b981';
                   }
                   
                   return (
-                    <div key={point} style={{
-                      background: `${pillBg} !important`,
-                      border: `2px solid ${pillBorder} !important`,
-                      borderRadius: '20px',
+                    <span key={point} style={{
+                      backgroundColor: pillBg,
+                      color: pillColor,
                       padding: '0.5rem 1rem',
+                      borderRadius: '20px',
                       fontSize: '0.9rem',
-                      color: `${pillColor} !important`,
-                      textAlign: 'center',
                       fontWeight: '600',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
                       display: 'inline-block',
-                      width: '100%'
+                      width: '100%',
+                      textAlign: 'center',
+                      border: 'none',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
                     }}>
                       {point}
-                    </div>
+                    </span>
                   );
                 })}
               </div>
