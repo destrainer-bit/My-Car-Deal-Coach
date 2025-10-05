@@ -290,15 +290,17 @@ function Onboarding({ onStart }) {
                   
                   return (
                     <div key={point} style={{
-                      background: pillBg,
-                      border: `2px solid ${pillBorder}`,
+                      background: `${pillBg} !important`,
+                      border: `2px solid ${pillBorder} !important`,
                       borderRadius: '20px',
                       padding: '0.5rem 1rem',
                       fontSize: '0.9rem',
-                      color: pillColor,
+                      color: `${pillColor} !important`,
                       textAlign: 'center',
                       fontWeight: '600',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      display: 'inline-block',
+                      width: '100%'
                     }}>
                       {point}
                     </div>
