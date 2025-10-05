@@ -264,21 +264,11 @@ export default function SignIn() {
                 </div>
               )}
 
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <div className="mobile-first-button-group">
                 <button
                   type="submit"
                   disabled={resetLoading}
-                  style={{
-                    flex: 1,
-                    background: resetLoading ? '#9ca3af' : '#3b82f6',
-                    color: 'white',
-                    padding: '0.75rem',
-                    border: 'none',
-                    borderRadius: '6px',
-                    fontSize: '1rem',
-                    fontWeight: '500',
-                    cursor: resetLoading ? 'not-allowed' : 'pointer'
-                  }}
+                  className={`mobile-first-cta ${resetLoading ? 'mobile-first-cta-disabled' : ''}`}
                 >
                   {resetLoading ? 'Sending...' : 'Send Reset Email'}
                 </button>
@@ -289,16 +279,7 @@ export default function SignIn() {
                     setResetEmail('')
                     setResetMessage('')
                   }}
-                  style={{
-                    background: '#6b7280',
-                    color: 'white',
-                    padding: '0.75rem',
-                    border: 'none',
-                    borderRadius: '6px',
-                    fontSize: '1rem',
-                    fontWeight: '500',
-                    cursor: 'pointer'
-                  }}
+                  className="mobile-first-cta mobile-first-cta-secondary"
                 >
                   Cancel
                 </button>

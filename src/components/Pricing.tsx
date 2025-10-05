@@ -193,13 +193,12 @@ function Pricing() {
                   color: 'var(--text-primary)'
                 }}
               />
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <div className="mobile-first-button-group">
                 <button
                   type="submit"
                   name="signup"
                   value="false"
-                  className="cta"
-                  style={{ flex: 1 }}
+                  className="mobile-first-cta"
                 >
                   Sign In
                 </button>
@@ -207,8 +206,7 @@ function Pricing() {
                   type="submit"
                   name="signup"
                   value="true"
-                  className="cta"
-                  style={{ flex: 1, background: 'var(--accent)' }}
+                  className="mobile-first-cta mobile-first-cta-accent"
                 >
                   Sign Up
                 </button>
