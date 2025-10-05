@@ -285,21 +285,23 @@ function Onboarding({ onStart }) {
                   }
                   
                   return (
-                    <span key={point} style={{
+                    <div key={point} className="custom-colored-pill" style={{
                       backgroundColor: pillBg,
                       color: pillColor,
                       padding: '0.5rem 1rem',
                       borderRadius: '20px',
                       fontSize: '0.9rem',
                       fontWeight: '600',
-                      display: 'inline-block',
+                      display: 'block',
                       width: '100%',
                       textAlign: 'center',
                       border: 'none',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      margin: '0',
+                      background: pillBg
                     }}>
                       {point}
-                    </span>
+                    </div>
                   );
                 })}
               </div>

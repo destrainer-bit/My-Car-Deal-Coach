@@ -1925,6 +1925,14 @@ body {
   color: var(--color-warning-dark);
 }
 
+/* Custom colored pills for features section */
+.custom-colored-pill {
+  background: inherit !important;
+  color: inherit !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
 .status-badge.visiting {
   background: var(--color-info-light);
   color: var(--color-info-dark);
