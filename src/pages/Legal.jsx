@@ -200,7 +200,6 @@ function Legal({ onBack }) {
           {sections[activeSection].content}
         </div>
       </div>
-      </div>
     </div>
   )
 }
