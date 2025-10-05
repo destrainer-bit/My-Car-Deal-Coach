@@ -298,7 +298,7 @@ function Onboarding({ onStart }) {
 
       <section className="onboarding-cta" id="cta">
         <h2>Ready to buy smarter?</h2>
-        <p className="orange-text">Cancel anytime. No hidden fees. Built for buyers, not dealers.</p>
+        <p className="orange-text">One-time payment. No hidden fees. Built for buyers, not dealers.</p>
         <button className="btn btn-primary btn-large" onClick={onStart}>
           Get Your Car Coach Today
         </button>
