@@ -369,8 +369,8 @@ function CreateDeal({ onSave, onCancel }) {
       
       <div className="form-group" style={{ marginBottom: '2rem' }}>
         <label>Do you have a trade-in vehicle?</label>
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+        <div className="mobile-first-radio-group">
+          <label className="mobile-first-radio-label">
             <input
               type="radio"
               name="hasTradeIn"
@@ -380,7 +380,7 @@ function CreateDeal({ onSave, onCancel }) {
             />
             <span>Yes, I have a trade-in</span>
           </label>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+          <label className="mobile-first-radio-label">
             <input
               type="radio"
               name="hasTradeIn"
