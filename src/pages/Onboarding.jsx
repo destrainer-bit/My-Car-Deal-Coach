@@ -229,6 +229,16 @@ function Onboarding({ onStart }) {
         </div>
       </section>
 
+      {/* TEST SECTION - Color Test */}
+      <section style={{ padding: '2rem', background: 'red', textAlign: 'center' }}>
+        <h2 style={{ color: 'white' }}>COLOR TEST</h2>
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ backgroundColor: '#f59e0b', color: 'white', padding: '1rem', borderRadius: '10px' }}>ORANGE TEST</div>
+          <div style={{ backgroundColor: '#3b82f6', color: 'white', padding: '1rem', borderRadius: '10px' }}>BLUE TEST</div>
+          <div style={{ backgroundColor: '#10b981', color: 'white', padding: '1rem', borderRadius: '10px' }}>GREEN TEST</div>
+        </div>
+      </section>
+
       <section className="onboarding-features" id="features" style={{ 
         padding: '4rem 2rem', 
         background: 'rgba(0, 0, 0, 0.1)',
