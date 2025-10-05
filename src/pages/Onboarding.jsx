@@ -99,29 +99,19 @@ function Onboarding({ onStart }) {
         </button>
       </div>
 
-      <section className="onboarding-hero" id="hero" style={{ 
-        paddingTop: '80px', 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '80vh',
-        maxWidth: 'min(90%, 900px)',
-        margin: '0 auto',
-        borderRadius: '12px',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
-      }}>
-        <div className="onboarding-hero-content" style={{ textAlign: 'center', width: '100%', padding: '0 2rem' }}>
-          <span className="onboarding-eyebrow orange-text" style={{ display: 'block', marginBottom: '1rem', fontSize: 'clamp(1rem, 2.5vw, 1.2rem)' }}>Car buying without the games</span>
-          <h1 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.8rem)', lineHeight: '1.3', marginBottom: '1rem', letterSpacing: '0.01em', textAlign: 'center' }}>
+      <section className="onboarding-hero mobile-first-hero" id="hero">
+        <div className="onboarding-hero-content">
+          <span className="onboarding-eyebrow orange-text">Car buying without the games</span>
+          <h1>
             Imagine a world where car buying no longer feels like a battle against pressure, persuasion, or dishonest sales tactics.
           </h1>
-          <h1 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.8rem)', lineHeight: '1.3', marginBottom: '1rem', letterSpacing: '0.01em', textAlign: 'center' }}>
+          <h1>
             Instead, it's smooth, honest, and genuinely enjoyable. Welcome to a new way of car shopping, the way it should be.
           </h1>
-          <p className="orange-text" style={{ marginBottom: '2rem', fontSize: 'clamp(0.9rem, 2.2vw, 1.1rem)', maxWidth: '100%', lineHeight: '1.2', textAlign: 'center' }}>
+          <p className="orange-text">
             Your AI-powered car buying coach gives you scripts, calculators, and negotiation tactics so you can push back on pressure, spot hidden fees, and walk away with the deal you want.
           </p>
-          <div className="onboarding-hero-actions" style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div className="onboarding-hero-actions">
             <button className="btn btn-primary btn-large" onClick={() => navigate('/pricing')}>
               Start a Deal
             </button>
@@ -164,8 +154,8 @@ function Onboarding({ onStart }) {
               }}>
                 <strong style={{ color: '#3b82f6' }}>Goal:</strong>
                 <br />
-                OTD under $25,000 for 2020 Civic EX
-              </div>
+              OTD under $25,000 for 2020 Civic EX
+            </div>
               <div className="onboarding-screen-card" style={{
                 background: 'rgba(255, 255, 255, 0.1)',
                 padding: '1rem',
@@ -187,7 +177,7 @@ function Onboarding({ onStart }) {
                 <strong style={{ color: '#10b981', fontSize: '1.1rem' }}>Say This:</strong>
                 <br />
                 "I've researched and seen comparable cars at $23,500 OTD. Can you match that?"
-              </div>
+            </div>
               <div className="onboarding-screen-card" style={{
                 background: 'rgba(255, 255, 255, 0.1)',
                 padding: '1rem',
@@ -198,7 +188,7 @@ function Onboarding({ onStart }) {
                 <strong style={{ color: '#f59e0b' }}>Next Move:</strong>
                 <br />
                 If they won't drop the add-ons, walk away. They'll call back.
-              </div>
+            </div>
             </div>
           </div>
         </div>
@@ -230,46 +220,19 @@ function Onboarding({ onStart }) {
       </section>
 
 
-      <section className="onboarding-features" id="features" style={{ 
-        padding: '4rem 2rem', 
-        background: 'rgba(0, 0, 0, 0.1)',
-        display: 'flex',
-        justifyContent: 'center'
-      }}>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
-          gap: '2rem', 
-          maxWidth: '1200px',
-          width: '100%'
-        }}>
-          {featureBlocks.map((feature) => (
-            <div key={feature.title} style={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              borderRadius: '12px',
-              padding: '2rem',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              backdropFilter: 'blur(10px)'
-            }}>
-              <h3 style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: 'bold', 
-                color: '#ffffff', 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>
+          <section className="onboarding-features mobile-first-features" id="features">
+            <div className="mobile-first-features-grid">
+        {featureBlocks.map((feature) => (
+            <div key={feature.title} className="mobile-first-feature-card">
+              <h3>
                 {feature.title}
               </h3>
               <p style={{ 
-                color: feature.title === 'Payment Calculator & Rate Decoder' ? '#10b981' : '#ffffff',
-                marginBottom: '1.5rem',
-                fontSize: '1rem',
-                lineHeight: '1.4',
-                textAlign: 'center'
+                color: feature.title === 'Payment Calculator & Rate Decoder' ? '#10b981' : '#ffffff'
               }}>
                 {feature.description}
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <div className="mobile-first-feature-points">
                 {feature.points.map((point, index) => {
                   // Use colored borders instead of backgrounds
                   let borderColor = '#3b82f6'; // Default blue
@@ -285,17 +248,10 @@ function Onboarding({ onStart }) {
                   return (
                     <div 
                       key={`${feature.title}-${index}`} 
+                      className="mobile-first-feature-point"
                       style={{
-                        backgroundColor: 'transparent',
-                        color: '#ffffff',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '20px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        textAlign: 'center',
                         border: `2px solid ${borderColor}`,
-                        boxShadow: `0 0 8px ${borderColor}40`,
-                        background: 'rgba(255, 255, 255, 0.05)'
+                        boxShadow: `0 0 8px ${borderColor}40`
                       }}
                     >
                       {point}

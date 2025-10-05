@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Onboarding from './pages/Onboarding.jsx';
 import SignIn from './pages/SignIn';
 import ResetPassword from './pages/ResetPassword';
+import './styles/mobile-first-base.css';
 import './styles/mobile-first.css';
 
 // Import existing pages for backward compatibility
