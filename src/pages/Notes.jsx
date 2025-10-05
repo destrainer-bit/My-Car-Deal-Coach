@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PhotoUploader from '../components/PhotoUploader.jsx'
 
 function Notes({ notes, photos, onNotesChange, onPhotosChange, onBack }) {
+  const navigate = useNavigate()
   const [selectedPhoto, setSelectedPhoto] = useState(null)
   const [editingPhoto, setEditingPhoto] = useState(null)
   
@@ -194,11 +196,14 @@ function Notes({ notes, photos, onNotesChange, onPhotosChange, onBack }) {
       <div className="notes-header">
         <h1>Notes & Photos</h1>
         <p>Keep track of important information and photos for your car search.</p>
-        {onBack && (
-          <button className="btn btn-secondary" onClick={onBack}>
+        <div className="notes-actions">
+          <button className="btn btn-secondary" onClick={() => navigate('/app/saved-deals')}>
             ← Back to Deals
           </button>
-        )}
+          <button className="btn btn-primary" onClick={() => navigate('/app')}>
+            🏠 Back to Main
+          </button>
+        </div>
       </div>
 
       <div className="notes-content">

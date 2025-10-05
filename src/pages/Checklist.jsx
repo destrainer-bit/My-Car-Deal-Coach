@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import RangeBadge from '../components/RangeBadge.jsx'
 
 function Checklist({ deals, progress, onUpdateProgress }) {
+  const navigate = useNavigate()
   const [selectedDeal, setSelectedDeal] = useState(null)
 
   const checklistItems = {
@@ -108,7 +110,12 @@ function Checklist({ deals, progress, onUpdateProgress }) {
 
   const renderDealSelector = () => (
     <div className="deal-selector">
-      <h2 style={{ color: '#ffffff' }}>Select a Deal</h2>
+      <div className="deal-selector-header">
+        <h2 style={{ color: '#ffffff' }}>Select a Deal</h2>
+        <button className="btn btn-primary" onClick={() => navigate('/app')}>
+          🏠 Back to Main
+        </button>
+      </div>
       <div className="deals-list">
         {deals.map(deal => {
           const dealProgress = getProgressForDeal(deal.id)
@@ -155,6 +162,14 @@ function Checklist({ deals, progress, onUpdateProgress }) {
             <p style={{ color: '#ffffff' }}>{selectedDeal.vehicle.mileage.toLocaleString()} miles • {selectedDeal.vehicle.zip}</p>
             <RangeBadge status={selectedDeal.status} />
           </div>
+          <div className="checklist-actions">
+            <button className="btn btn-secondary" onClick={() => setSelectedDeal(null)}>
+              ← Back to Deals
+            </button>
+            <button className="btn btn-primary" onClick={() => navigate('/app')}>
+              🏠 Back to Main
+            </button>
+          </div>
         </div>
 
         <div className="checklist-sections">
@@ -179,6 +194,11 @@ function Checklist({ deals, progress, onUpdateProgress }) {
           </div>
           <h2>No deals to track</h2>
           <p>Create a deal first to access your negotiation checklist.</p>
+          <div className="empty-actions">
+            <button className="btn btn-primary" onClick={() => navigate('/app')}>
+              🏠 Back to Main
+            </button>
+          </div>
         </div>
       </div>
     )

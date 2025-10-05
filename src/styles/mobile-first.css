@@ -428,6 +428,67 @@
       }
     }
 
+    /* Settings page card alignment */
+    .settings-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .settings-card h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .settings-card-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .settings-card-actions {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .settings-card .btn {
+      background: #059669;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.2s;
+    }
+
+    .settings-card .btn:hover {
+      background: #047857;
+    }
+
+    .settings-card .btn-secondary {
+      background: #6b7280;
+    }
+
+    .settings-card .btn-secondary:hover {
+      background: #4b5563;
+    }
+
 /* Create Deal Mobile-First Styles */
 .mobile-first-create-deal {
   padding: var(--space-lg);

@@ -248,6 +248,13 @@ function SavedDeals({ deals, setDeals, navigateTo, onUpdateDeal, onAddPhoto, onA
         <h1 className="mobile-first-title">Your Deals</h1>
         <div className="mobile-first-header-actions">
           <button 
+            className="btn btn-primary" 
+            onClick={() => navigate('/app')}
+            title="Back to Main"
+          >
+            🏠 Back to Main
+          </button>
+          <button 
             className="btn btn-secondary" 
             onClick={() => setShowCalculator(true)}
             title="Financing Calculator"

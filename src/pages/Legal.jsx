@@ -164,9 +164,14 @@ function Legal({ onBack }) {
     <div className="mobile-first-legal">
       <div className="mobile-first-legal-container">
       <div className="legal-header">
-        <button className="btn btn-secondary" onClick={() => navigate('/app/settings')}>
-          ← Back to Settings
-        </button>
+        <div className="legal-actions">
+          <button className="btn btn-secondary" onClick={() => navigate('/app/settings')}>
+            ← Back to Settings
+          </button>
+          <button className="btn btn-primary" onClick={() => navigate('/app')}>
+            🏠 Back to Main
+          </button>
+        </div>
         <h1 style={{ color: '#ffffff' }}>Legal Information</h1>
         <p style={{ color: '#ffffff' }}>Important legal information about using Car Deal Coach</p>
       </div>

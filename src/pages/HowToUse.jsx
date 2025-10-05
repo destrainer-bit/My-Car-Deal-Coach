@@ -589,9 +589,14 @@ function HowToUse({ onBack }) {
       <div className="how-to-header">
         <h1>📚 How to Use Car Deal Coach</h1>
         <p>Your complete guide to getting the best car deals</p>
-        <button className="btn btn-secondary" onClick={() => navigate('/app/settings')}>
-          ← Back to Settings
-        </button>
+        <div className="how-to-actions">
+          <button className="btn btn-secondary" onClick={() => navigate('/app/settings')}>
+            ← Back to Settings
+          </button>
+          <button className="btn btn-primary" onClick={() => navigate('/app')}>
+            🏠 Back to Main
+          </button>
+        </div>
       </div>
 
       <div className="how-to-content">

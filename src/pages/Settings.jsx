@@ -164,188 +164,87 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
         }}>
           
           {/* Subscription Card */}
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.95)',
-            padding: '2rem',
-            borderRadius: '12px',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255,255,255,0.2)'
-          }}>
-            <h2 style={{ 
-              fontSize: '1.5rem', 
-              fontWeight: '600', 
-              color: '#1f2937', 
-              marginBottom: '1.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}>
-              💳 Subscription
-            </h2>
+          <div className="settings-card">
+            <h2>💳 Subscription</h2>
             
-            <div style={{ marginBottom: '1.5rem' }}>
-              <h3 style={{ fontSize: '1.125rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
-                Current Plan
-              </h3>
-              <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                Basic Plan - Core features included
-              </p>
-            <button 
+            <div className="settings-card-content">
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
+                  Current Plan
+                </h3>
+                <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
+                  Basic Plan - Core features included
+                </p>
+              </div>
+            </div>
+            
+            <div className="settings-card-actions">
+              <button 
                 onClick={() => window.location.href = '/app/upgrade'}
-                style={{
-                  background: '#059669',
-                  color: 'white',
-                  padding: '0.75rem 1.5rem',
-                  borderRadius: '8px',
-                  border: 'none',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  width: '100%',
-                  marginBottom: '0.75rem'
-                }}
+                className="btn"
               >
                 🚀 View Upgrade Options
-            </button>
-            <button 
-                onClick={() => window.location.href = '/app/billing'}
-                style={{
-                  background: '#6b7280',
-                  color: 'white',
-                  padding: '0.75rem 1.5rem',
-                  borderRadius: '8px',
-                  border: 'none',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  width: '100%'
-                }}
-            >
-              💳 Manage Billing
-            </button>
+              </button>
+              <button 
+                onClick={() => navigate('/app/billing')}
+                className="btn btn-secondary"
+              >
+                💳 Manage Billing
+              </button>
+            </div>
           </div>
         </div>
 
           {/* Finance Tools Card */}
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.95)',
-            padding: '2rem',
-            borderRadius: '12px',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255,255,255,0.2)'
-          }}>
-            <h2 style={{ 
-              fontSize: '1.5rem', 
-              fontWeight: '600', 
-              color: '#1f2937', 
-              marginBottom: '1.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}>
-              🧮 Finance Tools
-            </h2>
+          <div className="settings-card">
+            <h2>🧮 Finance Tools</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <button 
-              onClick={() => setShowFinanceEstimator(true)}
-                style={{
-                  background: '#3b82f6',
-                  color: 'white',
-                  padding: '0.75rem 1rem',
-                  borderRadius: '8px',
-                  border: 'none',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }}
-            >
-              💰 Calculate Financing
-            </button>
-            <button 
-              onClick={() => setShowPaymentCalculator(true)}
-                style={{
-                  background: '#8b5cf6',
-                  color: 'white',
-                  padding: '0.75rem 1rem',
-                  borderRadius: '8px',
-                  border: 'none',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }}
-            >
-              🧮 Calculate Rate
-            </button>
+            <div className="settings-card-content">
+              {/* Empty content area to push buttons to bottom */}
+            </div>
+            
+            <div className="settings-card-actions">
+              <button 
+                onClick={() => setShowFinanceEstimator(true)}
+                className="btn"
+                style={{ background: '#3b82f6' }}
+              >
+                💰 Calculate Financing
+              </button>
+              <button 
+                onClick={() => setShowPaymentCalculator(true)}
+                className="btn"
+                style={{ background: '#8b5cf6' }}
+              >
+                🧮 Calculate Rate
+              </button>
+            </div>
           </div>
         </div>
 
           {/* Help & Support Card */}
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.95)',
-            padding: '2rem',
-            borderRadius: '12px',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255,255,255,0.2)'
-          }}>
-            <h2 style={{ 
-              fontSize: '1.5rem', 
-              fontWeight: '600', 
-              color: '#1f2937', 
-              marginBottom: '1.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}>
-              📚 Help & Support
-            </h2>
+          <div className="settings-card">
+            <h2>📚 Help & Support</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <button 
+            <div className="settings-card-content">
+              {/* Empty content area to push buttons to bottom */}
+            </div>
+            
+            <div className="settings-card-actions">
+              <button 
                 onClick={() => navigate('/app/how-to-use')}
-                style={{
-                  background: '#059669',
-                  color: 'white',
-                  padding: '0.75rem 1rem',
-                  borderRadius: '8px',
-                  border: 'none',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }}
-            >
-              📚 View Guide
-            </button>
-            <button 
+                className="btn"
+              >
+                📚 View Guide
+              </button>
+              <button 
                 onClick={() => navigate('/app/legal')}
-                style={{
-                  background: '#dc2626',
-                  color: 'white',
-                  padding: '0.75rem 1rem',
-                  borderRadius: '8px',
-                  border: 'none',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }}
-            >
-              ⚖️ Legal Information
-            </button>
+                className="btn"
+                style={{ background: '#dc2626' }}
+              >
+                ⚖️ Legal Information
+              </button>
+            </div>
           </div>
         </div>
 
