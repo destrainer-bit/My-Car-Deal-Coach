@@ -25,14 +25,18 @@ function HowToUse({ onBack }) {
 
           <div className="coach-gpt-highlight">
             <h4>🤖 Your Personal AI Coach</h4>
-            <p><strong>Ask the Coach GPT for personalized guidance on:</strong></p>
+            <p><strong>Ask the Coach GPT for educational information on:</strong></p>
             <ul>
               <li><strong>Interest rates</strong> - "What interest rate should I expect with a 720 credit score?"</li>
               <li><strong>Debt-to-income ratios</strong> - "Is my debt-to-income ratio too high for a car loan?"</li>
-              <li><strong>Financial planning</strong> - "How much should I put down based on my income?"</li>
+              <li><strong>Financing planning</strong> - "How much should I put down based on my income?"</li>
               <li><strong>Credit improvement</strong> - "How can I improve my credit score before applying?"</li>
               <li><strong>Negotiation tactics</strong> - "What should I say when the dealer offers a high rate?"</li>
             </ul>
+            <div className="disclaimer">
+              <strong>⚠️ DISCLAIMER:</strong> The Coach GPT provides educational information only and is NOT financial advice. 
+              Always consult with qualified financial professionals before making financial decisions.
+            </div>
             <p><strong>Access the Coach GPT from:</strong></p>
             <ul>
               <li>Main dashboard - "Ask Coach GPT" button</li>
@@ -472,11 +476,16 @@ function HowToUse({ onBack }) {
       )
     },
     financial: {
-      title: '💰 Financial Guidance',
+      title: '💰 Financing Information',
       content: (
         <div className="how-to-section">
-          <h3>Get Personalized Financial Advice</h3>
-          <p>Use the Coach GPT to get expert guidance on interest rates, credit scores, debt-to-income ratios, and financing strategies.</p>
+          <h3>Get Educational Financing Information</h3>
+          <p>Use the Coach GPT to get educational information about interest rates, credit scores, debt-to-income ratios, and financing strategies.</p>
+          
+          <div className="disclaimer">
+            <strong>⚠️ IMPORTANT DISCLAIMER:</strong> This tool provides educational information only and is NOT financial advice. 
+            We are not licensed financial advisors. Always consult with qualified financial professionals before making financial decisions.
+          </div>
           
           <div className="financial-guidance">
             <h4>🤖 Ask the Coach GPT About:</h4>

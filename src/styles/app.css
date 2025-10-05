@@ -4055,3 +4055,21 @@ h1, h2, h3, h4, h5, h6, p, span, div, label {
   left: 0;
   font-weight: bold;
 }
+
+/* Disclaimer Styles */
+.disclaimer {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+  color: #cccccc;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.disclaimer strong {
+  color: #ef4444;
+  font-size: 0.9rem;
+}

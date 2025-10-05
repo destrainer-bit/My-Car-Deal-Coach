@@ -187,8 +187,12 @@ function FinancialAdvisor({ onClose }) {
   return (
     <div className="financial-advisor">
       <div className="advisor-header">
-        <h3>💰 Financial Advisor</h3>
-        <p>Get personalized financing guidance based on your financial profile</p>
+        <h3>💰 Financing Information Tool</h3>
+        <p>Get educational information about financing based on your profile</p>
+        <div className="disclaimer">
+          <strong>⚠️ IMPORTANT DISCLAIMER:</strong> This tool provides educational information only and is NOT financial advice. 
+          We are not licensed financial advisors. Always consult with qualified financial professionals before making financial decisions.
+        </div>
         {onClose && (
           <button className="close-btn" onClick={onClose}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -329,14 +333,14 @@ function FinancialAdvisor({ onClose }) {
         </div>
 
         <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? 'Analyzing...' : 'Get Financial Analysis'}
+          {loading ? 'Analyzing...' : 'Get Financing Information'}
         </button>
       </form>
 
       {analysis && (
         <div className="analysis-results">
           <div className="analysis-header">
-            <h4>Your Financial Analysis</h4>
+            <h4>Your Financing Information</h4>
           </div>
 
           <div className="analysis-summary">
@@ -365,7 +369,7 @@ function FinancialAdvisor({ onClose }) {
           </div>
 
           <div className="recommendations">
-            <h4>Personalized Recommendations</h4>
+            <h4>Educational Information & Tips</h4>
             {analysis.recommendations.map((rec, index) => (
               <div key={index} className="recommendation-card">
                 <div className="recommendation-header">
