@@ -229,28 +229,63 @@ function Onboarding({ onStart }) {
         </div>
       </section>
 
-      <section className="onboarding-features" id="features">
-        {featureBlocks.map((feature) => (
-          <article className="onboarding-feature" key={feature.title}>
-            <div className="onboarding-feature-copy">
-              <h3>{feature.title}</h3>
-              <p className={feature.title === 'Payment Calculator & Rate Decoder' ? 'green-text' : ''}>{feature.description}</p>
-              <ul className="feature-points">
+      <section className="onboarding-features" id="features" style={{ 
+        padding: '4rem 2rem', 
+        background: 'rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        justifyContent: 'center'
+      }}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+          gap: '2rem', 
+          maxWidth: '1200px',
+          width: '100%'
+        }}>
+          {featureBlocks.map((feature) => (
+            <div key={feature.title} style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '12px',
+              padding: '2rem',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <h3 style={{ 
+                fontSize: '1.5rem', 
+                fontWeight: 'bold', 
+                color: '#ffffff', 
+                marginBottom: '1rem',
+                textAlign: 'center'
+              }}>
+                {feature.title}
+              </h3>
+              <p style={{ 
+                color: feature.title === 'Payment Calculator & Rate Decoder' ? '#10b981' : '#ffffff',
+                marginBottom: '1.5rem',
+                fontSize: '1rem',
+                lineHeight: '1.4',
+                textAlign: 'center'
+              }}>
+                {feature.description}
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {feature.points.map(point => (
-                  <li key={point}>
-                    <span className="feature-pill">{point}</span>
-                  </li>
+                  <div key={point} style={{
+                    background: 'rgba(59, 130, 246, 0.1)',
+                    border: '1px solid rgba(59, 130, 246, 0.3)',
+                    borderRadius: '20px',
+                    padding: '0.5rem 1rem',
+                    fontSize: '0.9rem',
+                    color: '#ffffff',
+                    textAlign: 'center'
+                  }}>
+                    {point}
+                  </div>
                 ))}
-              </ul>
-            </div>
-            <div className="onboarding-feature-visual">
-              <div className="onboarding-callout">
-                <span className="callout-label">{feature.callout.label}</span>
-                <p>{feature.callout.body}</p>
               </div>
             </div>
-          </article>
-        ))}
+          ))}
+        </div>
       </section>
 
       {/* Savings Calculator Section */}
