@@ -714,18 +714,18 @@ function CreateDeal({ onSave, onCancel }) {
   }
 
   return (
-    <div className="create-deal-container">
-      <div className="create-deal-content">
-        <div className="create-deal-header">
-          <h1 className="text-center">Create New Deal</h1>
+    <div className="mobile-first-create-deal">
+      <div className="container">
+        <div className="mobile-first-header">
+          <h1 className="mobile-first-title text-center">Create New Deal</h1>
           <ProgressDots current={currentStep} total={5} steps={steps} />
         </div>
 
-        <div className="create-deal-step">
+        <div className="mobile-first-step">
           {renderCurrentStep()}
         </div>
 
-        <div className="step-navigation">
+        <div className="mobile-first-navigation">
           {currentStep > 1 && (
             <button className="btn btn-secondary" onClick={handlePrevious}>
               ← Previous

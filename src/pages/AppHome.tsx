@@ -4,16 +4,16 @@ import { useSubscription } from '../hooks/useSubscription';
 
 export default function AppHome() {
   return (
-    <div className="app-home-container">
+    <div className="mobile-first-app-home">
       <div className="container">
-        <h1 className="app-home-title">
+        <h1 className="mobile-first-title">
           Welcome to Car Deal Coach!
         </h1>
-        <p className="app-home-subtitle">
+        <p className="mobile-first-subtitle">
           You're signed in! Start by creating your first deal.
         </p>
-        <div className="app-home-grid">
-          <div className="app-home-card">
+        <div className="mobile-first-grid">
+          <div className="mobile-first-card">
             <h3>📝 Create Your First Deal</h3>
             <p>
               Start tracking a car you're interested in.
@@ -26,31 +26,31 @@ export default function AppHome() {
             </button>
           </div>
           
-              <div className="app-home-card">
-                <h3>📚 Learn How to Use</h3>
-                <p>
-                  Get the complete guide to using all features.
-                </p>
-                <button 
-                  className="btn btn-primary"
-                  onClick={() => window.location.href = '/app/how-to-use'}
-                >
-                  View Guide
-                </button>
-              </div>
-              
-              <div className="app-home-card">
-                <h3>🤖 Car Buying Coach</h3>
-                <p>
-                  Ask questions and get personalized guidance from your AI coach.
-                </p>
-                <button 
-                  className="btn btn-primary"
-                  onClick={() => window.open('https://chatgpt.com/g/g-68d8a61f4f888191b31500953d037590-the-negotiator', '_blank')}
-                >
-                  Ask Coach GPT
-                </button>
-              </div>
+          <div className="mobile-first-card">
+            <h3>📚 Learn How to Use</h3>
+            <p>
+              Get the complete guide to using all features.
+            </p>
+            <button 
+              className="btn btn-primary"
+              onClick={() => window.location.href = '/app/how-to-use'}
+            >
+              View Guide
+            </button>
+          </div>
+          
+          <div className="mobile-first-card">
+            <h3>🤖 Car Buying Coach</h3>
+            <p>
+              Ask questions and get personalized guidance from your AI coach.
+            </p>
+            <button 
+              className="btn btn-primary"
+              onClick={() => window.open('https://chatgpt.com/g/g-68d8a61f4f888191b31500953d037590-the-negotiator', '_blank')}
+            >
+              Ask Coach GPT
+            </button>
+          </div>
         </div>
       </div>
     </div>

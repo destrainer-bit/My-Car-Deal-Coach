@@ -263,10 +263,205 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+    @media (min-width: 640px) {
+      .mobile-first-feature-point {
+        font-size: var(--text-base);
+        padding: var(--space-md) var(--space-lg);
+      }
+    }
+
+/* App Home Mobile-First Styles */
+.mobile-first-app-home {
+  padding: var(--space-lg);
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.mobile-first-title {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
 @media (min-width: 640px) {
-  .mobile-first-feature-point {
+  .mobile-first-title {
+    font-size: var(--text-3xl);
+  }
+}
+
+.mobile-first-subtitle {
+  font-size: var(--text-base);
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  color: var(--text-secondary);
+}
+
+@media (min-width: 640px) {
+  .mobile-first-subtitle {
+    font-size: var(--text-lg);
+  }
+}
+
+.mobile-first-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-first-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.mobile-first-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: var(--space-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-card {
+    padding: var(--space-xl);
+  }
+}
+
+.mobile-first-card h3 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
+@media (min-width: 640px) {
+  .mobile-first-card h3 {
+    font-size: var(--text-xl);
+  }
+}
+
+.mobile-first-card p {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-lg);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-card p {
     font-size: var(--text-base);
-    padding: var(--space-md) var(--space-lg);
+  }
+}
+
+/* Create Deal Mobile-First Styles */
+.mobile-first-create-deal {
+  padding: var(--space-lg);
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.mobile-first-header {
+  margin-bottom: var(--space-xl);
+  text-align: center;
+}
+
+.mobile-first-step {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 640px) {
+  .mobile-first-step {
+    padding: var(--space-xl);
+  }
+}
+
+.mobile-first-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-navigation {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.mobile-first-navigation .btn {
+  width: 100%;
+  min-width: 120px;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-navigation .btn {
+    width: auto;
+  }
+}
+
+/* Settings Mobile-First Styles */
+.mobile-first-settings {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: var(--space-lg);
+  font-family: var(--font-family-base);
+}
+
+@media (min-width: 640px) {
+  .mobile-first-settings {
+    padding: var(--space-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-first-settings {
+    padding: 2rem;
+  }
+}
+
+/* Sign In Mobile-First Styles */
+.mobile-first-signin {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.mobile-first-signin-card {
+  background: white;
+  border-radius: 12px;
+  padding: var(--space-xl);
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+@media (min-width: 640px) {
+  .mobile-first-signin {
+    padding: var(--space-lg);
+  }
+  
+  .mobile-first-signin-card {
+    padding: 2rem;
   }
 }
 
