@@ -325,7 +325,6 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
               </button>
             </div>
           </div>
-        </div>
 
         {/* Data Management Section */}
         <div style={{
