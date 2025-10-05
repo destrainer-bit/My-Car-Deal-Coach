@@ -3375,3 +3375,212 @@ h1, h2, h3, h4, h5, h6, p, span, div, label {
     padding: var(--space-lg);
   }
 }
+
+/* Simple Rate Calculator Styles */
+.simple-rate-calculator {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.simple-rate-calculator .calculator-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.simple-rate-calculator .calculator-header h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.simple-rate-calculator .calculator-header p {
+  color: #cccccc;
+  font-size: 0.9rem;
+}
+
+.simple-rate-calculator .close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.simple-rate-calculator .close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.simple-rate-calculator .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.simple-rate-calculator .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.simple-rate-calculator .form-group label {
+  color: #ffffff;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.simple-rate-calculator .form-group input,
+.simple-rate-calculator .form-group select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.simple-rate-calculator .form-group input:focus,
+.simple-rate-calculator .form-group select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.simple-rate-calculator .form-group small {
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.simple-rate-calculator .error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.simple-rate-calculator .error-message p {
+  color: #ef4444;
+  margin: 0;
+}
+
+.simple-rate-calculator .calculator-results {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.simple-rate-calculator .result-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.simple-rate-calculator .result-header h4 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.simple-rate-calculator .credit-rating {
+  color: #3b82f6;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.simple-rate-calculator .result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.simple-rate-calculator .result-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.simple-rate-calculator .result-card.primary {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.simple-rate-calculator .result-label {
+  color: #cccccc;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.simple-rate-calculator .result-value {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.simple-rate-calculator .result-summary {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.simple-rate-calculator .result-summary p {
+  color: #cccccc;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.simple-rate-calculator .result-summary strong {
+  color: #ffffff;
+}
+
+.simple-rate-calculator .calculator-tips {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.simple-rate-calculator .calculator-tips h4 {
+  color: #ffffff;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.simple-rate-calculator .calculator-tips ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.simple-rate-calculator .calculator-tips li {
+  color: #cccccc;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.simple-rate-calculator .calculator-tips li:before {
+  content: "•";
+  color: #3b82f6;
+  position: absolute;
+  left: 0;
+}
