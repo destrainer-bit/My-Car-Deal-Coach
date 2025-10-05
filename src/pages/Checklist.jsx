@@ -186,6 +186,7 @@ function Checklist({ deals, progress, onUpdateProgress }) {
 
   return (
     <div className="mobile-first-checklist">
+      <div className="mobile-first-checklist-container">
       {!selectedDeal ? renderDealSelector() : (
         <>
           <div className="checklist-nav">
@@ -199,6 +200,7 @@ function Checklist({ deals, progress, onUpdateProgress }) {
           {renderChecklist()}
         </>
       )}
+      </div>
     </div>
   )
 }

@@ -585,6 +585,7 @@ function HowToUse({ onBack }) {
 
   return (
     <div className="mobile-first-how-to-use">
+      <div className="mobile-first-how-to-use-container">
       <div className="how-to-header">
         <h1>📚 How to Use Car Deal Coach</h1>
         <p>Your complete guide to getting the best car deals</p>
@@ -617,6 +618,7 @@ function HowToUse({ onBack }) {
             {sections[activeSection].content}
           </div>
         </div>
+      </div>
       </div>
     </div>
   )

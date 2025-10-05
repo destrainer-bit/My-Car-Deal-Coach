@@ -422,6 +422,9 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: var(--space-lg);
   font-family: var(--font-family-base);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 @media (min-width: 640px) {
@@ -434,6 +437,12 @@
   .mobile-first-settings {
     padding: 2rem;
   }
+}
+
+.mobile-first-settings-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Sign In Mobile-First Styles */
@@ -892,6 +901,15 @@
   padding: var(--space-lg);
   min-height: 100vh;
   background: var(--bg-primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.mobile-first-saved-deals-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .mobile-first-saved-deals-header {
@@ -932,6 +950,15 @@
   padding: var(--space-lg);
   min-height: 100vh;
   background: var(--bg-primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.mobile-first-checklist-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .mobile-first-checklist .checklist-header {
@@ -960,6 +987,15 @@
   padding: var(--space-lg);
   min-height: 100vh;
   background: var(--bg-primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.mobile-first-notes-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .mobile-first-notes .notes-header {
@@ -997,6 +1033,15 @@
   padding: var(--space-lg);
   min-height: 100vh;
   background: var(--bg-primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.mobile-first-how-to-use-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .mobile-first-how-to-use .how-to-header {
@@ -1034,6 +1079,15 @@
   padding: var(--space-lg);
   min-height: 100vh;
   background: var(--bg-primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.mobile-first-legal-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .mobile-first-legal .legal-header {

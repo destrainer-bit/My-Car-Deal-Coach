@@ -226,6 +226,7 @@ function SavedDeals({ deals, setDeals, navigateTo, onUpdateDeal, onAddPhoto, onA
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      <div className="mobile-first-saved-deals-container">
       {/* Pull-to-refresh indicator */}
       {isRefreshing && (
         <div className="pull-to-refresh-indicator">
@@ -531,6 +532,7 @@ function SavedDeals({ deals, setDeals, navigateTo, onUpdateDeal, onAddPhoto, onA
           vehicleData={selectedDeal?.vehicle || null}
         />
       )}
+      </div>
     </div>
   )
 }

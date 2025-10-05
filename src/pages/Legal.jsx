@@ -162,6 +162,7 @@ function Legal({ onBack }) {
 
   return (
     <div className="mobile-first-legal">
+      <div className="mobile-first-legal-container">
       <div className="legal-header">
         <button className="btn btn-secondary" onClick={() => navigate('/app/settings')}>
           ← Back to Settings
@@ -198,6 +199,7 @@ function Legal({ onBack }) {
         <div className="legal-section-content">
           {sections[activeSection].content}
         </div>
+      </div>
       </div>
     </div>
   )

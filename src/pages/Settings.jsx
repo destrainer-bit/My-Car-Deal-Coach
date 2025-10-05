@@ -113,9 +113,9 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
     ]
   }
 
-  return (
-    <div className="mobile-first-settings">
-      <div className="container">
+    return (
+      <div className="mobile-first-settings">
+        <div className="mobile-first-settings-container">
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <button 

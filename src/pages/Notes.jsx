@@ -190,6 +190,7 @@ function Notes({ notes, photos, onNotesChange, onPhotosChange, onBack }) {
 
   return (
     <div className="mobile-first-notes">
+      <div className="mobile-first-notes-container">
       <div className="notes-header">
         <h1>Notes & Photos</h1>
         <p>Keep track of important information and photos for your car search.</p>
@@ -221,6 +222,7 @@ function Notes({ notes, photos, onNotesChange, onPhotosChange, onBack }) {
       </div>
 
       {renderPhotoLightbox()}
+      </div>
     </div>
   )
 }
