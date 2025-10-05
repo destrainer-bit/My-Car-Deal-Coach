@@ -887,6 +887,179 @@
   }
 }
 
+/* Saved Deals Mobile-First Styles */
+.mobile-first-saved-deals {
+  padding: var(--space-lg);
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.mobile-first-saved-deals-header {
+  margin-bottom: var(--space-xl);
+  text-align: center;
+}
+
+.mobile-first-header-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+@media (min-width: 640px) {
+  .mobile-first-header-actions {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+}
+
+.mobile-first-header-actions .btn {
+  width: 100%;
+  min-height: 44px;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-header-actions .btn {
+    width: auto;
+    min-width: 120px;
+  }
+}
+
+/* Checklist Mobile-First Styles */
+.mobile-first-checklist {
+  padding: var(--space-lg);
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.mobile-first-checklist .checklist-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.mobile-first-checklist .checklist-nav {
+  margin-bottom: var(--space-lg);
+}
+
+.mobile-first-checklist .checklist-nav .btn {
+  width: 100%;
+  min-height: 44px;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-checklist .checklist-nav .btn {
+    width: auto;
+    min-width: 120px;
+  }
+}
+
+/* Notes Mobile-First Styles */
+.mobile-first-notes {
+  padding: var(--space-lg);
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.mobile-first-notes .notes-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.mobile-first-notes .notes-header h1 {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.mobile-first-notes .notes-header p {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.mobile-first-notes .btn {
+  width: 100%;
+  min-height: 44px;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-notes .btn {
+    width: auto;
+    min-width: 120px;
+  }
+}
+
+/* How To Use Mobile-First Styles */
+.mobile-first-how-to-use {
+  padding: var(--space-lg);
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.mobile-first-how-to-use .how-to-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.mobile-first-how-to-use .how-to-header h1 {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.mobile-first-how-to-use .how-to-header p {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.mobile-first-how-to-use .btn {
+  width: 100%;
+  min-height: 44px;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-how-to-use .btn {
+    width: auto;
+    min-width: 120px;
+  }
+}
+
+/* Legal Mobile-First Styles */
+.mobile-first-legal {
+  padding: var(--space-lg);
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.mobile-first-legal .legal-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.mobile-first-legal .legal-header h1 {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.mobile-first-legal .btn {
+  width: 100%;
+  min-height: 44px;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-legal .btn {
+    width: auto;
+    min-width: 120px;
+  }
+}
+
 /* Base mobile styles */
 * {
   box-sizing: border-box;

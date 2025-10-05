@@ -584,7 +584,7 @@ function HowToUse({ onBack }) {
   }
 
   return (
-    <div className="how-to-use">
+    <div className="mobile-first-how-to-use">
       <div className="how-to-header">
         <h1>📚 How to Use Car Deal Coach</h1>
         <p>Your complete guide to getting the best car deals</p>

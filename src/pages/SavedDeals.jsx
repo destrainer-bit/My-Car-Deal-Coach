@@ -221,7 +221,7 @@ function SavedDeals({ deals, setDeals, navigateTo, onUpdateDeal, onAddPhoto, onA
 
   return (
     <div 
-      className="saved-deals"
+      className="mobile-first-saved-deals"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -241,9 +241,9 @@ function SavedDeals({ deals, setDeals, navigateTo, onUpdateDeal, onAddPhoto, onA
         </div>
       )}
 
-      <div className="saved-deals-header">
-        <h1>Your Deals</h1>
-        <div className="header-actions">
+      <div className="mobile-first-saved-deals-header">
+        <h1 className="mobile-first-title">Your Deals</h1>
+        <div className="mobile-first-header-actions">
           <button 
             className="btn btn-secondary" 
             onClick={() => setShowCalculator(true)}
