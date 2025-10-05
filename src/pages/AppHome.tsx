@@ -14,7 +14,7 @@ export default function AppHome() {
         </p>
         <div className="mobile-first-grid">
           <div className="mobile-first-card">
-            <h3>📝 Create Your First Deal</h3>
+            <h3>📝 Create New Deal</h3>
             <p>
               Start tracking a car you're interested in.
             </p>
@@ -27,15 +27,54 @@ export default function AppHome() {
           </div>
           
           <div className="mobile-first-card">
-            <h3>📚 Learn How to Use</h3>
+            <h3>💾 Your Deals</h3>
             <p>
-              Get the complete guide to using all features.
+              View and manage all your saved deals.
             </p>
             <button 
               className="btn btn-primary"
-              onClick={() => window.location.href = '/app/how-to-use'}
+              onClick={() => window.location.href = '/app/saved-deals'}
             >
-              View Guide
+              View Deals
+            </button>
+          </div>
+          
+          <div className="mobile-first-card">
+            <h3>✅ Negotiation Checklist</h3>
+            <p>
+              Track your negotiation progress step by step.
+            </p>
+            <button 
+              className="btn btn-primary"
+              onClick={() => window.location.href = '/app/checklist'}
+            >
+              View Checklist
+            </button>
+          </div>
+          
+          <div className="mobile-first-card">
+            <h3>📝 Notes & Photos</h3>
+            <p>
+              Keep track of important information and photos.
+            </p>
+            <button 
+              className="btn btn-primary"
+              onClick={() => window.location.href = '/app/notes'}
+            >
+              View Notes
+            </button>
+          </div>
+          
+          <div className="mobile-first-card">
+            <h3>🧮 Financial Tools</h3>
+            <p>
+              Calculate payments, rates, and financing options.
+            </p>
+            <button 
+              className="btn btn-primary"
+              onClick={() => window.location.href = '/app/settings'}
+            >
+              Open Calculators
             </button>
           </div>
           
@@ -49,6 +88,32 @@ export default function AppHome() {
               onClick={() => window.open('https://chatgpt.com/g/g-68d8a61f4f888191b31500953d037590-the-negotiator', '_blank')}
             >
               Ask Coach GPT
+            </button>
+          </div>
+          
+          <div className="mobile-first-card">
+            <h3>📚 How to Use</h3>
+            <p>
+              Get the complete guide to using all features.
+            </p>
+            <button 
+              className="btn btn-primary"
+              onClick={() => window.location.href = '/app/how-to-use'}
+            >
+              View Guide
+            </button>
+          </div>
+          
+          <div className="mobile-first-card">
+            <h3>⚙️ Settings</h3>
+            <p>
+              Manage your account, billing, and app preferences.
+            </p>
+            <button 
+              className="btn btn-primary"
+              onClick={() => window.location.href = '/app/settings'}
+            >
+              Open Settings
             </button>
           </div>
         </div>
