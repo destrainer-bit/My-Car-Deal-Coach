@@ -269,19 +269,40 @@ function Onboarding({ onStart }) {
                 {feature.description}
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {feature.points.map(point => (
-                  <div key={point} style={{
-                    background: 'rgba(59, 130, 246, 0.1)',
-                    border: '1px solid rgba(59, 130, 246, 0.3)',
-                    borderRadius: '20px',
-                    padding: '0.5rem 1rem',
-                    fontSize: '0.9rem',
-                    color: '#ffffff',
-                    textAlign: 'center'
-                  }}>
-                    {point}
-                  </div>
-                ))}
+                {feature.points.map(point => {
+                  let pillColor = '#3b82f6'; // Default blue
+                  let pillBg = 'rgba(59, 130, 246, 0.1)';
+                  let pillBorder = 'rgba(59, 130, 246, 0.3)';
+                  
+                  if (feature.title === 'Scripts & Red Flags') {
+                    pillColor = '#f59e0b'; // Orange
+                    pillBg = 'rgba(245, 158, 11, 0.2)';
+                    pillBorder = 'rgba(245, 158, 11, 0.4)';
+                  } else if (feature.title === 'Payment Calculator & Rate Decoder') {
+                    pillColor = '#3b82f6'; // Blue
+                    pillBg = 'rgba(59, 130, 246, 0.2)';
+                    pillBorder = 'rgba(59, 130, 246, 0.4)';
+                  } else if (feature.title === 'Dealership Psychology Training') {
+                    pillColor = '#10b981'; // Emerald Green
+                    pillBg = 'rgba(16, 185, 129, 0.2)';
+                    pillBorder = 'rgba(16, 185, 129, 0.4)';
+                  }
+                  
+                  return (
+                    <div key={point} style={{
+                      background: pillBg,
+                      border: `1px solid ${pillBorder}`,
+                      borderRadius: '20px',
+                      padding: '0.5rem 1rem',
+                      fontSize: '0.9rem',
+                      color: pillColor,
+                      textAlign: 'center',
+                      fontWeight: '500'
+                    }}>
+                      {point}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}
