@@ -82,46 +82,46 @@ function Pricing() {
   }
 
   return (
-    <section id="pricing" className="pricing-wrap">
-      <header className="pricing-header">
+    <section id="pricing" className="mobile-first-pricing">
+      <header className="mobile-first-pricing-header">
         <h2>Choose Your Protection</h2>
-        <p className="sub">Save thousands in markups, add-ons, and finance games for less than a soda a day.</p>
+        <p className="mobile-first-pricing-sub">Save thousands in markups, add-ons, and finance games for less than a soda a day.</p>
       </header>
 
-      <div className="pricing-grid">
+      <div className="mobile-first-pricing-grid">
         {upgradePlans.map((plan) => {
           const disabled = !plan.priceId
           const dynamicAccent =
             plan.featured || plan.label.toLowerCase() === (highlight || '').toLowerCase()
 
           return (
-            <article key={plan.id} className={`card ${dynamicAccent ? 'accent pulse' : ''}`}>
-              {plan.badge && <span className="ribbon">{plan.badge}</span>}
+            <article key={plan.id} className={`mobile-first-pricing-card ${dynamicAccent ? 'accent pulse' : ''}`}>
+              {plan.badge && <span className="mobile-first-ribbon">{plan.badge}</span>}
 
-              <div className="price-row">
-                <span className="price">{plan.price}</span>
-                <span className="per">{plan.perDay}</span>
+              <div className="mobile-first-price-row">
+                <span className="mobile-first-price">{plan.price}</span>
+                <span className="mobile-first-per">{plan.perDay}</span>
               </div>
-              <div className="label">{plan.label}</div>
+              <div className="mobile-first-label">{plan.label}</div>
 
-              <h3 className="headline">{plan.title}</h3>
-              {plan.blurb && <p className="blurb">{plan.blurb}</p>}
+              <h3 className="mobile-first-headline">{plan.title}</h3>
+              {plan.blurb && <p className="mobile-first-blurb">{plan.blurb}</p>}
 
-              <ul className="bullets">
+              <ul className="mobile-first-bullets">
                 {plan.highlights.map((item) => (
                   <li key={item}>✅ {item}</li>
                 ))}
               </ul>
 
               <button 
-                className="cta" 
+                className="mobile-first-cta" 
                 onClick={() => handleSelect(plan.id)} 
                 disabled={subscriptionLoading || disabled}
               >
                 {subscriptionLoading ? 'Processing...' : (plan.cta || 'Purchase Now!')}
               </button>
 
-              <p className="fineprint">
+              <p className="mobile-first-fineprint">
                 Typical buyers overpay $1,500–$5,000 without guidance. Keep it in your pocket.
               </p>
             </article>
@@ -237,5 +237,6 @@ function Pricing() {
 }
 
 export default Pricing
+
 
 
