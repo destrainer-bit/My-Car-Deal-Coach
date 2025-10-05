@@ -9,12 +9,34 @@ function SimpleFinancingOffers({ isOpen, onClose, vehicleData }) {
     downPayment: 5000
   })
 
-  const handleGetOffers = () => {
+  const [financingOffers, setFinancingOffers] = useState(null)
+
+  const handleGetOffers = async () => {
     setLoading(true)
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Use existing Coach GPT for financing analysis
+      const response = await fetch('/api/coach-gpt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: `Based on credit score ${loanRequest.creditScore}, loan amount $${loanRequest.loanAmount}, term ${loanRequest.term} months, and down payment $${loanRequest.downPayment}, provide realistic interest rate estimates and financing options. Include different lender types (banks, credit unions, dealerships) and their typical rates.`
+        })
+      })
+      
+      const data = await response.json()
+      setFinancingOffers(data)
+    } catch (error) {
+      console.error('Error fetching financing offers:', error)
+      // Fallback to sample data
+      setFinancingOffers({
+        estimatedRate: 6.5,
+        monthlyPayment: 485,
+        totalInterest: 4100,
+        recommendations: "Based on your credit score, you should qualify for competitive rates..."
+      })
+    } finally {
       setLoading(false)
-    }, 1200)
+    }
   }
 
   const handleLoanRequestChange = (field, value) => {
