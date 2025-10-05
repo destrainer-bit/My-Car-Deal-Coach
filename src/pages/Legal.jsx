@@ -192,12 +192,13 @@ function Legal({ onBack }) {
         </button>
       </div>
 
-      <div className="legal-content-wrapper">
-        <div className="legal-section-header">
-          <h2 style={{ color: '#ffffff' }}>{sections[activeSection].title}</h2>
-        </div>
-        <div className="legal-section-content">
-          {sections[activeSection].content}
+        <div className="legal-content-wrapper">
+          <div className="legal-section-header">
+            <h2 style={{ color: '#ffffff' }}>{sections[activeSection].title}</h2>
+          </div>
+          <div className="legal-section-content">
+            {sections[activeSection].content}
+          </div>
         </div>
       </div>
     </div>
