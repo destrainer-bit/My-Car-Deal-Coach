@@ -1933,6 +1933,23 @@ body {
   box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
 }
 
+/* Override all background declarations for test and feature pills */
+[style*="backgroundColor"] {
+  background: inherit !important;
+}
+
+/* Force colors for test section */
+section[style*="background: red"] div[style*="backgroundColor"] {
+  background: inherit !important;
+}
+
+/* Feature pill colored class using CSS variables */
+.feature-pill-colored {
+  background: var(--pill-bg) !important;
+  color: var(--pill-text) !important;
+  border: none !important;
+}
+
 .status-badge.visiting {
   background: var(--color-info-light);
   color: var(--color-info-dark);

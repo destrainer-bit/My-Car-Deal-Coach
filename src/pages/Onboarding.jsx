@@ -229,15 +229,6 @@ function Onboarding({ onStart }) {
         </div>
       </section>
 
-      {/* TEST SECTION - Color Test */}
-      <section style={{ padding: '2rem', background: 'red', textAlign: 'center' }}>
-        <h2 style={{ color: 'white' }}>COLOR TEST</h2>
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <div style={{ backgroundColor: '#f59e0b', color: 'white', padding: '1rem', borderRadius: '10px' }}>ORANGE TEST</div>
-          <div style={{ backgroundColor: '#3b82f6', color: 'white', padding: '1rem', borderRadius: '10px' }}>BLUE TEST</div>
-          <div style={{ backgroundColor: '#10b981', color: 'white', padding: '1rem', borderRadius: '10px' }}>GREEN TEST</div>
-        </div>
-      </section>
 
       <section className="onboarding-features" id="features" style={{ 
         padding: '4rem 2rem', 
@@ -280,49 +271,33 @@ function Onboarding({ onStart }) {
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {feature.points.map((point, index) => {
-                  // Simple color assignment based on feature title
-                  let pillStyle = {};
+                  // Use colored borders instead of backgrounds
+                  let borderColor = '#3b82f6'; // Default blue
                   
                   if (feature.title === 'Scripts & Red Flags') {
-                    pillStyle = {
-                      backgroundColor: '#f59e0b',
-                      color: '#ffffff',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '20px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      textAlign: 'center',
-                      border: 'none',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                    };
+                    borderColor = '#f59e0b'; // Orange
                   } else if (feature.title === 'Payment Calculator & Rate Decoder') {
-                    pillStyle = {
-                      backgroundColor: '#3b82f6',
-                      color: '#ffffff',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '20px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      textAlign: 'center',
-                      border: 'none',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                    };
+                    borderColor = '#3b82f6'; // Blue
                   } else if (feature.title === 'Dealership Psychology Training') {
-                    pillStyle = {
-                      backgroundColor: '#10b981',
-                      color: '#ffffff',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '20px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      textAlign: 'center',
-                      border: 'none',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                    };
+                    borderColor = '#10b981'; // Emerald Green
                   }
                   
                   return (
-                    <div key={`${feature.title}-${index}`} style={pillStyle}>
+                    <div 
+                      key={`${feature.title}-${index}`} 
+                      style={{
+                        backgroundColor: 'transparent',
+                        color: '#ffffff',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '20px',
+                        fontSize: '0.9rem',
+                        fontWeight: '600',
+                        textAlign: 'center',
+                        border: `2px solid ${borderColor}`,
+                        boxShadow: `0 0 8px ${borderColor}40`,
+                        background: 'rgba(255, 255, 255, 0.05)'
+                      }}
+                    >
                       {point}
                     </div>
                   );
