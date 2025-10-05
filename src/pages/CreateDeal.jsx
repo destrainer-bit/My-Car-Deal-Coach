@@ -299,9 +299,9 @@ function CreateDeal({ onSave, onCancel }) {
                 onChange={(e) => handleInputChange('condition', parseInt(e.target.value))}
                 className="slider"
               />
-              <div className="condition-options">
+              <div className="mobile-first-condition-options">
                 {conditionOptions.map(option => (
-                  <div key={option.value} className={`condition-option ${formData.condition === option.value ? 'selected' : ''}`}>
+                  <label key={option.value} className={`mobile-first-condition-option ${formData.condition === option.value ? 'selected' : ''}`}>
                     <input
                       type="radio"
                       name="condition"
@@ -309,11 +309,11 @@ function CreateDeal({ onSave, onCancel }) {
                       checked={formData.condition === option.value}
                       onChange={(e) => handleInputChange('condition', parseInt(e.target.value))}
                     />
-                    <div className="condition-option-content">
+                    <div className="mobile-first-condition-content">
                       <h4>{option.label}</h4>
                       <p>{option.description}</p>
                     </div>
-                  </div>
+                  </label>
                 ))}
               </div>
             </div>
