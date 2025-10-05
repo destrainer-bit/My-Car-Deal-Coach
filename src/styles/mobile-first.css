@@ -2,7 +2,7 @@
 
 /* Onboarding Page Mobile-First Styles */
 .mobile-first-hero {
-  padding-top: 80px;
+  padding-top: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +11,7 @@
   margin: 0 auto;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  padding: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
 }
 
 @media (min-width: 640px) {
@@ -43,12 +43,39 @@
 .mobile-first-hero .onboarding-eyebrow {
   display: block;
   margin-bottom: var(--space-md);
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
+  line-height: 1.4;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  text-align: center;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 @media (min-width: 640px) {
   .mobile-first-hero .onboarding-eyebrow {
-    font-size: var(--text-xl);
+    font-size: var(--text-lg);
+    white-space: normal;
+  }
+}
+
+/* Extra small mobile devices - ensure text is fully visible */
+@media (max-width: 480px) {
+  .mobile-first-hero {
+    padding-top: 120px;
+    padding: var(--space-xl) var(--space-sm);
+  }
+  
+  .mobile-first-hero .onboarding-eyebrow {
+    font-size: var(--text-sm);
+    padding: var(--space-xs) var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+  
+  .mobile-first-hero h1 {
+    font-size: var(--text-lg);
+    line-height: 1.2;
   }
 }
 
