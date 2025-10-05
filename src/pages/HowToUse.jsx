@@ -23,6 +23,24 @@ function HowToUse({ onBack }) {
             </ol>
           </div>
 
+          <div className="coach-gpt-highlight">
+            <h4>🤖 Your Personal AI Coach</h4>
+            <p><strong>Ask the Coach GPT for personalized guidance on:</strong></p>
+            <ul>
+              <li><strong>Interest rates</strong> - "What interest rate should I expect with a 720 credit score?"</li>
+              <li><strong>Debt-to-income ratios</strong> - "Is my debt-to-income ratio too high for a car loan?"</li>
+              <li><strong>Financial planning</strong> - "How much should I put down based on my income?"</li>
+              <li><strong>Credit improvement</strong> - "How can I improve my credit score before applying?"</li>
+              <li><strong>Negotiation tactics</strong> - "What should I say when the dealer offers a high rate?"</li>
+            </ul>
+            <p><strong>Access the Coach GPT from:</strong></p>
+            <ul>
+              <li>Main dashboard - "Ask Coach GPT" button</li>
+              <li>Sidebar - "Open Agent" button</li>
+              <li>Settings page - Personal Negotiator Agent section</li>
+            </ul>
+          </div>
+
           <div className="app-navigation">
             <h4>🧭 App Navigation</h4>
             <div className="nav-guide">
@@ -448,6 +466,107 @@ function HowToUse({ onBack }) {
               <li><strong>Follow the checklist</strong> - Don't skip steps</li>
               <li><strong>Ask the AI agent</strong> - Get expert advice</li>
               <li><strong>Be persistent</strong> - The right deal will come</li>
+            </ul>
+          </div>
+        </div>
+      )
+    },
+    financial: {
+      title: '💰 Financial Guidance',
+      content: (
+        <div className="how-to-section">
+          <h3>Get Personalized Financial Advice</h3>
+          <p>Use the Coach GPT to get expert guidance on interest rates, credit scores, debt-to-income ratios, and financing strategies.</p>
+          
+          <div className="financial-guidance">
+            <h4>🤖 Ask the Coach GPT About:</h4>
+            
+            <div className="guidance-category">
+              <h5>📊 Interest Rates & Credit</h5>
+              <ul>
+                <li><strong>"What interest rate should I expect with a 720 credit score?"</strong></li>
+                <li><strong>"How can I improve my credit score before applying?"</strong></li>
+                <li><strong>"What's a good interest rate for a used car?"</strong></li>
+                <li><strong>"Should I wait to improve my credit before buying?"</strong></li>
+              </ul>
+            </div>
+
+            <div className="guidance-category">
+              <h5>💳 Debt-to-Income Analysis</h5>
+              <ul>
+                <li><strong>"Is my debt-to-income ratio too high for a car loan?"</strong></li>
+                <li><strong>"How much should I put down based on my income?"</strong></li>
+                <li><strong>"Should I pay off other debt first?"</strong></li>
+                <li><strong>"What's the maximum car payment I can afford?"</strong></li>
+              </ul>
+            </div>
+
+            <div className="guidance-category">
+              <h5>🏦 Financing Strategy</h5>
+              <ul>
+                <li><strong>"Should I get pre-approved before visiting dealers?"</strong></li>
+                <li><strong>"What's better: dealer financing or bank loan?"</strong></li>
+                <li><strong>"How do I negotiate a better interest rate?"</strong></li>
+                <li><strong>"What documents do I need for financing?"</strong></li>
+              </ul>
+            </div>
+
+            <div className="guidance-category">
+              <h5>💡 Financial Planning</h5>
+              <ul>
+                <li><strong>"How much should I save for a down payment?"</strong></li>
+                <li><strong>"What's the total cost of ownership?"</strong></li>
+                <li><strong>"Should I buy or lease based on my situation?"</strong></li>
+                <li><strong>"How do I budget for car insurance and maintenance?"</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="coach-access">
+            <h4>🎯 How to Access the Coach GPT</h4>
+            <div className="access-methods">
+              <div className="access-method">
+                <h5>1. Main Dashboard</h5>
+                <p>Click the <strong>"Ask Coach GPT"</strong> button on the home page</p>
+              </div>
+              <div className="access-method">
+                <h5>2. Sidebar</h5>
+                <p>Use the <strong>"Open Agent"</strong> button in the left sidebar</p>
+              </div>
+              <div className="access-method">
+                <h5>3. Settings Page</h5>
+                <p>Go to Settings → <strong>"Personal Negotiator Agent"</strong> section</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="example-questions">
+            <h4>💬 Example Questions to Ask</h4>
+            <div className="question-examples">
+              <div className="example-question">
+                <strong>"I have a 680 credit score, $60k income, and $800/month in debt payments. What interest rate should I expect for a $25k car loan?"</strong>
+              </div>
+              <div className="example-question">
+                <strong>"My debt-to-income ratio is 35%. Is that too high for a car loan? What can I do to improve it?"</strong>
+              </div>
+              <div className="example-question">
+                <strong>"The dealer offered me 8.5% APR but I have good credit. How do I negotiate a better rate?"</strong>
+              </div>
+              <div className="example-question">
+                <strong>"I'm self-employed with 2 years of tax returns. What do I need to know about financing?"</strong>
+              </div>
+            </div>
+          </div>
+
+          <div className="financial-tips">
+            <h4>💡 Pro Financial Tips</h4>
+            <ul>
+              <li><strong>Get pre-approved first</strong> - Know your rate before visiting dealers</li>
+              <li><strong>Shop multiple lenders</strong> - Banks, credit unions, and online lenders</li>
+              <li><strong>Improve your credit first</strong> - Even 20-30 points can save thousands</li>
+              <li><strong>Consider a co-signer</strong> - If your credit needs help</li>
+              <li><strong>Negotiate the rate</strong> - Don't accept the first offer</li>
+              <li><strong>Read all paperwork</strong> - Watch for rate changes in the finance office</li>
             </ul>
           </div>
         </div>
