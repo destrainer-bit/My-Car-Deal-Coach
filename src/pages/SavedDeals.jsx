@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import DealCard from '../components/DealCard.jsx'
 import RangeBadge from '../components/RangeBadge.jsx'
 import ConfirmModal from '../components/ConfirmModal.jsx'
@@ -13,6 +14,7 @@ function SavedDeals({ deals, setDeals, navigateTo, onUpdateDeal, onAddPhoto, onA
   console.log('SavedDeals component rendering with deals:', deals)
   console.log('SavedDeals props:', { deals, setDeals, navigateTo, onUpdateDeal, onAddPhoto, onAddNote, onUpdateChecklistProgress, checklistProgress })
   
+  const navigate = useNavigate()
   const [filterStatus, setFilterStatus] = useState('all')
   const [sortBy, setSortBy] = useState('updated')
   const [deleteModal, setDeleteModal] = useState(null)
@@ -76,7 +78,7 @@ function SavedDeals({ deals, setDeals, navigateTo, onUpdateDeal, onAddPhoto, onA
   }
 
   const onCreateNew = () => {
-    navigateTo('create')
+    navigate('/app/create-deal')
   }
 
   const statusOptions = [
