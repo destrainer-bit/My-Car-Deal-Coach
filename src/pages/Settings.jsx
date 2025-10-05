@@ -246,7 +246,6 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
               </button>
             </div>
           </div>
-        </div>
 
           {/* Quick Actions Card */}
           <div style={{
