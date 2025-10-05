@@ -269,37 +269,50 @@ function Onboarding({ onStart }) {
                 {feature.description}
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {feature.points.map(point => {
-                  let pillColor = '#ffffff';
-                  let pillBg = '#3b82f6'; // Default blue background
+                {feature.points.map((point, index) => {
+                  // Simple color assignment based on feature title
+                  let pillStyle = {};
                   
                   if (feature.title === 'Scripts & Red Flags') {
-                    pillColor = '#ffffff';
-                    pillBg = '#f59e0b'; // Orange background
-                  } else if (feature.title === 'Payment Calculator & Rate Decoder') {
-                    pillColor = '#ffffff';
-                    pillBg = '#3b82f6'; // Blue background
-                  } else if (feature.title === 'Dealership Psychology Training') {
-                    pillColor = '#ffffff';
-                    pillBg = '#10b981'; // Emerald Green background
-                  }
-                  
-                  return (
-                    <div key={point} className="custom-colored-pill" style={{
-                      backgroundColor: pillBg,
-                      color: pillColor,
+                    pillStyle = {
+                      backgroundColor: '#f59e0b',
+                      color: '#ffffff',
                       padding: '0.5rem 1rem',
                       borderRadius: '20px',
                       fontSize: '0.9rem',
                       fontWeight: '600',
-                      display: 'block',
-                      width: '100%',
                       textAlign: 'center',
                       border: 'none',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                      margin: '0',
-                      background: pillBg
-                    }}>
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                    };
+                  } else if (feature.title === 'Payment Calculator & Rate Decoder') {
+                    pillStyle = {
+                      backgroundColor: '#3b82f6',
+                      color: '#ffffff',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '20px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      textAlign: 'center',
+                      border: 'none',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                    };
+                  } else if (feature.title === 'Dealership Psychology Training') {
+                    pillStyle = {
+                      backgroundColor: '#10b981',
+                      color: '#ffffff',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '20px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      textAlign: 'center',
+                      border: 'none',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                    };
+                  }
+                  
+                  return (
+                    <div key={`${feature.title}-${index}`} style={pillStyle}>
                       {point}
                     </div>
                   );
