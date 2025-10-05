@@ -120,3 +120,5 @@ grant all on public.profiles to anon, authenticated;
 grant all on public.savings_scenarios to anon, authenticated;
 grant execute on function public.has_active_subscription to anon, authenticated;
 grant execute on function public.has_tier_access to anon, authenticated;
+
+

@@ -70,22 +70,6 @@
   --z-tooltip: 1060;
 }
 
-/* Dark mode variables */
-.dark {
-  --bg-primary: #111827;
-  --bg-secondary: #1F2937;
-  --bg-tertiary: #374151;
-  --bg-card: #1F2937;
-  --bg-overlay: rgba(0, 0, 0, 0.7);
-  
-  --text-primary: #F9FAFB;
-  --text-secondary: #D1D5DB;
-  --text-tertiary: #9CA3AF;
-  
-  --border-light: #374151;
-  --border-medium: #4B5563;
-  --border-dark: #6B7280;
-}
 
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {

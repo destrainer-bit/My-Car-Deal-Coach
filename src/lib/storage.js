@@ -3,7 +3,6 @@ const STORAGE_KEYS = {
   DEALS: 'carCoachDeals',
   NOTES: 'carCoachNotes', 
   PHOTOS: 'carCoachPhotos',
-  DARK_MODE: 'carCoachDarkMode',
   CHECKLIST_PROGRESS: 'carCoachChecklistProgress'
 }
 

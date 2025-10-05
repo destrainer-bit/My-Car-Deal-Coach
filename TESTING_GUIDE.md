@@ -85,7 +85,6 @@
 - [ ] **"📚 View Guide" button** - Should navigate to How to Use page (NEW!)
 
 #### **App Settings:**
-- [ ] **Dark Mode toggle** - Should switch theme
 - [ ] **Data Management** - Clear data, export data
 - [ ] **Premium Features** - Payment modal (test version)
 
@@ -166,7 +165,7 @@
 - ✅ Deal creation, editing, deletion
 - ✅ Checklist with deal selection
 - ✅ Notes management
-- ✅ Settings and dark mode
+- ✅ Settings
 - ✅ All modals and calculators
 - ✅ Data persistence (localStorage)
 
@@ -213,3 +212,5 @@
 ---
 
 **🎉 All major functionality should now work! The app is ready for testing.**
+
+

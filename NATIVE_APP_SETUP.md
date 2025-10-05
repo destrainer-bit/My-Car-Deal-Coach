@@ -66,7 +66,7 @@ npm run cap:android
 ### **3. Test Features:**
 - ✅ **Camera** - Take photos for car deals
 - ✅ **Haptics** - Feel vibrations on button taps
-- ✅ **Status Bar** - Dark theme integration
+- ✅ **Status Bar** - Theme integration
 - ✅ **Keyboard** - Native keyboard behavior
 - ✅ **Back Button** - Android back button handling
 

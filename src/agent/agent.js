@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 import { z } from "zod";
-import { tools, toolNames } from "./tools.js";
+import { tools } from "./tools.js";
 
-const client = new OpenAI({ apiKey: process.env.VITE_OPENAI_API_KEY });
+const client = new OpenAI({ apiKey: import.meta.env.VITE_OPENAI_API_KEY });
 
 const StepSchema = z.object({
   plan: z.string(),
@@ -53,7 +53,7 @@ export async function runAgentStep({
   let step;
   try {
     step = StepSchema.parse(JSON.parse(raw));
-  } catch (e) {
+  } catch {
     // Fallback if model strays: mark as not-done with parser hint
     step = {
       plan: "Reformatting output to valid JSON.",

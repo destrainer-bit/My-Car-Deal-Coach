@@ -2,7 +2,7 @@ import { supabaseServer } from "../lib/supabaseServer.js";
 
 export const tools = {
   async math(expression) {
-    if (!/^[\d\.\+\-\*\/\(\) ]+$/.test(expression)) throw new Error("Unsafe math input");
+    if (!/^[\d.+\-*/() ]+$/.test(expression)) throw new Error("Unsafe math input");
     // eslint-disable-next-line no-eval
     const value = eval(expression);
     return { value };

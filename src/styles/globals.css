@@ -67,21 +67,6 @@
   --z-tooltip: 3000;
 }
 
-/* Dark Mode */
-.dark {
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #2a2a2a;
-  --bg-tertiary: #3a3a3a;
-  --bg-card: #2a2a2a;
-  --bg-overlay: rgba(0, 0, 0, 0.8);
-  
-  --text-primary: #ffffff;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  
-  --border-color: #374151;
-  --border-color-hover: #4b5563;
-}
 
 /* Reset and Base */
 * {
@@ -4202,7 +4187,6 @@ body {
   margin: 0 0 var(--space-md) 0;
   color: var(--text-primary);
 }
-
 /* Payment Modal Styles */
 .payment-modal {
     max-width: 800px;

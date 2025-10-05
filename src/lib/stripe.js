@@ -27,8 +27,8 @@ export const createCheckoutSession = async (priceId, mode = 'subscription') => {
       body: JSON.stringify({
         priceId,
         mode,
-        successUrl: `${window.location.origin}/#/settings?payment=success`,
-        cancelUrl: `${window.location.origin}/#/settings?payment=cancelled`,
+        successUrl: `${window.location.origin}/app/settings?payment=success`,
+        cancelUrl: `${window.location.origin}/app/settings?payment=cancelled`,
       }),
     });
 
@@ -73,7 +73,7 @@ export const createCustomerPortalSession = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        returnUrl: `${window.location.origin}/#/settings`,
+        returnUrl: `${window.location.origin}/app/settings`,
       }),
     });
 
@@ -95,5 +95,8 @@ export const redirectToCustomerPortal = async () => {
     throw error;
   }
 };
+
+
+
 
 

@@ -34,7 +34,7 @@ The app will be available at `http://localhost:5173`
 - **Saved Deals**: Card-based interface with filtering and sorting
 - **Negotiation Checklist**: Auto-generated checklists grouped by phase
 - **Notes & Photos**: Rich textarea with photo gallery and lightbox
-- **Settings**: Dark mode, data export/import, reset functionality
+- **Settings**: Data export/import, reset functionality
 
 ### Smart Pricing
 - **Heuristic Algorithm**: `base = 28000 - (age*1200) - (mileage/120)`, clamped to [2000, 70000]

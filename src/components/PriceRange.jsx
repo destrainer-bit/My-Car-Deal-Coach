@@ -1,74 +1,65 @@
 import React from 'react'
-import { formatPrice } from '../lib/pricing.js'
+import './price-range.css'
 
 function PriceRange({ price }) {
-  if (!price || !price.low || !price.mid || !price.high) {
+  if (!price) {
     return (
       <div className="price-range">
-        <div className="price-error">Price not available</div>
+        <div className="price-range__error">
+          <p>Unable to calculate pricing</p>
+        </div>
       </div>
     )
   }
 
-  const getPriceColor = (value, low, mid, high) => {
-    if (value <= low) return 'var(--color-success)'
-    if (value <= mid) return 'var(--color-warning)'
-    return 'var(--color-danger)'
+  const formatPrice = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount)
   }
 
   return (
     <div className="price-range">
-      <div className="price-header">
-        <h4>Estimated Price Range</h4>
-        {price.explanation && (
-          <p className="price-explanation">{price.explanation}</p>
+      <div className="price-range__header">
+        <h3>Estimated Price Range</h3>
+        {price.isRealData && (
+          <div className="price-range__badge">
+            <span className="badge badge--success">Real Market Data</span>
+          </div>
         )}
       </div>
       
-      <div className="price-values">
-        <div className="price-item low">
-          <span className="price-label">Low</span>
-          <span className="price-value">{formatPrice(price.low)}</span>
+      <div className="price-range__values">
+        <div className="price-range__value price-range__value--low">
+          <div className="price-range__label">Low End</div>
+          <div className="price-range__amount">{formatPrice(price.low)}</div>
         </div>
         
-        <div className="price-item mid">
-          <span className="price-label">Likely</span>
-          <span className="price-value">{formatPrice(price.mid)}</span>
+        <div className="price-range__value price-range__value--mid">
+          <div className="price-range__label">Market Average</div>
+          <div className="price-range__amount">{formatPrice(price.mid)}</div>
         </div>
         
-        <div className="price-item high">
-          <span className="price-label">High</span>
-          <span className="price-value">{formatPrice(price.high)}</span>
+        <div className="price-range__value price-range__value--high">
+          <div className="price-range__label">High End</div>
+          <div className="price-range__amount">{formatPrice(price.high)}</div>
         </div>
       </div>
-
-      <div className="price-range-bar">
-        <div className="range-track">
-          <div 
-            className="range-fill"
-            style={{
-              left: '0%',
-              width: '100%',
-              background: `linear-gradient(to right, 
-                var(--color-success) 0%, 
-                var(--color-warning) 50%, 
-                var(--color-danger) 100%)`
-            }}
-          />
-          <div 
-            className="range-marker low"
-            style={{ left: '0%' }}
-          />
-          <div 
-            className="range-marker mid"
-            style={{ left: '50%' }}
-          />
-          <div 
-            className="range-marker high"
-            style={{ left: '100%' }}
-          />
+      
+      {price.explanation && (
+        <div className="price-range__explanation">
+          <p>{price.explanation}</p>
         </div>
-      </div>
+      )}
+      
+      {price.count && (
+        <div className="price-range__source">
+          <p>Based on {price.count} listings from {price.source}</p>
+        </div>
+      )}
     </div>
   )
 }

@@ -5,16 +5,37 @@ import Pricing from './components/Pricing';
 import AppHome from './pages/AppHome';
 import ProtectedRoute from './components/ProtectedRoute';
 import Onboarding from './pages/Onboarding.jsx';
+import SignIn from './pages/SignIn';
+import ResetPassword from './pages/ResetPassword';
+import './styles/mobile-first.css';
 
 // Import existing pages for backward compatibility
 import Settings from './pages/Settings.jsx';
 import Upgrade from './pages/Upgrade.jsx';
 import CreateDeal from './pages/CreateDeal.jsx';
+
+// CreateDeal wrapper component to handle navigation
+function CreateDealWrapper() {
+  const navigate = useNavigate();
+  
+  const handleSave = (dealData) => {
+    // TODO: Implement deal saving logic
+    console.log('Deal saved:', dealData);
+    navigate('/app/saved-deals');
+  };
+  
+  const handleCancel = () => {
+    navigate('/app');
+  };
+  
+  return <CreateDeal onSave={handleSave} onCancel={handleCancel} />;
+}
 import SavedDeals from './pages/SavedDeals.jsx';
 import Checklist from './pages/Checklist.jsx';
 import Notes from './pages/Notes.jsx';
 import HowToUse from './pages/HowToUse.jsx';
 import Legal from './pages/Legal.jsx';
+import BillingManagement from './pages/BillingManagement.tsx';
 
 function AppRoutes() {
   const navigate = useNavigate();
@@ -25,6 +46,8 @@ function AppRoutes() {
       <Route path="/" element={<Onboarding onStart={() => navigate('/pricing')} />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         
         {/* Protected App Routes */}
         <Route
@@ -47,7 +70,7 @@ function AppRoutes() {
           path="/app/settings"
           element={
             <ProtectedRoute>
-              <Settings />
+              <Settings onClearData={() => {}} onExportData={() => {}} deals={[]} notes={[]} photos={[]} navigateTo={() => {}} />
             </ProtectedRoute>
           }
         />
@@ -63,7 +86,7 @@ function AppRoutes() {
           path="/app/create-deal"
           element={
             <ProtectedRoute>
-              <CreateDeal />
+              <CreateDealWrapper />
             </ProtectedRoute>
           }
         />
@@ -71,7 +94,7 @@ function AppRoutes() {
           path="/app/saved-deals"
           element={
             <ProtectedRoute>
-              <SavedDeals />
+              <SavedDeals deals={[]} setDeals={() => {}} navigateTo={() => {}} onUpdateDeal={() => {}} onAddPhoto={() => {}} onAddNote={() => {}} onUpdateChecklistProgress={() => {}} checklistProgress={{}} />
             </ProtectedRoute>
           }
         />
@@ -79,7 +102,7 @@ function AppRoutes() {
           path="/app/checklist"
           element={
             <ProtectedRoute>
-              <Checklist />
+              <Checklist deals={[]} progress={{}} onUpdateProgress={() => {}} />
             </ProtectedRoute>
           }
         />
@@ -87,7 +110,7 @@ function AppRoutes() {
           path="/app/notes"
           element={
             <ProtectedRoute>
-              <Notes />
+              <Notes notes={[]} photos={[]} onNotesChange={() => {}} onPhotosChange={() => {}} onBack={() => {}} />
             </ProtectedRoute>
           }
         />
@@ -95,7 +118,7 @@ function AppRoutes() {
           path="/app/how-to-use"
           element={
             <ProtectedRoute>
-              <HowToUse />
+              <HowToUse onBack={() => {}} />
             </ProtectedRoute>
           }
         />
@@ -103,7 +126,15 @@ function AppRoutes() {
           path="/app/legal"
           element={
             <ProtectedRoute>
-              <Legal />
+              <Legal onBack={() => {}} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/app/billing"
+          element={
+            <ProtectedRoute>
+              <BillingManagement />
             </ProtectedRoute>
           }
         />
@@ -121,3 +152,7 @@ export default function App() {
     </BrowserRouter>
   );
 }
+
+
+
+

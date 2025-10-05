@@ -1,146 +1,58 @@
-# AI Agent Setup Guide
+# 🤖 AI Agent Setup Guide
 
-## Overview
-The Car Deal Coach now includes "The Negotiator" - an AI-powered negotiation assistant that can help users with car deal negotiations.
+## Current Status: **PARTIALLY CONNECTED** ⚠️
 
-## Prerequisites
+The GPT agent is built and integrated but needs API key configuration to work fully.
 
-### 1. Supabase Setup
-1. Create a new Supabase project at [supabase.com](https://supabase.com)
-2. Run the following SQL in your Supabase SQL editor:
+## ✅ What's Already Working:
 
-```sql
--- memory for runs
-create table if not exists agent_runs (
-  id uuid primary key default gen_random_uuid(),
-  goal text not null,
-  status text not null default 'running', -- running|done|error
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
-);
+1. **Agent Infrastructure**: Complete OpenAI integration system
+2. **UI Components**: Multiple agent panels in Settings page
+3. **Demo Mode**: Shows how the agent works without API key
+4. **Local Agent**: Client-side AI processing ready
 
--- message log / tool calls / results
-create table if not exists agent_messages (
-  id uuid primary key default gen_random_uuid(),
-  run_id uuid references agent_runs(id) on delete cascade,
-  role text not null, -- system|user|assistant|tool
-  content jsonb not null,
-  created_at timestamptz default now()
-);
+## 🔧 To Enable Full AI Functionality:
 
--- optional: contacts
-create table if not exists contacts (
-  id uuid primary key default gen_random_uuid(),
-  name text,
-  email text,
-  phone text,
-  notes text
-);
-```
+### 1. Get OpenAI API Key
+- Go to https://platform.openai.com
+- Create account and get API key
+- Add credits to your account
 
-### 2. Environment Variables
-Create a `.env` file in your project root with:
-
+### 2. Configure Environment
+Add to your `.env.local` file:
 ```bash
-# OpenAI API Key
-VITE_OPENAI_API_KEY=sk-your-openai-api-key-here
-
-# Supabase Configuration
-VITE_SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
-
-# Google Maps API (already configured)
-VITE_GOOGLE_MAPS_API_KEY=AIzaSyDEyCtUVwcVxjiX9ubZ66jtVb132eby4hw
+VITE_OPENAI_API_KEY=your_actual_api_key_here
 ```
 
-### 3. API Keys Needed
+### 3. Test the Agent
+- Go to Settings page in the app
+- Find "Personal Negotiator Agent" section
+- Enter a negotiation goal
+- Click "Run Step" to test
 
-#### OpenAI API Key
-1. Go to [platform.openai.com](https://platform.openai.com)
-2. Create an account and get an API key
-3. Add it to your `.env` file
+## 🎯 Agent Features:
 
-#### Supabase Keys
-1. In your Supabase dashboard, go to Settings > API
-2. Copy the Project URL and Service Role Key
-3. Add them to your `.env` file
+- **Negotiation Strategy**: Analyzes deals and provides tactics
+- **Fee Detection**: Identifies junk fees and add-ons
+- **Script Generation**: Creates negotiation scripts
+- **Step-by-Step Guidance**: Breaks down complex negotiations
 
-## Features
+## 📍 Where to Find the Agent:
 
-### The Negotiator Agent
-- **Goal-based negotiation**: Set specific targets (e.g., "Get OTD ≤ $39,500")
-- **Fee analysis**: Identifies and flags junk fees
-- **Counter strategies**: Generates negotiation scripts
-- **Memory system**: Remembers previous interactions
-- **Math tools**: Calculates complex pricing scenarios
-- **Web search**: Can research market data (stub implementation)
+1. **Settings Page**: `/app/settings` - Personal Negotiator Agent section
+2. **Shell Component**: Sidebar with agent access
+3. **Multiple Panels**: Simple, Negotiator, and Mock versions
 
-### Agent Tools
-- **Math**: Safe mathematical calculations
-- **Memory**: Store and retrieve negotiation data
-- **Web Search**: Research market information
-- **Email**: Send negotiation communications
+## 🚀 Current Demo Mode:
 
-## Usage
+The agent currently shows demo responses to demonstrate functionality. Once you add the API key, it will provide real AI-powered negotiation assistance.
 
-1. Go to Settings in the app
-2. Scroll down to "AI Negotiator Agent"
-3. Enter your negotiation goal
-4. Click "Run Step" to execute the agent
-5. The agent will work step-by-step toward your goal
+## 🔍 Testing:
 
-## Deployment
+1. Open the app at `http://localhost:5173`
+2. Navigate to Settings
+3. Scroll to "Personal Negotiator Agent"
+4. Enter a goal like "Get OTD for Honda Civic ≤ $25,000"
+5. Click "Run Step" to see the agent work
 
-### Vercel Deployment
-1. Push your code to GitHub
-2. Connect to Vercel
-3. Add environment variables in Vercel dashboard:
-   - `VITE_OPENAI_API_KEY`
-   - `VITE_SUPABASE_URL`
-   - `SUPABASE_SERVICE_ROLE_KEY`
-4. Deploy
-
-### Testing
-Test the agent with:
-```bash
-curl -X POST https://your-app.vercel.app/api/agent \
-  -H 'Content-Type: application/json' \
-  -d '{"goal":"Get OTD ≤ $39,500"}'
-```
-
-## File Structure
-
-```
-src/
-├── agent/
-│   ├── agent.js          # AI agent brain
-│   └── tools.js          # Agent tools
-├── lib/
-│   └── supabaseServer.js # Server-side Supabase client
-├── components/
-│   └── NegotiatorAgentPanel.jsx # UI component
-api/
-└── agent.js              # Vercel API function
-```
-
-## Troubleshooting
-
-### Common Issues
-1. **"Unknown tool" error**: The agent requested a tool not defined in `tools.js`
-2. **API connection failed**: Check environment variables
-3. **Supabase errors**: Verify table creation and API keys
-
-### Debug Mode
-Check the browser console and network tab for detailed error messages.
-
-## Next Steps
-
-1. **Real API Integration**: Replace stub tools with real APIs
-2. **Enhanced UI**: Better visualization of agent progress
-3. **Deal Integration**: Connect agent to specific deals
-4. **Advanced Tools**: Add more sophisticated negotiation tools
-
-
-
-
-
+The agent is **ready to use** - just needs the API key! 🎉

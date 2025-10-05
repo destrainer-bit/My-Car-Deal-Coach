@@ -1,45 +1,40 @@
 import React from 'react'
+import './progress-dots.css'
 
 function ProgressDots({ current, total, steps = [] }) {
   return (
     <div className="progress-dots">
-      <div className="progress-track">
+      <div className="progress-dots__container">
         {Array.from({ length: total }, (_, index) => {
           const stepNumber = index + 1
           const isActive = stepNumber === current
           const isCompleted = stepNumber < current
-          const step = steps[index] || { title: `Step ${stepNumber}` }
-
+          const step = steps[index] || {}
+          
           return (
-            <div key={stepNumber} className="progress-step">
-              <div className={`step-dot ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}>
-                {isCompleted ? (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                ) : (
-                  <span>{stepNumber}</span>
-                )}
+            <div
+              key={stepNumber}
+              className={`progress-dots__dot ${
+                isActive ? 'active' : ''
+              } ${isCompleted ? 'completed' : ''}`}
+            >
+              <div className="progress-dots__number">
+                {isCompleted ? '✓' : stepNumber}
               </div>
-              <div className="step-info">
-                <div className="step-title">{step.title}</div>
-                {step.description && (
-                  <div className="step-description">{step.description}</div>
-                )}
-              </div>
+              {step.title && (
+                <div className="progress-dots__label">
+                  {step.title}
+                </div>
+              )}
             </div>
           )
         })}
       </div>
-      
-      <div className="progress-bar">
-        <div 
-          className="progress-fill"
-          style={{ 
-            width: `${((current - 1) / (total - 1)) * 100}%` 
-          }}
-        />
-      </div>
+      {steps[current - 1] && (
+        <div className="progress-dots__description">
+          {steps[current - 1].description}
+        </div>
+      )}
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import React from 'react';
 import SavingsCalculator from '../components/SavingsCalculator';
 
 export default function Landing() {

@@ -6,6 +6,7 @@ function PaymentCalculator({ onClose }) {
     downPayment: '',
     tradeInValue: '',
     taxesAndFees: '',
+    docFees: '',
     monthlyPayment: '',
     loanTerm: 60,
     totalPayments: ''
@@ -80,6 +81,7 @@ function PaymentCalculator({ onClose }) {
       const downPayment = parseFloat(formData.downPayment) || 0
       const tradeInValue = parseFloat(formData.tradeInValue) || 0
       const taxesAndFees = parseFloat(formData.taxesAndFees) || 0
+      const docFees = parseFloat(formData.docFees) || 0
       const monthlyPayment = parseFloat(formData.monthlyPayment) || 0
       const loanTerm = parseInt(formData.loanTerm) || 60
 
@@ -92,7 +94,7 @@ function PaymentCalculator({ onClose }) {
       }
 
       // Calculate loan amount
-      const loanAmount = vehiclePrice - downPayment - tradeInValue + taxesAndFees
+      const loanAmount = vehiclePrice - downPayment - tradeInValue + taxesAndFees + docFees
 
       if (loanAmount <= 0) {
         throw new Error('Loan amount must be greater than 0. Check your down payment and trade-in values.')
@@ -124,7 +126,8 @@ function PaymentCalculator({ onClose }) {
           vehiclePrice,
           downPayment,
           tradeInValue,
-          taxesAndFees
+          taxesAndFees,
+          docFees
         }
       })
     } catch (err) {
@@ -196,6 +199,19 @@ function PaymentCalculator({ onClose }) {
               onChange={(e) => handleInputChange('taxesAndFees', e.target.value)}
               placeholder="e.g., 1200"
             />
+          </div>
+
+          <div className="form-group">
+            <label style={{ color: '#ffffff' }}>Documentation Fees ($)</label>
+            <input
+              type="number"
+              value={formData.docFees}
+              onChange={(e) => handleInputChange('docFees', e.target.value)}
+              placeholder="e.g., 599"
+            />
+            <small style={{ color: '#888', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>
+              Common doc fees: $200-800 (varies by state)
+            </small>
           </div>
 
           <div className="form-group">
@@ -312,6 +328,10 @@ function PaymentCalculator({ onClose }) {
                 <span style={{ color: '#ffffff' }}>Taxes & Fees:</span>
                 <span style={{ color: '#ffffff' }}>+{formatCurrency(result.inputs.taxesAndFees)}</span>
               </div>
+              <div className="breakdown-item">
+                <span style={{ color: '#ffffff' }}>Documentation Fees:</span>
+                <span style={{ color: '#ffffff' }}>+{formatCurrency(result.inputs.docFees)}</span>
+              </div>
               <div className="breakdown-item total">
                 <span style={{ color: '#0B84FE', fontWeight: 'bold' }}>Loan Amount:</span>
                 <span style={{ color: '#0B84FE', fontWeight: 'bold' }}>{formatCurrency(result.loanAmount)}</span>
@@ -338,6 +358,12 @@ function PaymentCalculator({ onClose }) {
                 <li style={{ color: '#ffffff' }}>You'll pay more than 30% of the loan amount in interest - consider a larger down payment</li>
               )}
               <li style={{ color: '#ffffff' }}>Compare this rate with our Finance Calculator to see if you can get better terms</li>
+              {result.inputs.docFees > 800 && (
+                <li style={{ color: '#ffffff' }}>⚠️ Doc fees above $800 are high - some states cap these fees, check your local laws</li>
+              )}
+              {result.inputs.docFees > 0 && result.inputs.docFees < 200 && (
+                <li style={{ color: '#ffffff' }}>✅ Your doc fees are reasonable - most dealers charge $200-800</li>
+              )}
             </ul>
           </div>
         </div>

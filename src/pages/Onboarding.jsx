@@ -5,9 +5,9 @@ import SavingsCalculator from '../components/SavingsCalculator'
 function Onboarding({ onStart }) {
   const navigate = useNavigate()
   const problemItems = [
-    '“Why is my payment higher than we agreed?”',
+    '"Why is my payment higher than we agreed?"',
     'Surprise warranties, paint protection, and GAP bundles you never asked for',
-    'Finance office rate bumps and “sign now or lose the deal” pressure'
+    'Finance office rate bumps and "sign now or lose the deal" pressure'
   ]
 
   const featureBlocks = [
@@ -39,7 +39,7 @@ function Onboarding({ onStart }) {
     },
     {
       title: 'Dealership Psychology Training',
-      description: 'Role-play pressure scenarios with the Personal Negotiator Agent so “sign now or lose the car” never rattles you again.',
+      description: 'Role-play pressure scenarios with the Personal Negotiator Agent so "sign now or lose the car" never rattles you again.',
       points: [
         'Simulated high-pressure finance conversations',
         'Behavioral tactics to stay calm and in control',
@@ -47,37 +47,81 @@ function Onboarding({ onStart }) {
       ],
       callout: {
         label: 'Stay ready',
-        body: '“I’m ready to buy when the numbers match what we agreed.” Scarcity pressure handled—on your terms.'
+        body: '"I\'m ready to buy when the numbers match what we agreed." Scarcity pressure handled—on your terms.'
       }
     }
   ]
 
   const testimonials = [
     {
-      quote: '“I walked in with scripts on my phone. Finance tried to add a warranty—Car Deal Coach told me exactly what to say. Saved $3,900.”',
-      author: 'Sarah M., first-time buyer'
-    },
-    {
-      quote: '“The dealer flipped the rate in the back office. The calculator exposed it and I renegotiated on the spot.”',
+      quote: '"The dealer flipped the rate in the back office. The calculator exposed it and I renegotiated on the spot."',
       author: 'Mike R., repeat buyer'
     }
   ]
 
   return (
     <div className="onboarding">
-    <section className="onboarding-hero" id="hero">
-        <div className="onboarding-hero-content">
-          <span className="onboarding-eyebrow orange-text">Car buying without the games</span>
-          <h1 style={{ fontSize: '2.5rem', lineHeight: '1.4', marginBottom: '1.5rem', letterSpacing: '0.02em' }}>
+      {/* Top Navigation Bar with Sign In */}
+      <div style={{
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        background: 'rgba(0, 0, 0, 0.9)',
+        backdropFilter: 'blur(10px)',
+        padding: '1rem 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        zIndex: '1000',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+      }}>
+        <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff' }}>
+          Car Deal Coach
+        </div>
+        <button 
+          onClick={() => navigate('/signin')}
+          style={{
+            background: '#3b82f6',
+            color: 'white',
+            padding: '0.75rem 1.5rem',
+            borderRadius: '8px',
+            border: 'none',
+            fontSize: '1rem',
+            fontWeight: '500',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseOver={(e) => e.target.style.background = '#2563eb'}
+          onMouseOut={(e) => e.target.style.background = '#3b82f6'}
+        >
+          Sign In
+        </button>
+      </div>
+
+      <section className="onboarding-hero" id="hero" style={{ 
+        paddingTop: '80px', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '80vh',
+        maxWidth: 'min(90%, 900px)',
+        margin: '0 auto',
+        borderRadius: '12px',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+      }}>
+        <div className="onboarding-hero-content" style={{ textAlign: 'center', width: '100%', padding: '0 2rem' }}>
+          <span className="onboarding-eyebrow orange-text" style={{ display: 'block', marginBottom: '1rem', fontSize: 'clamp(1rem, 2.5vw, 1.2rem)' }}>Car buying without the games</span>
+          <h1 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.8rem)', lineHeight: '1.3', marginBottom: '1rem', letterSpacing: '0.01em', textAlign: 'center' }}>
             Imagine a world where car buying no longer feels like a battle against pressure, persuasion, or dishonest sales tactics.
           </h1>
-          <h1 style={{ fontSize: '2.5rem', lineHeight: '1.4', marginBottom: '1.5rem', letterSpacing: '0.02em' }}>
+          <h1 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.8rem)', lineHeight: '1.3', marginBottom: '1rem', letterSpacing: '0.01em', textAlign: 'center' }}>
             Instead, it's smooth, honest, and genuinely enjoyable. Welcome to a new way of car shopping, the way it should be.
           </h1>
-          <p className="orange-text" style={{ marginBottom: '2rem', fontSize: '1.05rem', maxWidth: '100%', lineHeight: '1.2' }}>
+          <p className="orange-text" style={{ marginBottom: '2rem', fontSize: 'clamp(0.9rem, 2.2vw, 1.1rem)', maxWidth: '100%', lineHeight: '1.2', textAlign: 'center' }}>
             Your AI-powered car buying coach gives you scripts, calculators, and negotiation tactics so you can push back on pressure, spot hidden fees, and walk away with the deal you want.
           </p>
-          <div className="onboarding-hero-actions">
+          <div className="onboarding-hero-actions" style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
             <button className="btn btn-primary btn-large" onClick={() => navigate('/pricing')}>
               Start a Deal
             </button>
@@ -86,24 +130,75 @@ function Onboarding({ onStart }) {
             </button>
           </div>
         </div>
-        <div className="onboarding-hero-visual">
-          <div className="onboarding-screen">
-            <h3>Personal Negotiator Agent</h3>
-            <div className="onboarding-screen-card">
-              <strong>Goal:</strong>
-              OTD under $25,000 for 2020 Civic EX
-            </div>
-            <div className="onboarding-screen-card">
-              <strong>Red Flag:</strong>
-              Dealer added $1,200 “doc fee”. Standard is $300—ask for itemized breakdown.
-            </div>
-            <div className="onboarding-screen-card">
-              <strong>Say This:</strong>
-              “I’ve researched and seen comparable cars at $23,500 OTD. Can you match that?”
-            </div>
-            <div className="onboarding-screen-card">
-              <strong>Next Move:</strong>
-              If they won’t drop the add-ons, walk away. They’ll call back.
+      </section>
+
+      {/* Personal Negotiator Agent - Moved underneath */}
+      <section style={{ padding: '2rem', background: 'rgba(0, 0, 0, 0.1)' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className="onboarding-screen" style={{ 
+            background: 'rgba(255, 255, 255, 0.1)', 
+            borderRadius: '12px', 
+            padding: '1.5rem',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)'
+          }}>
+            <h3 style={{ 
+              textAlign: 'center', 
+              marginBottom: '1.5rem', 
+              fontSize: '1.25rem',
+              color: '#ffffff'
+            }}>
+              Personal Negotiator Agent
+            </h3>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+              gap: '1rem' 
+            }}>
+              <div className="onboarding-screen-card" style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                padding: '1rem',
+                borderRadius: '8px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                fontSize: '0.9rem'
+              }}>
+                <strong style={{ color: '#3b82f6' }}>Goal:</strong>
+                <br />
+                OTD under $25,000 for 2020 Civic EX
+              </div>
+              <div className="onboarding-screen-card" style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                padding: '1rem',
+                borderRadius: '8px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                fontSize: '0.9rem'
+              }}>
+                <strong style={{ color: '#ef4444' }}>Red Flag:</strong>
+                <br />
+                Dealer added $1,200 "doc fee". Standard is $300—ask for itemized breakdown.
+              </div>
+              <div className="onboarding-screen-card" style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                padding: '1rem',
+                borderRadius: '8px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                fontSize: '1rem'
+              }}>
+                <strong style={{ color: '#10b981', fontSize: '1.1rem' }}>Say This:</strong>
+                <br />
+                "I've researched and seen comparable cars at $23,500 OTD. Can you match that?"
+              </div>
+              <div className="onboarding-screen-card" style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                padding: '1rem',
+                borderRadius: '8px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                fontSize: '0.9rem'
+              }}>
+                <strong style={{ color: '#f59e0b' }}>Next Move:</strong>
+                <br />
+                If they won't drop the add-ons, walk away. They'll call back.
+              </div>
             </div>
           </div>
         </div>
@@ -121,7 +216,7 @@ function Onboarding({ onStart }) {
           </div>
           <div className="onboarding-problem-card">
             <h3>73%</h3>
-            <p>Of drivers sign finance paperwork they don’t fully understand.</p>
+            <p>Of drivers sign finance paperwork they don't fully understand.</p>
           </div>
           <div className="onboarding-problem-card checklist">
             <h4>Have you experienced this?</h4>
@@ -162,19 +257,20 @@ function Onboarding({ onStart }) {
       <section className="onboarding-calculator" style={{ marginTop: 'var(--space-2xl)', marginBottom: 'var(--space-2xl)' }}>
         <div style={{ textAlign: 'center', marginBottom: 'var(--space-xl)' }}>
           <h2 style={{ fontSize: 'clamp(2rem, 3vw, 2.8rem)', fontWeight: '800', marginBottom: 'var(--space-md)' }}>
-            Estimate your savings
+            See Your Potential Savings
           </h2>
-          <p style={{ fontSize: '1.05rem', opacity: '0.9', maxWidth: '640px', margin: '0 auto' }}>
-            Adjust the numbers and watch the story lose its grip. Full line-by-line breakdown unlocks with your plan.
+          <p style={{ fontSize: '1.125rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
+            Try our calculator to estimate how much you could save with expert guidance
           </p>
         </div>
         <SavingsCalculator isPaid={false} />
       </section>
 
-      <section className="onboarding-social">
-        <div className="onboarding-testimonials">
-          {testimonials.map(testimonial => (
-            <div className="onboarding-testimonial" key={testimonial.author}>
+      {/* Social Proof */}
+      <section className="onboarding-testimonials">
+        <div className="onboarding-testimonials-grid">
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="onboarding-testimonial">
               <p>{testimonial.quote}</p>
               <span>{testimonial.author}</span>
             </div>

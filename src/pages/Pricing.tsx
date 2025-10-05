@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { upgradePlans } from '../data/upgradePlans';
 
@@ -215,3 +215,5 @@ export default function Pricing() {
     </main>
   );
 }
+
+

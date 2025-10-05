@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function HowToUse({ onBack }) {
+  const navigate = useNavigate()
   const [activeSection, setActiveSection] = useState('overview')
 
   const sections = {
@@ -74,7 +76,8 @@ function HowToUse({ onBack }) {
           
           <div className="step-guide">
             <div className="step">
-              <h4>Step 1: Basic Vehicle Information</h4>
+              <h4>Step 1: Car You Want to Buy</h4>
+              <p><strong>Important:</strong> This is about the car you want to PURCHASE, not a trade-in vehicle.</p>
               <ul>
                 <li><strong>Year:</strong> Enter the model year (e.g., 2023)</li>
                 <li><strong>Make:</strong> Brand name (e.g., Honda, Toyota, Ford)</li>
@@ -85,17 +88,39 @@ function HowToUse({ onBack }) {
             </div>
 
             <div className="step">
-              <h4>Step 2: Location & Pricing</h4>
+              <h4>Step 2: Vehicle Details</h4>
               <ul>
-                <li><strong>Zip Code:</strong> Where the car is located</li>
-                <li><strong>City/State:</strong> Full location for market analysis</li>
-                <li><strong>Asking Price:</strong> What the seller is asking</li>
-                <li><strong>Condition:</strong> Rate from Excellent to Poor</li>
+                <li><strong>New or Used:</strong> Select whether it's a new or used car</li>
+                <li><strong>Condition:</strong> Rate condition (for used cars only)</li>
+                <li><strong>Location:</strong> Where the car is located</li>
+                <li><strong>Photos:</strong> Add photos of the car (optional)</li>
               </ul>
             </div>
 
             <div className="step">
-              <h4>Step 3: Save & Track</h4>
+              <h4>Step 3: Trade-In (Optional)</h4>
+              <ul>
+                <li><strong>Have a Trade-In?</strong> Select yes or no</li>
+                <li><strong>Trade Details:</strong> Year, make, model, mileage</li>
+                <li><strong>Trade Condition:</strong> Rate your trade-in's condition</li>
+                <li><strong>Trade Photos:</strong> Add photos of your trade-in</li>
+                <li><strong>Skip if No Trade:</strong> You can skip this step entirely</li>
+              </ul>
+            </div>
+
+            <div className="step">
+              <h4>Step 4: Price Estimate</h4>
+              <ul>
+                <li><strong>Market Analysis:</strong> See estimated price range based on real listings</li>
+                <li><strong>Regional Pricing:</strong> Prices adjusted for your specific area</li>
+                <li><strong>Trade Value:</strong> See estimated trade-in value (if applicable)</li>
+                <li><strong>Important:</strong> These are retail market averages, not wholesale prices</li>
+                <li><strong>Pro Tip:</strong> Get a CarMax quote - most manufacturers honor CarMax trade-in quotes</li>
+              </ul>
+            </div>
+
+            <div className="step">
+              <h4>Step 5: Save & Track</h4>
               <ul>
                 <li>Click "Save Deal" to add to your tracking list</li>
                 <li>Deal will appear in "Your Deals" section</li>
@@ -306,7 +331,6 @@ function HowToUse({ onBack }) {
             <div className="setting-section">
               <h4>🌙 App Preferences</h4>
               <ul>
-                <li><strong>Dark Mode:</strong> Toggle between light and dark themes</li>
                 <li><strong>Data Management:</strong> Clear all data or export for backup</li>
                 <li><strong>Notifications:</strong> Get reminders about your deals</li>
               </ul>
@@ -436,11 +460,9 @@ function HowToUse({ onBack }) {
       <div className="how-to-header">
         <h1>📚 How to Use Car Deal Coach</h1>
         <p>Your complete guide to getting the best car deals</p>
-        {onBack && (
-          <button className="btn btn-secondary" onClick={onBack}>
-            ← Back to Settings
-          </button>
-        )}
+        <button className="btn btn-secondary" onClick={() => navigate('/app/settings')}>
+          ← Back to Settings
+        </button>
       </div>
 
       <div className="how-to-content">

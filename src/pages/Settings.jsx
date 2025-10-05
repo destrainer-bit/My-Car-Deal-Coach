@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ConfirmModal from '../components/ConfirmModal.jsx'
 import SimpleNegotiatorAgent from '../components/SimpleNegotiatorAgent.jsx'
 import PaymentModal from '../components/PaymentModal.jsx'
@@ -14,13 +15,14 @@ import {
 import { triggerHaptic } from '../lib/gestures.js'
 
 function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo }) {
+  const navigate = useNavigate();
   const [clearModal, setClearModal] = useState(false)
   const [importModal, setImportModal] = useState(false)
   const [importFile, setImportFile] = useState(null)
   const [showFinanceEstimator, setShowFinanceEstimator] = useState(false)
   const [showPaymentCalculator, setShowPaymentCalculator] = useState(false)
 
-  const billingPortalUrl = import.meta.env.VITE_STRIPE_BILLING_PORTAL_URL || 'https://billing.stripe.com/p/login'
+  // Redirect to custom billing management page instead of Stripe portal
 
   const handleImportFile = (event) => {
     const file = event.target.files[0]
@@ -88,147 +90,526 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
   const appInfo = {
     name: 'Car Deal Coach',
     version: '1.0.0',
-    description: 'Your personal car-buying assistant',
+    description: 'Complete car buying platform with AI negotiation coach, real-time market data, finance tools, and deal tracking',
     features: [
-      'Smart price estimation',
-      'Negotiation checklists',
-      'Deal tracking',
-      'Photo management',
-      'Notes and reminders'
+      'AI-Powered Negotiation Coach - Personalized scripts and strategies',
+      'Real-Time Market Data - Live pricing from AutoTrader, Cars.com, CarGurus',
+      'Advanced Finance Calculator - APR analysis and payment breakdowns',
+      'Deal Tracking System - Track multiple car deals with photos and notes',
+      'Step-by-Step Checklist - Complete negotiation and buying guide',
+      'Photo Management - Upload and organize car photos and documents',
+      'Notes & Reminders - Keep track of conversations and important details',
+      'Regional Market Analysis - ZIP code-based pricing adjustments',
+      'Trade-In Valuation - Separate trade-in tracking and valuation',
+      'Payment Calculator - Monthly payment and loan term analysis',
+      'Mobile-First Design - Optimized for smartphone use',
+      'Cloud Backup - Export/import deals and data',
+      'Red Flag Alerts - Spot hidden fees and dealer tactics',
+      'Savings Tracking - Calculate potential savings and overpayments',
+      'Secure Data Storage - Your information stays private',
+      'Comprehensive Guides - How-to guides and legal information',
+      'Customizable Settings - Personalize your experience',
+      'Real-Time Updates - Always current market data and pricing'
     ]
   }
 
   return (
-    <div className="settings">
-      <div className="settings-header">
-        <h1 style={{ color: '#ffffff' }}>Settings</h1>
-        <p style={{ color: '#ffffff' }}>Customize your Car Deal Coach experience</p>
-      </div>
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      padding: '2rem',
+      fontFamily: 'system-ui, sans-serif'
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <button 
+            onClick={() => navigate('/app')}
+            style={{
+              background: 'rgba(255, 255, 255, 0.2)',
+              color: '#ffffff',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '8px',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              fontSize: '1rem',
+              fontWeight: '500',
+              cursor: 'pointer',
+              marginBottom: '1rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              margin: '0 auto 1rem auto'
+            }}
+          >
+            ← Back to Dashboard
+          </button>
+          <h1 style={{ 
+            fontSize: '2.5rem', 
+            fontWeight: 'bold', 
+            color: '#ffffff', 
+            marginBottom: '0.5rem' 
+          }}>
+            ⚙️ Settings
+          </h1>
+          <p style={{ 
+            fontSize: '1.125rem', 
+            color: '#e2e8f0', 
+            marginBottom: '2rem' 
+          }}>
+            Customize your Car Deal Coach experience
+          </p>
+        </div>
 
-      <div className="settings-content">
-        <div className="settings-section">
-          <h2 style={{ color: '#ffffff' }}>Subscription</h2>
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>Current Plan</h3>
-              <p style={{ color: '#ffffff' }}>Basic Plan - Core features included</p>
-            </div>
+        {/* Main Content Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+          gap: '2rem',
+          marginBottom: '2rem'
+        }}>
+          
+          {/* Subscription Card */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.95)',
+            padding: '2rem',
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)'
+          }}>
+            <h2 style={{ 
+              fontSize: '1.5rem', 
+              fontWeight: '600', 
+              color: '#1f2937', 
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}>
+              💳 Subscription
+            </h2>
+            
+            <div style={{ marginBottom: '1.5rem' }}>
+              <h3 style={{ fontSize: '1.125rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
+                Current Plan
+              </h3>
+              <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
+                Basic Plan - Core features included
+              </p>
             <button 
-              className="btn btn-primary"
-              onClick={() => window.open('#/upgrade', '_self')}
-            >
-              🚀 View Upgrade Options
+                onClick={() => window.location.href = '/app/upgrade'}
+                style={{
+                  background: '#059669',
+                  color: 'white',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  width: '100%',
+                  marginBottom: '0.75rem'
+                }}
+              >
+                🚀 View Upgrade Options
             </button>
-          </div>
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>Manage Subscription</h3>
-              <p style={{ color: '#ffffff' }}>Update payment method or cancel subscription</p>
-            </div>
             <button 
-              className="btn btn-secondary"
-              onClick={() => window.open(billingPortalUrl, '_blank')}
+                onClick={() => window.location.href = '/app/billing'}
+                style={{
+                  background: '#6b7280',
+                  color: 'white',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  width: '100%'
+                }}
             >
               💳 Manage Billing
             </button>
           </div>
         </div>
 
-        <div className="settings-section">
-          <h2 style={{ color: '#ffffff' }}>Finance Tools</h2>
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>Finance Calculator</h3>
-              <p style={{ color: '#ffffff' }}>Get instant financing estimates and negotiation tips</p>
-            </div>
+          {/* Finance Tools Card */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.95)',
+            padding: '2rem',
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)'
+          }}>
+            <h2 style={{ 
+              fontSize: '1.5rem', 
+              fontWeight: '600', 
+              color: '#1f2937', 
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}>
+              🧮 Finance Tools
+            </h2>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <button 
-              className="btn btn-primary"
               onClick={() => setShowFinanceEstimator(true)}
+                style={{
+                  background: '#3b82f6',
+                  color: 'white',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
             >
               💰 Calculate Financing
             </button>
-          </div>
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>Payment Calculator</h3>
-              <p style={{ color: '#ffffff' }}>Enter dealer worksheet to calculate your actual interest rate</p>
-            </div>
             <button 
-              className="btn btn-secondary"
               onClick={() => setShowPaymentCalculator(true)}
+                style={{
+                  background: '#8b5cf6',
+                  color: 'white',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
             >
               🧮 Calculate Rate
             </button>
           </div>
         </div>
 
-        <div className="settings-section">
-          <h2 style={{ color: '#ffffff' }}>Help & Support</h2>
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>How to Use</h3>
-              <p style={{ color: '#ffffff' }}>Complete guide to using all features effectively</p>
-            </div>
+          {/* Help & Support Card */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.95)',
+            padding: '2rem',
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)'
+          }}>
+            <h2 style={{ 
+              fontSize: '1.5rem', 
+              fontWeight: '600', 
+              color: '#1f2937', 
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}>
+              📚 Help & Support
+            </h2>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <button 
-              className="btn btn-primary"
-              onClick={() => navigateTo('how-to-use')}
+                onClick={() => navigate('/app/how-to-use')}
+                style={{
+                  background: '#059669',
+                  color: 'white',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
             >
               📚 View Guide
             </button>
             <button 
-              className="btn btn-secondary"
-              onClick={() => navigateTo('legal')}
+                onClick={() => navigate('/app/legal')}
+                style={{
+                  background: '#dc2626',
+                  color: 'white',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
             >
               ⚖️ Legal Information
             </button>
           </div>
         </div>
 
-        <div className="settings-section">
-          <h2 style={{ color: '#ffffff' }}>Data Management</h2>
+          {/* Quick Actions Card */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.95)',
+            padding: '2rem',
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)'
+          }}>
+            <h2 style={{ 
+              fontSize: '1.5rem', 
+              fontWeight: '600', 
+              color: '#1f2937', 
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}>
+              ⚡ Quick Actions
+            </h2>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <button 
+                onClick={() => navigate('/app/create-deal')}
+                style={{
+                  background: '#f59e0b',
+                  color: 'white',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                📝 Create New Deal
+              </button>
+              <button 
+                onClick={() => navigate('/app/saved-deals')}
+                style={{
+                  background: '#10b981',
+                  color: 'white',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                💾 View Saved Deals
+              </button>
+              <button 
+                onClick={() => navigate('/app/checklist')}
+                style={{
+                  background: '#8b5cf6',
+                  color: 'white',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                ✅ Deal Checklist
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Data Management Section */}
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.95)',
+          padding: '2rem',
+          borderRadius: '12px',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          marginBottom: '2rem'
+        }}>
+          <h2 style={{ 
+            fontSize: '1.5rem', 
+            fontWeight: '600', 
+            color: '#1f2937', 
+            marginBottom: '1.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            💾 Data Management
+          </h2>
           
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>Export Data</h3>
-              <p style={{ color: '#ffffff' }}>Download your data in various formats</p>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '1.5rem'
+          }}>
+            {/* Export Section */}
+            <div>
+              <h3 style={{ fontSize: '1.125rem', fontWeight: '500', color: '#374151', marginBottom: '0.75rem' }}>
+                Export Data
+              </h3>
+              <p style={{ color: '#6b7280', marginBottom: '1rem', fontSize: '0.875rem' }}>
+                Download your deals, notes, and photos
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <button 
+                  onClick={handleExportJSON}
+                  style={{
+                    background: '#3b82f6',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}
+                >
+                  📄 Export JSON
+                </button>
+                <button 
+                  onClick={handleExportCSV}
+                  style={{
+                    background: '#10b981',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}
+                >
+                  📊 Export CSV
+                </button>
+                <button 
+                  onClick={handleExportBackup}
+                  style={{
+                    background: '#8b5cf6',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}
+                >
+                  💾 Full Backup
+                </button>
+              </div>
             </div>
-            <div className="export-buttons">
-              <button className="btn btn-secondary btn-small" onClick={handleExportJSON}>
-                JSON
-              </button>
-              <button className="btn btn-secondary btn-small" onClick={handleExportCSV}>
-                CSV
-              </button>
-              <button className="btn btn-secondary btn-small" onClick={handleExportBackup}>
-                Full Backup
-              </button>
-            </div>
-          </div>
 
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>Import Data</h3>
-              <p style={{ color: '#ffffff' }}>Restore data from a previous export</p>
+            {/* Import Section */}
+            <div>
+              <h3 style={{ fontSize: '1.125rem', fontWeight: '500', color: '#374151', marginBottom: '0.75rem' }}>
+                Import Data
+              </h3>
+              <p style={{ color: '#6b7280', marginBottom: '1rem', fontSize: '0.875rem' }}>
+                Restore from backup or import deals
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <button 
+                  onClick={() => setImportModal(true)}
+                  style={{
+                    background: '#f59e0b',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}
+                >
+                  📥 Import Backup
+                </button>
+                <input
+                  type="file"
+                  accept=".json"
+                  onChange={handleImportFile}
+                  style={{ display: 'none' }}
+                  id="import-file"
+                />
+                <label 
+                  htmlFor="import-file"
+                  style={{
+                    background: '#6b7280',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    textAlign: 'center'
+                  }}
+                >
+                  📁 Choose File
+                </label>
+              </div>
             </div>
-            <button 
-              className="btn btn-secondary"
-              onClick={() => setImportModal(true)}
-            >
-              Import Data
-            </button>
-          </div>
 
-          <div className="setting-item">
-            <div className="setting-info">
-              <h3 style={{ color: '#ffffff' }}>Clear All Data</h3>
-              <p style={{ color: '#ffffff' }}>Permanently delete all your deals, notes, and photos</p>
+            {/* Clear Data Section */}
+            <div>
+              <h3 style={{ fontSize: '1.125rem', fontWeight: '500', color: '#374151', marginBottom: '0.75rem' }}>
+                Clear All Data
+              </h3>
+              <p style={{ color: '#dc2626', marginBottom: '1rem', fontSize: '0.875rem' }}>
+                ⚠️ This will permanently delete all your data
+              </p>
+              <button 
+                onClick={() => setClearModal(true)}
+                style={{
+                  background: '#dc2626',
+                  color: 'white',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '6px',
+                  border: 'none',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                🗑️ Clear All Data
+              </button>
             </div>
-            <button 
-              className="btn btn-danger"
-              onClick={() => setClearModal(true)}
-            >
-              Clear All Data
-            </button>
           </div>
         </div>
 
@@ -261,25 +642,6 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
           </div>
         </div>
 
-        <div className="settings-section">
-          <h2 style={{ color: '#ffffff' }}>Future Integration</h2>
-          <div className="integration-info">
-            <p style={{ color: '#ffffff' }}>
-              <strong style={{ color: '#ffffff' }}>Supabase Integration:</strong> This app is designed to easily connect 
-              to Supabase for cloud storage and real-time synchronization. 
-              See <code style={{ color: '#ffffff' }}>src/lib/supabase-hooks.js</code> for integration points.
-            </p>
-            <div className="integration-features">
-              <h4 style={{ color: '#ffffff' }}>Planned Features:</h4>
-              <ul>
-                <li style={{ color: '#ffffff' }}>Cloud backup and sync</li>
-                <li style={{ color: '#ffffff' }}>Real-time collaboration</li>
-                <li style={{ color: '#ffffff' }}>Advanced analytics</li>
-                <li style={{ color: '#ffffff' }}>Dealer network integration</li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
         <div className="settings-section">
           <h2 style={{ color: '#ffffff' }}>Personal Negotiator Agent</h2>

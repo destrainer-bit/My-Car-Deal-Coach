@@ -1,4 +1,5 @@
 // Pricing estimation utilities for Car Deal Coach
+import { marketDataAPI } from './marketDataAPI.js'
 
 export const calculateBasePrice = (year, mileage) => {
   const currentYear = new Date().getFullYear()
@@ -56,6 +57,36 @@ export const estimatePriceRange = (vehicleData) => {
     mid,
     high,
     explanation: generateExplanation(base, condition, trim, getZipMultiplier(zipCode))
+  }
+}
+
+// Enhanced pricing with real market data
+export const estimatePriceRangeWithMarketData = async (vehicleData) => {
+  try {
+    // Try to get real market data first
+    const marketData = await marketDataAPI.getRegionalPricing(vehicleData)
+    
+    if (marketData && marketData.count > 0) {
+      return {
+        low: marketData.low,
+        mid: marketData.mid,
+        high: marketData.high,
+        explanation: marketData.explanation,
+        source: marketData.source,
+        count: marketData.count,
+        isRealData: true
+      }
+    }
+  } catch (error) {
+    console.log('Market data unavailable, using algorithm pricing:', error.message)
+  }
+  
+  // Fallback to algorithm pricing
+  const algorithmResult = estimatePriceRange(vehicleData)
+  return {
+    ...algorithmResult,
+    isRealData: false,
+    explanation: algorithmResult.explanation + ' (estimated - no market data available)'
   }
 }
 

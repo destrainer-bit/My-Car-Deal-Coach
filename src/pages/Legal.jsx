@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Legal({ onBack }) {
+  const navigate = useNavigate()
   const [activeSection, setActiveSection] = useState('disclaimer')
 
   const sections = {
@@ -161,7 +163,7 @@ function Legal({ onBack }) {
   return (
     <div className="legal">
       <div className="legal-header">
-        <button className="btn btn-secondary" onClick={onBack}>
+        <button className="btn btn-secondary" onClick={() => navigate('/app/settings')}>
           ← Back to Settings
         </button>
         <h1 style={{ color: '#ffffff' }}>Legal Information</h1>
