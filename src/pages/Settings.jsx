@@ -113,55 +113,25 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
     ]
   }
 
-    return (
+  return (
       <div className="mobile-first-settings">
         <div className="mobile-first-settings-container">
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+        <div className="mobile-first-settings-header">
           <button 
             onClick={() => navigate('/app')}
-            style={{
-              background: 'rgba(255, 255, 255, 0.2)',
-              color: '#ffffff',
-              padding: '0.75rem 1.5rem',
-              borderRadius: '8px',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              fontSize: '1rem',
-              fontWeight: '500',
-              cursor: 'pointer',
-              marginBottom: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              margin: '0 auto 1rem auto'
-            }}
+            className="btn btn-secondary"
           >
             ← Back to Dashboard
           </button>
-          <h1 style={{ 
-            fontSize: '2.5rem', 
-            fontWeight: 'bold', 
-            color: '#ffffff', 
-            marginBottom: '0.5rem' 
-          }}>
-            ⚙️ Settings
-          </h1>
-          <p style={{ 
-            fontSize: '1.125rem', 
-            color: '#e2e8f0', 
-            marginBottom: '2rem' 
-          }}>
+          <h1 className="mobile-first-title">⚙️ Settings</h1>
+          <p className="mobile-first-subtitle">
             Customize your Car Deal Coach experience
           </p>
-        </div>
+      </div>
 
         {/* Main Content Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-          gap: '2rem',
-          marginBottom: '2rem'
-        }}>
+        <div className="mobile-first-settings-grid">
           
           {/* Subscription Card */}
           <div className="settings-card">
@@ -179,20 +149,20 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
             </div>
             
             <div className="settings-card-actions">
-              <button 
+            <button 
                 onClick={() => window.location.href = '/app/upgrade'}
                 className="btn"
-              >
+            >
                 🚀 View Upgrade Options
-              </button>
-              <button 
+            </button>
+            <button 
                 onClick={() => navigate('/app/billing')}
-                className="btn btn-secondary"
-              >
-                💳 Manage Billing
-              </button>
-            </div>
+              className="btn btn-secondary"
+            >
+              💳 Manage Billing
+            </button>
           </div>
+        </div>
         </div>
 
           {/* Finance Tools Card */}
@@ -204,22 +174,22 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
             </div>
             
             <div className="settings-card-actions">
-              <button 
-                onClick={() => setShowFinanceEstimator(true)}
+            <button 
+              onClick={() => setShowFinanceEstimator(true)}
                 className="btn"
                 style={{ background: '#3b82f6' }}
-              >
-                💰 Calculate Financing
-              </button>
-              <button 
-                onClick={() => setShowPaymentCalculator(true)}
+            >
+              💰 Calculate Financing
+            </button>
+            <button 
+              onClick={() => setShowPaymentCalculator(true)}
                 className="btn"
                 style={{ background: '#8b5cf6' }}
-              >
-                🧮 Calculate Rate
-              </button>
-            </div>
+            >
+              🧮 Calculate Rate
+            </button>
           </div>
+        </div>
         </div>
 
           {/* Help & Support Card */}
@@ -231,21 +201,21 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
             </div>
             
             <div className="settings-card-actions">
-              <button 
+            <button 
                 onClick={() => navigate('/app/how-to-use')}
                 className="btn"
-              >
-                📚 View Guide
-              </button>
-              <button 
+            >
+              📚 View Guide
+            </button>
+            <button 
                 onClick={() => navigate('/app/legal')}
                 className="btn"
                 style={{ background: '#dc2626' }}
-              >
-                ⚖️ Legal Information
-              </button>
-            </div>
+            >
+              ⚖️ Legal Information
+            </button>
           </div>
+        </div>
 
           {/* Quick Actions Card */}
           <div style={{
@@ -269,7 +239,7 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
             </h2>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <button 
+            <button 
                 onClick={() => navigate('/app/create-deal')}
                 style={{
                   background: '#f59e0b',
@@ -327,41 +297,15 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
           </div>
 
         {/* Data Management Section */}
-        <div style={{
-          background: 'rgba(255, 255, 255, 0.95)',
-          padding: '2rem',
-          borderRadius: '12px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.2)',
-          marginBottom: '2rem'
-        }}>
-          <h2 style={{ 
-            fontSize: '1.5rem', 
-            fontWeight: '600', 
-            color: '#1f2937', 
-            marginBottom: '1.5rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
-          }}>
-            💾 Data Management
-          </h2>
+        <div className="mobile-first-settings-section">
+          <h2>💾 Data Management</h2>
           
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '1.5rem'
-          }}>
+          <div className="mobile-first-settings-actions">
             {/* Export Section */}
             <div>
-              <h3 style={{ fontSize: '1.125rem', fontWeight: '500', color: '#374151', marginBottom: '0.75rem' }}>
-                Export Data
-              </h3>
-              <p style={{ color: '#6b7280', marginBottom: '1rem', fontSize: '0.875rem' }}>
-                Download your deals, notes, and photos
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <h3>Export Data</h3>
+              <p>Download your deals, notes, and photos</p>
+              <div className="mobile-first-settings-actions">
                 <button 
                   onClick={handleExportJSON}
                   style={{
@@ -428,8 +372,8 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
                 Restore from backup or import deals
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <button 
-                  onClick={() => setImportModal(true)}
+            <button 
+              onClick={() => setImportModal(true)}
                   style={{
                     background: '#f59e0b',
                     color: 'white',
@@ -445,7 +389,7 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
                   }}
                 >
                   📥 Import Backup
-                </button>
+            </button>
                 <input
                   type="file"
                   accept=".json"
@@ -472,7 +416,7 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
                 >
                   📁 Choose File
                 </label>
-              </div>
+          </div>
             </div>
 
             {/* Clear Data Section */}
@@ -483,8 +427,8 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
               <p style={{ color: '#dc2626', marginBottom: '1rem', fontSize: '0.875rem' }}>
                 ⚠️ This will permanently delete all your data
               </p>
-              <button 
-                onClick={() => setClearModal(true)}
+            <button 
+              onClick={() => setClearModal(true)}
                 style={{
                   background: '#dc2626',
                   color: 'white',
@@ -500,7 +444,7 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
                 }}
               >
                 🗑️ Clear All Data
-              </button>
+            </button>
             </div>
           </div>
         </div>
@@ -544,9 +488,9 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
             </div>
           </div>
           <SimpleNegotiatorAgent />
-        </div>
+      </div>
 
-        {clearModal && (
+      {clearModal && (
         <ConfirmModal
           title="Clear All Data"
           message="Are you sure you want to delete all your deals, notes, and photos? This action cannot be undone."
@@ -629,7 +573,7 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
           </div>
         </div>
       )}
-      </div>
+    </div>
   )
 }
 

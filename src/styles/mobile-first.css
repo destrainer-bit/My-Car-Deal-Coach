@@ -489,6 +489,99 @@
       background: #4b5563;
     }
 
+    /* Settings Page Mobile-First Styles */
+    .mobile-first-settings {
+      padding: var(--space-lg);
+      min-height: 100vh;
+      background: var(--bg-primary);
+    }
+
+    .mobile-first-settings-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .mobile-first-settings-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .mobile-first-settings-header .btn {
+      margin-bottom: var(--space-lg);
+    }
+
+    .mobile-first-settings-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+
+    @media (min-width: 768px) {
+      .mobile-first-settings-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xl);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .mobile-first-settings-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .mobile-first-settings-section {
+      background: rgba(255, 255, 255, 0.95);
+      padding: var(--space-xl);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      margin-bottom: var(--space-lg);
+    }
+
+    .mobile-first-settings-section h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: var(--space-lg);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mobile-first-settings-section h3 {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: var(--space-md);
+    }
+
+    .mobile-first-settings-section p {
+      color: #6b7280;
+      margin-bottom: var(--space-lg);
+      line-height: 1.5;
+    }
+
+    .mobile-first-settings-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    @media (min-width: 640px) {
+      .mobile-first-settings-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+
+    .mobile-first-settings-actions .btn {
+      flex: 1;
+      min-width: 200px;
+    }
+
 /* Create Deal Mobile-First Styles */
 .mobile-first-create-deal {
   padding: var(--space-lg);
