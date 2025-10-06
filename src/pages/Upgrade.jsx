@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PaymentModal from '../components/PaymentModal.jsx'
 import { upgradePlans } from '../data/upgradePlans.js'
 
 export default function Upgrade() {
+  const navigate = useNavigate()
   const [selectedPlan, setSelectedPlan] = useState(null)
 
   const onSelectOffer = (plan) => {
@@ -15,6 +17,25 @@ export default function Upgrade() {
   return (
     <div className="upgrade-page">
       <header className="upgrade-page__header">
+        <button 
+          onClick={() => navigate('/app')}
+          style={{
+            background: 'rgba(255, 255, 255, 0.2)',
+            color: 'white',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            borderRadius: '8px',
+            padding: '0.75rem 1.5rem',
+            fontSize: '1rem',
+            fontWeight: '500',
+            cursor: 'pointer',
+            marginBottom: '2rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          ← Back to Main
+        </button>
         <h1>Upgrade Your Car Deal Coach Protection</h1>
         <p>Choose the plan that matches your buying timeline and get instant access to scripts, alerts, and AI coaching.</p>
       </header>
