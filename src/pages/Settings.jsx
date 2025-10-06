@@ -545,9 +545,8 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
           </div>
           <SimpleNegotiatorAgent />
         </div>
-      </div>
 
-      {clearModal && (
+        {clearModal && (
         <ConfirmModal
           title="Clear All Data"
           message="Are you sure you want to delete all your deals, notes, and photos? This action cannot be undone."
