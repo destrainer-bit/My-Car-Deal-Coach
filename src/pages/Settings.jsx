@@ -630,7 +630,6 @@ function Settings({ onClearData, onExportData, deals, notes, photos, navigateTo 
         </div>
       )}
       </div>
-    </div>
   )
 }
 
